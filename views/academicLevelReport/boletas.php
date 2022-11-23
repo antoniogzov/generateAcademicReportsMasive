@@ -10,11 +10,12 @@ include_once 'card_select.php';
         <!-- Card header -->
         <div class="card-header">
             <h3 class="mb-0">Grupos para esta combinación académica</h3>
+            <input type="text" id="id_level_combination" value="<?=$id_level_combination?>" style="display:none">
         </div>
         <!-- Card body -->
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-hover">
+                <table class="table table-striped table-hover" id="groupsTable">
                     <thead class="table-dark">
                         <th>CÓDIGO</th>
                         <th>GRADO</th>
@@ -28,7 +29,7 @@ include_once 'card_select.php';
                                 <td><?= mb_strtoupper($group->degree); ?></td>
                                 <td><?= mb_strtoupper($group->tutor_name); ?></td>
                                 <td>
-                                    <a href="index.php?controller=academicLevelReport&action=boletas&id_academic_area=<?= $id_academic_area; ?>&id_academic_level=<?= $id_academic_level; ?>&id_campus=<?= $id_campus; ?>&id_section=<?= $id_section; ?>&id_level_combination=<?= $id_level_combination; ?>&id_group=<?= $group->id_group; ?>" class="btn btn-sm btn-primary">Generar boletas</a>
+                                    <button data-id-group="<?= $group->id_group ?>"  data-id-level-combination ="<?=$id_level_combination?>" type="button"  class="btn btn-primary generateGroupReports">Generar boletas</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

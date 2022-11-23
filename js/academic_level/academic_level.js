@@ -1,6 +1,7 @@
 $(document).ready(function () {
   $("#slct_academic_area").change(function () {
     $("#slct_academic_level").prop("disabled", false);
+    $("#slct_academic_level").val("");
 
     $("#slct_campus").html(
       '<option value="0" selected disabled>Elija una opción</option>'
@@ -50,7 +51,9 @@ $(document).ready(function () {
   });
 
   $("#slct_campus").change(function () {
-    $("#slct_section").html('<option value="0" selected disabled>Elija una opción</option>');
+    $("#slct_section").html(
+      '<option value="0" selected disabled>Elija una opción</option>'
+    );
     loading();
     var id_campus = $(this).val();
     var id_academic_level = $("#slct_academic_level").val();
@@ -74,7 +77,9 @@ $(document).ready(function () {
           html_options +=
             '<option value="0" selected disabled>Elija una opción</option>';
           for (let i = 0; i < data.data.length; i++) {
-            html_options += `<option value="${data.data[i].id_section}">${data.data[i].section.toUpperCase()}</option>`;
+            html_options += `<option value="${
+              data.data[i].id_section
+            }">${data.data[i].section.toUpperCase()}</option>`;
           }
           $("#slct_section").html(html_options);
           Swal.close();
@@ -86,7 +91,7 @@ $(document).ready(function () {
       })
       .fail(function (message) {});
   });
-  
+
   $("#slct_section").change(function () {
     loading();
     var id_section = $(this).val();
@@ -95,9 +100,22 @@ $(document).ready(function () {
     var id_academic_area = $("#slct_academic_area").val();
 
     window.location.search = `?id_academic_area=${id_academic_area}&id_academic_level=${id_academic_level}&id_campus=${id_campus}&id_section=${id_section}`;
-    
-    
   });
+
+  var tf = new TableFilter(document.querySelector("#groupsTable"), {
+    base_path: "assets/tablefilter/",
+    paging: {
+      results_per_page: ["Records: ", [10, 25, 50, 100]],
+    },
+    grid_layout: {
+      width: "100%",
+    },
+    rows_counter: true,
+    btn_reset: true,
+    col_1: "select",
+    col_3: "none",
+  });
+  tf.init();
 
   function loading() {
     Swal.fire({
