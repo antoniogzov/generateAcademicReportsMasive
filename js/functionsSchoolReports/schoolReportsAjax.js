@@ -10,15 +10,15 @@ $(document).ready(function () {
         console.log("getBangFemSpanPrimSR()");
         //--- --- ---//
         $.ajax({
-          url: "schoolReports.php",
+          url: "controllers/academicLevelReport/schoolReportsPrimBangSpan.php",
           method: "POST",
           data: {
-            fun: "getSchoolReportCardHebrewPrimaryBangueolo",
-            id_level_combination: "7",
-            order_by_lang:
-              "ORDER BY FIELD(sbj.id_subject, '358', '370','373', '365', '371','361','356') DESC",
-            order_by_gral:
-              "ORDER BY FIELD(sbj.id_subject, '372', '357','342') DESC",
+            fun: "getBangFemSpanPrimSR",
+            id_level_combination: id_level_combination,
+            id_group: id_group,
+            id_academic_area: id_academic_area,
+            order_by_lang: "ORDER BY sbj.name_subject",
+            order_by_gral: "ORDER BY sbj.name_subject",
             installment: 1,
           },
         })
@@ -26,8 +26,9 @@ $(document).ready(function () {
             var data = JSON.parse(data);
             if (data.response) {
               var response_data = data;
+              console.log(response_data);
               //--- --- ---//
-              getBangFemSpanPrimSR(images, response_data);
+              getBangFemSpanPrimSR(response_data);
               //--- --- ---//
             } else {
               //--- --- ---//
@@ -41,7 +42,7 @@ $(document).ready(function () {
         break;
 
       case "7":
-        console.log("getBangFemHebPrimSR()");
+        //console.log("getBangFemHebPrimSR()");
         //--- --- ---//
         $.ajax({
           url: "controllers/academicLevelReport/schoolReportsPrimBang.php",
@@ -51,10 +52,8 @@ $(document).ready(function () {
             id_level_combination: id_level_combination,
             id_group: id_group,
             id_academic_area: id_academic_area,
-            order_by_lang:
-              "ORDER BY sbj.name_subject",
-            order_by_gral:
-              "ORDER BY sbj.name_subject",
+            order_by_lang: "ORDER BY sbj.name_subject",
+            order_by_gral: "ORDER BY sbj.name_subject",
             installment: 1,
           },
         })
@@ -62,7 +61,7 @@ $(document).ready(function () {
             var data = JSON.parse(data);
             if (data.response) {
               var response_data = data;
-              console.log(response_data);
+              //console.log(response_data);
               //--- --- ---//
               getBangFemHebPrimSR(response_data);
 
@@ -94,5 +93,5 @@ $(document).ready(function () {
       showCancelButton: false,
       showConfirmButton: false,
     });
-    }
+  }
 });

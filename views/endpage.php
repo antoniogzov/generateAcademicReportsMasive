@@ -8,3 +8,4 @@
 <script src="assets/jspdf/jspdf.plugin.autotable.js"></script>
 <script src="js/functionsSchoolReports/schoolReportsAjax.js"></script>
 <script src="js/functionsSchoolReports/getBangFemHebPrimSR.js"></script>
+<script src="js/functionsSchoolReports/getBangFemSpanPrimSR.js"></script>
