@@ -9,9 +9,11 @@ class Connection
     private $db_host = "servykt.homeip.net";
     private $db_user = "usuario";
     private $db_pass = "UsuarioRemoto2020";
-     /*private $db_host = "localhost";
-    private $db_user = "usuario";
-    private $db_pass = "UsuarioRemoto2020";;*/
+     /*
+      private $db_host = "localhost";
+    private $db_user = "root";
+    private $db_pass = "Admon2022a*";
+    */
 
     /* Server de pruebas */
     /* private $db_port = 3307;
