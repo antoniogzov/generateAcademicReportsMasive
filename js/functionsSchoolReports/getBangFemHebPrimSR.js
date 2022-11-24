@@ -64,6 +64,7 @@ async function getBangFemHebPrimSR(data) {
         var valid_period = 0;
         var qualif_final = 0;
         if (
+          qualif_period_1 == "-" &&
           qualif_period_2 == "-" &&
           qualif_period_3 == "-" &&
           qualif_period_4 == "-"
@@ -109,6 +110,7 @@ async function getBangFemHebPrimSR(data) {
         ];
         data_school_report.push(data_school_report_arr);
       }
+      console.log(promedio_p1);
       var num_valid_periods = 0;
       if (promedio_p1 == 0) {
         promedio_p1 = "-";
