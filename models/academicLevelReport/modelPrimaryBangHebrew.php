@@ -58,6 +58,7 @@ class DataSchoolReportCardsHebrew extends Connection
         AND sbj.id_academic_area = $id_academic_area 
         AND sbj.id_subject != 416
         AND sbj.id_subject !=323
+        AND assgn.print_school_report_card = 1
             $order_by_gral";
         //echo $sql;
         $query = $this->conn->query($sql);
