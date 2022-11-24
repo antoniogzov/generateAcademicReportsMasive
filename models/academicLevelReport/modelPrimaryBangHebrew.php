@@ -54,7 +54,6 @@ class DataSchoolReportCardsHebrew extends Connection
         ON grape.id_final_grade = asscassglmp.id_final_grade AND percal.id_period_calendar = grape.id_period_calendar
         WHERE asscassglmp.id_assignment = assgn.id_assignment
          AND assgn.id_group = $id_group
-        AND sbj.subject_type_id !=3
         AND insc.id_student = $id_student
         AND sbj.id_academic_area = $id_academic_area 
         AND sbj.id_subject != 416

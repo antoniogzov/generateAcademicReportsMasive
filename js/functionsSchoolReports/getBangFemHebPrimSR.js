@@ -176,7 +176,7 @@ async function getBangFemHebPrimSR(data) {
           RQBangFemHebPrim(qualif_period_3),
           RQBangFemHebPrim(qualif_period_4),
         ];
-        data_school_report.push(data_school_report_language_arr);
+       // data_school_report.push(data_school_report_language_arr);
         /* data_school_report_languages = [
         ["Idioma", "9", "10", "10", "10"],
         ["Escritura", "10", "10", "10", "10"],
@@ -272,25 +272,74 @@ async function getBangFemHebPrimSR(data) {
       doc.setFontSize(20);
       doc.setFont("Yiddishkeit AlefAlefAlef Bold", "bold"); // set font
       doc.setR2L(true);
-      doc.text(110, 15, " בית ספר בנות כתר תורה"); // ESCUELA DE NIÑAS KETER TORÁ
+      doc.text(65, 15, " בית ספר בנות כתר תורה"); // ESCUELA DE NIÑAS KETER TORÁ
       //doc.text(117, 15, " בית ספר גברים כתר תורה"); // ESCUELA DE NIÑOS KETER TORÁ
       doc.setR2L(false);
       doc.setFontSize(10);
       doc.setFont("Yiddishkeit AlefAlefAlef Bold", "bold"); // set font
-      doc.text(106, 20, "Yeshivá Kéter Torá Bangueolo Jacob y Esther Safra");
-      doc.text(100, 25, "Primaria Mujeres Hebreo");
-      doc.text(150, 25, "Reporte de Calificaciones");
+      doc.text(64, 20, "Yeshivá Kéter Torá Bangueolo Jacob y Esther Safra");
+      doc.text(58, 25, "Primaria Mujeres Hebreo");
+      doc.text(115, 25, "Reporte de Calificaciones");
       //--- --- ---//
       doc.setFontSize(10);
-      doc.text(15, 40, "NOMBRE DE LA ALUMNA: " + student_name);
-      doc.text(15, 45, "CÓDIGO DE LA ALUMNA: " + student_code);
-      doc.text(135, 40, "KITÁ: " + group_name);
-      doc.text(210, 25, "CICLO ESCOLAR: " + school_cycle);
-      doc.text(205, 40, "GRADO ACADÉMICO: " + grade.toUpperCase());
+      //doc.text(140, 40, "GRADO ACADÉMICO: " + grade.toUpperCase());
+
+       doc.autoTable({
+        theme: "plain",
+        startY: 30,
+        tableWidth: 190,
+        margin: {
+          left: 8,
+        },
+        headStyles: {
+          halign: "left",
+          valign: "middle",
+          font: "VarelaRound-Regular",
+          fillColor: [255, 255, 255],
+          textColor: [0, 0, 0],
+          fontSize: 10,
+        },
+        bodyStyles: {
+          font: "VarelaRound-Regular",
+          fillColor: [255, 255, 255],
+          textColor: [0, 0, 0],
+        },
+        columnStyles: {
+          0: {
+            cellWidth: 95,
+          },
+          1: {
+            cellWidth: 95,
+          },
+        },
+        body: [
+          [
+            {
+              content: "NOMBRE DE LA ALUMNA: " + student_name.toUpperCase(),
+              styles: { halign: "left" },
+            },
+            {
+              content: "GRADO ACADÉMICO: " + grade.toUpperCase(),
+              styles: { halign: "right" },
+            },
+          ],
+           [
+            {
+              content: "CÓDIGO DE LA ALUMNA: " + student_code,
+              styles: { halign: "left" },
+            },
+            {
+              content: "KITÁ: " + group_name + "  CICLO ESCOLAR:"+school_cycle,
+              styles: { halign: "right" },
+            },
+          ],
+        ],
+      });
+
       //--- TABLA IZQUIERDA ARRIBA---//
       doc.autoTable({
         startY: 50,
-        tableWidth: 130,
+        tableWidth: 180,
         headStyles: {
           fillColor: [255, 255, 255],
           textColor: [0, 0, 0],
@@ -417,12 +466,10 @@ async function getBangFemHebPrimSR(data) {
 
       //--- TABLA DERECHA ---//
       doc.autoTable({
-        startY: 50,
-        tableWidth: 115,
+        startY: 150,
+        tableWidth: 180,
         font: "Yiddishkeit AlefAlefAlef Bold",
-        margin: {
-          left: 150,
-        },
+        
         headStyles: {
           fillColor: [255, 255, 255],
           textColor: [0, 0, 0],
@@ -551,48 +598,27 @@ async function getBangFemHebPrimSR(data) {
           ],
           body: data_school_report_abilities,
       }); */
-      //--- FIRMA DE LA  MORÁ ---//
-      doc.setDrawColor(0, 0, 0);
-      doc.line(165, 190, 205, 190);
-      doc.setFontSize(7);
-      //doc.text(170, 188, "");
-      doc.text(175, 196, "Docente del grupo");
-      //--- FIRMA TUTOR ---//
-      doc.line(220, 190, 260, 190);
-      doc.text(230, 196, "Firma del tutor");
+     
       //--- MATERIAS ADEUDADAS ---//
-      /* doc.setFontSize(8);
-      doc.text(15, 175, "IDIOMA");
-      if (defaulted_subjects.length > 0) {
-          var Xlist = 15;
-          var Ylist = 180;
-          var longest_word = 25;
-          for (var i = 0; i < defaulted_subjects.length; i++) {
-              doc.text(Xlist, Ylist, "• " + defaulted_subjects[i]);
-              Ylist += 4;
-              //--- --- ---//
-              if (defaulted_subjects[i].length > longest_word) {
-                  longest_word = defaulted_subjects[i].length;
-              }
-              //--- --- ---//
-              if (i == 3) {
-                  //console.log(longest_word);
-                  Ylist = 180;
-                  Xlist = longest_word * 2;
-              }
-              //--- --- ---//
-          }
-      } else {
-          doc.text(15, 180, "• SIN MATERIAS ADEUDADAS");
-      } */
+      
       //--- TEXTO DE EQUIVALENCIAS  ---//
       doc.setFontSize(8);
-      doc.text(190, 165, "Código de calificaciones:");
+      doc.text(14, 240, "Código de calificaciones:");
       doc.text(
-        180,
-        168,
+        14,
+        245,
         "(E) Excelente.  (MB) Muy bien. (B) Bien.  (RM) Requiere mejorar."
       );
+
+       //--- FIRMA DE LA  MORÁ ---//
+       doc.setDrawColor(0, 0, 0);
+       doc.line(40, 269, 80, 269);
+       doc.setFontSize(9);
+       //doc.text(170, 188, "");
+       doc.text(48, 275, "Docente del grupo");
+       //--- FIRMA TUTOR ---//
+       doc.line(120, 269, 160, 269);
+       doc.text(130, 275, "Firma del tutor");
       //--- ACOTACIONES ---//
       /* doc.setFontSize(6);
       doc.text(20, 200, "** AQUI ALGUNAS NOTAS REELEVANTES");
@@ -602,20 +628,14 @@ async function getBangFemHebPrimSR(data) {
           "*** Otra nota importante."
       ); */
       //--- --- ---//
-      doc.addImage(getLogoBangueoloFemalesYKTBase64(), "png", 15, 2, 30, 30);
+      doc.addImage(getLogoBangueoloFemalesYKTBase64(), "png", 8, 5, 20, 20);
       //--- --- ---//
       doc.save(student_code + ".pdf");
       await timer(3000);
     }
   }
   //--- --- ---//
-  Swal.fire({
-    title: "¡Listo!",
-    text: "Se ha generado la boleta.",
-    icon: "success",
-    confirmButtonText: "Aceptar",
-    timer: 2000,
-  });
+ 
 }
 
 function timer(ms) {
