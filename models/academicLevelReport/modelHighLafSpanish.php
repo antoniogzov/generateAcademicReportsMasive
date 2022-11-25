@@ -350,6 +350,7 @@ class DataSchoolReportCardsLafontine extends Connection
         ELSE ext_exam.`grade_extraordinary_examen`
         END
         AS 'extraordinary',
+        groups.group_type_id,
        CASE
         WHEN grape.grade_period IS NULL THEN '-'
         ELSE grape.grade_period
@@ -402,79 +403,10 @@ class DataSchoolReportCardsLafontine extends Connection
         AND assgn.print_school_report_card != 0
         ORDER BY group_type_id, sbj.name_subject ASC";
 
-        $sql2 = "SELECT DISTINCT
-        assgn.id_assignment,
-        sbj.id_subject,
-        percal.no_period,
-        sbj.name_subject,
-        CASE
-        WHEN ext_exam.`grade_extraordinary_examen` IS NULL THEN '-'
-        ELSE ext_exam.`grade_extraordinary_examen`
-        END
-        AS 'extraordinary',
-       CASE
-        WHEN grape.grade_period IS NULL THEN '-'
-        ELSE grape.grade_period
-        END
-        AS 'calificacion',
-        percal.no_period,
-        CASE 
-        WHEN sbj.hebrew_name IS NULL THEN ''
-        ELSE sbj.hebrew_name
-        END
-        AS 'hebrew_name',
-        (SELECT COUNT(*) FROM attendance_records.attendance_index AS ati
-                INNER JOIN attendance_records.attendance_record AS atr ON ati.id_attendance_index = atr.id_attendance_index AND atr.id_student = $id_student
-                 WHERE ati.id_assignment = assgn.id_assignment AND DATE(ati.apply_date) BETWEEN percal.start_date AND percal.end_date
-                AND ati.obligatory = 1 AND ati.valid_assistance = 1
-                 ) AS 'pases_lista',
-        (SELECT COUNT(*) FROM attendance_records.attendance_index AS ati
-        INNER JOIN attendance_records.attendance_record AS atr ON ati.id_attendance_index = atr.id_attendance_index AND atr.id_student = $id_student
-        INNER JOIN attendance_records.incidents_attendance as iat ON atr.incident_id = iat.incident_id
-        WHERE ati.id_assignment = assgn.id_assignment AND DATE(ati.apply_date) BETWEEN percal.start_date AND percal.end_date
-        AND ati.obligatory = 1 AND ati.valid_assistance = 1 AND atr.attend = 0 
-        ) AS 'faltas',
-        colb.nombre_hebreo AS hebrew_name_teacher,
-        CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher,
-        sbj_tp.subject_type
-         FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions AS insc
-        INNER JOIN school_control_ykt.groups AS groups
-        ON groups.id_group = insc.id_group
-        INNER JOIN school_control_ykt.subjects AS sbj
-        ON assgn.id_subject = sbj.id_subject
-        INNER JOIN school_control_ykt.subjects_types AS sbj_tp
-        ON sbj.subject_type_id = sbj_tp.subject_type_id
-        INNER JOIN colaboradores_ykt.colaboradores AS colb
-        ON assgn.no_teacher = colb.no_colaborador
-        LEFT JOIN iteach_grades_quantitatives.period_calendar AS percal
-        ON percal.id_period_calendar = $id_period_calendar
-        INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS asscassglmp
-        ON assgn.id_assignment = asscassglmp.id_assignment AND asscassglmp.id_student = $id_student AND asscassglmp.id_inscription = insc.id_inscription
-        LEFT JOIN iteach_grades_quantitatives.grades_period AS grape
-        ON grape.id_final_grade = asscassglmp.id_final_grade AND percal.id_period_calendar = grape.id_period_calendar
-        LEFT JOIN iteach_grades_quantitatives.extraordinary_exams AS ext_exam ON ext_exam.`id_grade_period` = grape.`id_grade_period`
-         WHERE assgn.id_group = insc.id_group
-         AND assgn.print_school_report_card = 1
-        AND insc.id_student = $id_student
-        AND sbj.id_academic_area = $id_academic_area
-        AND sbj.id_subject != 417
-        AND sbj.id_subject != 418
-        AND sbj.name_subject NOT LIKE 'M1%'
-        AND sbj.name_subject NOT LIKE 'M2%'
-        AND sbj.name_subject NOT LIKE 'M3%'
-        AND assgn.print_school_report_card != 0
-        ORDER BY sbj.name_subject
-        ";
 
         $query = $this->conn->query($sql);
-        $query2 = $this->conn->query($sql2);
-
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
             $results[] = $row;
-        }
-        while ($row2 = $query2->fetch(PDO::FETCH_OBJ)) {
-            $results[] = $row2;
         }
 
         return $results;

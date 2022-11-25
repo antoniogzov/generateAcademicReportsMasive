@@ -81,10 +81,10 @@ $(document).ready(function () {
         //console.log("getBangFemHebPrimSR()");
         //--- --- ---//
         $.ajax({
-          url: "controllers/academicLevelReport/schoolReportsPrimBang.php",
+          url: "controllers/academicLevelReport/schoolReportsHighLFSpan.php",
           method: "POST",
           data: {
-            fun: "schoolReportsPrimBangHeb",
+            fun: "getLafMalesSpanHighSR",
             id_level_combination: id_level_combination,
             id_group: id_group,
             id_academic_area: id_academic_area,
@@ -97,9 +97,9 @@ $(document).ready(function () {
             var data = JSON.parse(data);
             if (data.response) {
               var response_data = data;
-              //console.log(response_data);
+              console.log(response_data);
               //--- --- ---//
-              getBangFemHebPrimSR(response_data);
+              getLFHighSpanSR(response_data);
 
               Swal.close();
               //--- --- ---//
