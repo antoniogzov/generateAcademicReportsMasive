@@ -308,10 +308,10 @@ async function getBangFemHebPrimSR(data) {
         },
         columnStyles: {
           0: {
-            cellWidth: 95,
+            cellWidth: 130,
           },
           1: {
-            cellWidth: 95,
+            cellWidth: 60,
           },
         },
         body: [
@@ -468,7 +468,7 @@ async function getBangFemHebPrimSR(data) {
 
       //--- TABLA DERECHA ---//
       doc.autoTable({
-        startY: 150,
+        startY: 170,
         tableWidth: 180,
         font: "Yiddishkeit AlefAlefAlef Bold",
         
@@ -605,22 +605,22 @@ async function getBangFemHebPrimSR(data) {
       
       //--- TEXTO DE EQUIVALENCIAS  ---//
       doc.setFontSize(8);
-      doc.text(14, 240, "Código de calificaciones:");
+      doc.text(14, 260, "Código de calificaciones:");
       doc.text(
         14,
-        245,
+        265,
         "(E) Excelente.  (MB) Muy bien. (B) Bien.  (RM) Requiere mejorar."
       );
 
        //--- FIRMA DE LA  MORÁ ---//
        doc.setDrawColor(0, 0, 0);
-       doc.line(40, 269, 80, 269);
+       doc.line(40, 275, 80, 275);
        doc.setFontSize(9);
        //doc.text(170, 188, "");
-       doc.text(48, 275, "Docente del grupo");
+       doc.text(48, 281, "Docente del grupo");
        //--- FIRMA TUTOR ---//
-       doc.line(120, 269, 160, 269);
-       doc.text(130, 275, "Firma del tutor");
+       doc.line(120, 275, 160, 275);
+       doc.text(130, 281, "Firma del tutor");
       //--- ACOTACIONES ---//
       /* doc.setFontSize(6);
       doc.text(20, 200, "** AQUI ALGUNAS NOTAS REELEVANTES");
