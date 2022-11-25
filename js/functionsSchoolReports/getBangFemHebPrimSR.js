@@ -204,8 +204,8 @@ async function getBangFemHebPrimSR(data) {
             cond
           ].evaluation_name.toUpperCase() +
           "\n" +
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
-            .period_qualifications[cond].eval_hebrew_name;
+          reverse(data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
+            .period_qualifications[cond].eval_hebrew_name);
         /* const qualif_period_1 = data.groups_heb[i_group].students[0][i_student].qualifications_cond[0].period_qualifications[cond].grade_evaluation_criteria_teacher; */
         const qualif_period_1 =
           data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
