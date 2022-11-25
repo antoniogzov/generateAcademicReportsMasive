@@ -308,10 +308,10 @@ async function getBangFemHebPrimSR(data) {
         },
         columnStyles: {
           0: {
-            cellWidth: 130,
+            cellWidth: 100,
           },
           1: {
-            cellWidth: 60,
+            cellWidth: 90,
           },
         },
         body: [
@@ -328,11 +328,11 @@ async function getBangFemHebPrimSR(data) {
            [
             {
               content: "CÓDIGO DE LA ALUMNA: " + student_code,
-              styles: { halign: "left" },
+              styles: { halign: "left", cellWidth: 30 },
             },
             {
               content: "KITÁ: " + group_name + "  CICLO ESCOLAR:"+school_cycle,
-              styles: { halign: "right" },
+              styles: { halign: "right", cellWidth: 130 },
             },
           ],
         ],
