@@ -328,11 +328,11 @@ async function getBangFemHebPrimSR(data) {
            [
             {
               content: "CÓDIGO DE LA ALUMNA: " + student_code,
-              styles: { halign: "left", cellWidth: 30 },
+              styles: { halign: "left" },
             },
             {
               content: "KITÁ: " + group_name + "  CICLO ESCOLAR:"+school_cycle,
-              styles: { halign: "right", cellWidth: 130 },
+              styles: { halign: "right" },
             },
           ],
         ],
