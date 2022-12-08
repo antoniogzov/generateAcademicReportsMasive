@@ -461,13 +461,13 @@ async function getBangHighMixedSR(data) {
       var doc = new jsPDF("landscape");
       //--- --- ---//
       var font = getFont();
-      doc.addFileToVFS("assets/fonts/VarelaRound-Regular-normal.ttf", font);
+      doc.addFileToVFS("assets/fonts/VarelaRound-Regular.ttf", font);
       doc.addFont(
-        "assets/fonts/VarelaRound-Regular-normal.ttf",
+        "assets/fonts/VarelaRound-Regular.ttf",
         "VarelaRound-Regular",
         "normal"
       );
-      doc.setFont("assets/fonts/VarelaRound-Regular"); // set font
+      doc.setFont("VarelaRound-Regular"); // set font
       doc.setFontSize(14);
       doc.text(8, 20, "COLEGIO DE CIENCIAS Y HUMANIDADES");
       doc.setFontSize(12);
