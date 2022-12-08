@@ -96,4 +96,33 @@ class generalModelReports extends Connection
 
         return $results;
     }
+
+    public function getAssignmentByGroupLanguage($id_group, $id_academic_area, $order_by)
+    {
+        $results = array();
+
+        $query = $this->conn->query(
+            "SELECT assgn.*, sbj.*,
+              CASE 
+        WHEN sbj.hebrew_name IS NULL THEN ' '
+        ELSE sbj.hebrew_name
+        END
+        AS 'sbj_hebrew_name',
+             colb.nombre_hebreo AS hebrew_name_teacher,  CONCAT(colb.apellido_paterno_colaborador, ' ', colb.nombres_colaborador) AS spanish_name_teacher, colb.nombre_corto, sbj_tp.*
+            FROM school_control_ykt.assignments AS assgn
+            INNER JOIN school_control_ykt.groups AS groups ON assgn.id_group = groups.id_group
+            INNER JOIN school_control_ykt.subjects AS sbj ON assgn.id_subject = sbj.id_subject
+            INNER JOIN school_control_ykt.subjects_types AS sbj_tp ON sbj.subject_type_id = sbj_tp.subject_type_id
+            INNER JOIN colaboradores_ykt.colaboradores AS colb ON assgn.no_teacher = colb.no_colaborador
+            WHERE assgn.id_group = '$id_group' AND sbj.id_academic_area = '$id_academic_area' AND assgn.print_school_report_card = 1 AND sbj.subject_type_id = '3' AND sbj.id_subject != 416
+            $order_by"
+        );
+
+        while ($row = $query->fetch(PDO::FETCH_OBJ)) {
+            $results[] = $row;
+        }
+
+        return $results;
+    }
+    
 }

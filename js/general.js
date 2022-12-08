@@ -30,7 +30,12 @@ function redondear(num) {
 }
 
 function reverse(s) {
-  return s.split("").reverse().join("");
+  //console.log(s);
+  if (s == null) {
+    return "";
+  } else {
+    return s.split("").reverse().join("");
+  }
 }
 
 function RQhighschoolLF(q) {
