@@ -34,6 +34,7 @@ async function getBangHighMixedSR(data) {
       } else {
         var mejanejet_commit = "-";
       }
+      console.log(mejanejet_commit);
       let texto = mejanejet_commit;
       arr_texto = texto.split(". ");
       var span_mejanejet = ". " + arr_texto[1];
@@ -785,8 +786,9 @@ async function getBangHighMixedSR(data) {
         ],
         body: data_school_conductual,
       });
+      //mejanejet_commit
       /* COMENTARIOS DE MEJANEJET */
-     /*  doc.autoTable({
+     doc.autoTable({
         startY: 120,
         tableWidth: 130,
         margin: {
@@ -814,7 +816,7 @@ async function getBangHighMixedSR(data) {
         head: [
           [
             {
-              content: reverse(heb_mejanejet) + "\n" + span_mejanejet,
+              content: mejanejet_commit,
               styles: {
                 halign: "right",
                 valign: "middle",
@@ -834,7 +836,7 @@ async function getBangHighMixedSR(data) {
           ],
           //--- --- ---//
         ],
-      }); */
+      }); 
       /* EXAMENES ADICIONALES 
          doc.autoTable({
          

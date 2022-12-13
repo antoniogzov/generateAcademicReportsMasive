@@ -85,7 +85,7 @@ function getbangFemalesMixedHighSR()
                 $qualifications_lang[] = $qualifications_lang_period;
                 /* CALIFICACIONES GENERALES POR PERIODO */
                 /* CALIFICACIONES CONDUCTUAL POR PERIODO */
-                $order_by_cond_heb = "ORDER BY FIELD(evaluation_name, 'Actitud hacia el Estudio','Comportamiento','Orden y Aseo','Respeto','Uniforme','Actitud en la Tefila') asc";
+                $order_by_cond_heb = "AND (ep.id_evaluation_source = 15 OR ep.id_evaluation_source = 24 OR ep.id_evaluation_source = 8 OR ep.id_evaluation_source = 25 OR ep.id_evaluation_source = 11 OR ep.id_evaluation_source = 16) ORDER BY FIELD(ep.id_evaluation_source, 15, 24, 8, 25, 11, 16) ASC";
                 $array_conductual = $model_heb->getQualificationsCondByStudentPeriod($group_heb->id_group, $id_academic_area_heb, $index->id_student, $p_h->id_period_calendar,$order_by_cond_heb);
 
                 $qualifications_cond_period = array(
@@ -152,8 +152,7 @@ function getbangFemalesMixedHighSR()
                     'spanish_period_qualifications' => $array_spanish
                 );
                 $qualifications[] = $qualifications_period;
-
-                $order_by_cond_span="ORDER BY FIELD(evaluation_name, 'Actitud hacia el Estudio','Comportamiento','Orden y Aseo','Respeto','Uniforme','Actitud en la Tefila') asc";
+                $order_by_cond_span = "AND (ep.id_evaluation_source = 15 OR ep.id_evaluation_source = 24 OR ep.id_evaluation_source = 8 OR ep.id_evaluation_source = 25 OR ep.id_evaluation_source = 11 OR ep.id_evaluation_source = 16) ORDER BY FIELD(ep.id_evaluation_source, 15, 24, 8, 25, 11, 16) ASC";
                 $array_conductual = $model_span->getQualificationsCondByStudentPeriodSpan($group_span->id_group, $id_academic_area_span, $index->id_student, $p_h->id_period_calendar,$order_by_cond_span);
                 
 

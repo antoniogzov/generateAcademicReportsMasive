@@ -6,6 +6,42 @@ $(document).ready(function () {
     const id_academic_area = $("#slct_academic_area").val();
     console.log(id_level_combination);
     switch (id_level_combination) {
+      case "5":
+        //console.log("getBangFemSpanPrimSR()");
+        //--- --- ---//
+        $.ajax({
+          url: "controllers/academicLevelReport/schoolReportsPrimBangHebMales.php",
+          method: "POST",
+          data: {
+            fun: "getBangMalesHebPrimSR",
+            id_level_combination: id_level_combination,
+            id_group: id_group,
+            id_academic_area: id_academic_area,
+            order_by_lang: "ORDER BY sbj.name_subject",
+            order_by_gral: "ORDER BY sbj.name_subject",
+            installment: 1,
+          },
+        })
+          .done(function (data) {
+            var data = JSON.parse(data);
+            if (data.response) {
+              var response_data = data;
+              console.log(response_data);
+              //--- --- ---//
+              getBangFemSpanPrimSR(response_data);
+              //--- --- ---//
+            } else {
+              //--- --- ---//
+              //--- --- ---//
+            }
+          })
+          .fail(function (message) {
+            alert("Ocurrió un error");
+          });
+        //--- --- ---//
+        break;
+
+      
       case "6":
         console.log("getBangFemSpanPrimSR()");
         //--- --- ---//
