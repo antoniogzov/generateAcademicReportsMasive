@@ -33,7 +33,7 @@ class DataSchoolReportCardsLafontine extends Connection
         $query = $this->conn->query(" SELECT student.id_student, student.student_code, student.hebrew_name, CONCAT(student.lastname , ' ', student.name) AS student_name
             FROM school_control_ykt.students AS student
             INNER JOIN school_control_ykt.inscriptions AS inscription ON student.id_student = inscription.id_student
-            WHERE inscription.id_group = '$group_id' AND student.status = '1' AND student.student_code ='AB51-01'
+            WHERE inscription.id_group = '$group_id' AND student.status = '1'
             ORDER BY student.lastname ");
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
