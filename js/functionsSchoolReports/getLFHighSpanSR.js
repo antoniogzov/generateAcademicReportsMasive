@@ -44,7 +44,7 @@ async function getLFHighSpanSR(data) {
         data.groups_span[i_group].students[0][ind_std].qualifications;
 
       var speciality =
-        data.groups_span[i_group].students[0][ind_std].speciality[0].group_code;
+        data.groups_span[i_group].students[0][ind_std].speciality[0].comment_group;
 
       console.log(array_all_periods_span_qualifications);
       ///-- nombre de materia y profesor -- ///
