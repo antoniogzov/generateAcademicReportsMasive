@@ -15,7 +15,8 @@ class DataSchoolReportCardsSpanish extends Connection
         assgn.id_assignment,
         sbj.id_subject,
         percal.no_period,
-        sbj.name_subject,
+        sbj.name_subject AS name_subject_original,
+        sbj1.name_subject,
         CASE
         WHEN ext_exam.`grade_extraordinary_examen` IS NULL THEN '-'
         ELSE ext_exam.`grade_extraordinary_examen`
@@ -49,18 +50,23 @@ class DataSchoolReportCardsSpanish extends Connection
         ON percal.id_period_calendar = $id_period_calendar
         INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS asscassglmp
         ON assgn.id_assignment = asscassglmp.id_assignment AND asscassglmp.id_student = $id_student AND asscassglmp.id_inscription = insc.id_inscription
+        INNER JOIN school_control_ykt.subjects AS sbj1
+        ON sbj.id_subject_group = sbj1.id_subject
         LEFT JOIN iteach_grades_quantitatives.grades_period AS grape
         ON grape.id_final_grade = asscassglmp.id_final_grade AND percal.id_period_calendar = grape.id_period_calendar
         LEFT JOIN iteach_grades_quantitatives.extraordinary_exams AS ext_exam ON ext_exam.`id_grade_period` = grape.`id_grade_period`
-         WHERE assgn.id_group = $id_group
-         AND assgn.print_school_report_card = 1
+        WHERE assgn.id_group = insc.id_group
+        AND assgn.print_school_report_card = 1
         AND insc.id_student = $id_student
         AND sbj.id_academic_area = $id_academic_area
         AND sbj.id_subject != 417
         AND sbj.id_subject != 418
-        AND sbj.name_subject LIKE 'M1:%'
+        AND sbj.name_subject LIKE 'M1%'
         AND assgn.print_school_report_card != 0
+        ORDER BY sbj1.name_subject
         ";
+
+        //echo $sql;
 
         $sql2 = "SELECT DISTINCT
         assgn.id_assignment,

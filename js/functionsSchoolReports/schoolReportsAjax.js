@@ -120,10 +120,10 @@ $(document).ready(function() {
                         installment: 1,
                     },
                 }).done(function(data) {
+                    console.log(data);
                     var data = JSON.parse(data);
                     if (data.response) {
                         var response_data = data;
-                        console.log(response_data);
                         //--- --- ---//
                         getBangHighMixedSR(response_data);
                         Swal.close();
