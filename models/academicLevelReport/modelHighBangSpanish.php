@@ -163,7 +163,7 @@ class DataSchoolReportCardsSpanish extends Connection
         FROM school_control_ykt.subjects AS sbj
         INNER JOIN school_control_ykt.assignments AS asg ON sbj.id_subject = asg.id_subject
         INNER JOIN school_control_ykt.students AS stud ON stud.id_student = '$id_student'
-        INNER JOIN iteach_grades_quantitatives.evaluation_plan AS ep ON  ep.id_assignment = asg.id_assignment AND ep.evaluation_type_id = 2
+        INNER JOIN iteach_grades_quantitatives.evaluation_plan AS ep ON  ep.id_assignment = asg.id_assignment
         INNER JOIN iteach_grades_quantitatives.evaluation_source AS esou ON esou.id_evaluation_source = ep.id_evaluation_source 
         LEFT JOIN iteach_grades_quantitatives.grades_evaluation_criteria AS gec ON ep.id_evaluation_plan = gec.id_evaluation_plan
         LEFT JOIN iteach_grades_quantitatives.final_grades_assignment AS fga ON gec.id_final_grade = fga.id_final_grade AND asg.id_assignment = fga.id_assignment AND fga.id_student = '$id_student'

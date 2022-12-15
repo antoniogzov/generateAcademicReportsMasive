@@ -438,7 +438,7 @@ async function getBangHighMixedSR(data) {
                     }, {
                         content: "Docente",
                     }, {
-                        content: "3do M.",
+                        content: "1er M.",
                     }, {
                         content: "Extra",
                     }, {
