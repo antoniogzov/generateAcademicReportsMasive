@@ -83,9 +83,13 @@ async function getLFHighSpanSR(data) {
           data_school_assignments.push([
             name_subject,
             subject_type,
+          ]);
+          /* data_school_assignments.push([
+            name_subject,
+            subject_type,
             pases_lista,
             faltas,
-          ]);
+          ]); */
         }
       }
 
@@ -137,7 +141,7 @@ async function getLFHighSpanSR(data) {
         data_school_averages_span = [
           [
             {
-              colSpan: 4,
+              colSpan: 2,
               content: "PROMEDIO: ",
               styles: { fontStyle: "bold", halign: "right" },
             },
@@ -323,12 +327,6 @@ async function getLFHighSpanSR(data) {
               content: "Tipo de materia",
             },
             {
-              content: "N° de sesiones",
-            },
-            {
-              content: "Inastencias",
-            },
-            {
               content: "Calificación M1",
             },
           ],
@@ -337,6 +335,25 @@ async function getLFHighSpanSR(data) {
         body: data_school_assignments,
         foot: data_school_averages_span,
       });
+
+     /*  {
+        content: "Materia",
+        styles: {
+          minCellHeight: 10,
+        },
+      },
+      {
+        content: "Tipo de materia",
+      },
+      {
+        content: "N° de sesiones",
+      },
+      {
+        content: "Inastencias",
+      },
+      {
+        content: "Calificación M1",
+      }, */
       /* MATERIAS PENDIENTES ESPAÑOL */
       doc.setFontSize(11);
       doc.text(100, 160, "Observaciones:");
@@ -391,7 +408,7 @@ async function getLFHighSpanSR(data) {
       doc.setLineWidth(0.5);
       doc.setDrawColor(0, 0, 0);
       doc.line(55, 220, 150, 220); // horizontal line
-      doc.text(76, 225, "LIC. IRENE ESSES-MOCHON");
+      doc.text(76, 225, "LIC. IRENE ESSES MOCHON");
       doc.text(79, 230, "DIRECTORA DE ESPAÑOL");
 
       doc.line(45, 245, 170, 245); // horizontal line
