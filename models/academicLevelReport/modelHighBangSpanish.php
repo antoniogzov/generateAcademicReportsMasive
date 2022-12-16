@@ -138,9 +138,9 @@ class DataSchoolReportCardsSpanish extends Connection
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
             $results[] = $row;
         }
-        while ($row2 = $query2->fetch(PDO::FETCH_OBJ)) {
-            $results[] = $row2;
-        }
+        //while ($row2 = $query2->fetch(PDO::FETCH_OBJ)) {
+        //    $results[] = $row2;
+        //}
 
         return $results;
     }
