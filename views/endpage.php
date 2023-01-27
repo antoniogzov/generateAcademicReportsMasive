@@ -11,3 +11,4 @@
 <script src="js/functionsSchoolReports/getBangFemSpanPrimSR.js"></script>
 <script src="js/functionsSchoolReports/getLFHighSpanSR.js"></script>
 <script src="js/functionsSchoolReports/getBangHighMixedSR.js"></script>
+<script src="js/functionsSchoolReports/getLFMiddleSpanSR.js"></script>
