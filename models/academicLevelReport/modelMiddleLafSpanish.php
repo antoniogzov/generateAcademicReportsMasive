@@ -1,14 +1,17 @@
 <?php
 ini_set('max_execution_time', 0);
 
-class DataSchoolReportCardsSecondaryMales extends Connection{
+class DataSchoolReportCardsSecondaryMales extends Connection
+{
 
-	private $conn;
-    public function __construct() {
+    private $conn;
+    public function __construct()
+    {
         $this->conn = $this->db_conn();
     }
 
-    public function getAllPeriodsByLevelCombination($id_level_combination){
+    public function getAllPeriodsByLevelCombination($id_level_combination)
+    {
         $results = array();
 
         $query = $this->conn->query("SELECT * FROM iteach_grades_quantitatives.period_calendar WHERE id_level_combination = '$id_level_combination' AND (no_period = 1 OR no_period = 2 OR no_period = 3 OR no_period = 4 OR no_period = 5)");
@@ -20,7 +23,8 @@ class DataSchoolReportCardsSecondaryMales extends Connection{
         return $results;
     }
 
-    public function getAllGroupsByIdLevelCombination($id_level_combination){
+    public function getAllGroupsByIdLevelCombination($id_level_combination)
+    {
         $results = array();
 
         $query = $this->conn->query("SELECT groups.*, lvl_comb.id_academic_area, aclvg.degree
@@ -38,7 +42,8 @@ class DataSchoolReportCardsSecondaryMales extends Connection{
         return $results;
     }
 
-    public function getListStudentsByIDgroup($group_id) {
+    public function getListStudentsByIDgroup($group_id)
+    {
 
         $results = array();
 
@@ -55,15 +60,24 @@ class DataSchoolReportCardsSecondaryMales extends Connection{
         }
 
         return $results;
-
     }
 
-    public function getAssignmentByGroup($id_group, $id_academic_area){
+    public function getAssignmentByGroup($id_group, $id_academic_area, $id_level_grade)
+    {
         $results = array();
+        $order_by = "";
+        switch ($id_level_grade) {
+            case 12:
+                $order_by = 'ORDER BY FIELD(sbj.id_subject, 17, 305, 35, 10, 28, 18, 359, 15, 6, 14)';
+                break;
+            case 13:
+                $order_by = 'ORDER BY FIELD(sbj.id_subject, 17, 306, 35, 11, 28, 359, 15, 6, 14)';
+                break;
+            case 14:
+                $order_by = 'ORDER BY FIELD(sbj.id_subject, 17, 307, 35, 12, 28, 359, 15, 6, 14)';
+                break;
+        }
 
-        $order_subject_3 = [17, 307, 35, 12, 28, 359, 15, 6, 14];
-        $order_subject_2 = [17, 306, 35, 11, 28, 359, 15, 6, 14];
-        $order_subject_1 = [17, 305, 35, 10, 28, 18, 359, 15, 6, 14];
 
         $query = $this->conn->query("SELECT assgn.*, sbj.*, colb.nombre_hebreo AS hebrew_name_teacher,  CONCAT(colb.apellido_paterno_colaborador, ' ', colb.nombres_colaborador) AS spanish_name_teacher, colb.nombre_corto, sbj_tp.*
             FROM school_control_ykt.assignments AS assgn
@@ -71,7 +85,7 @@ class DataSchoolReportCardsSecondaryMales extends Connection{
             INNER JOIN school_control_ykt.subjects AS sbj ON assgn.id_subject = sbj.id_subject
             INNER JOIN school_control_ykt.subjects_types AS sbj_tp ON sbj.subject_type_id = sbj_tp.subject_type_id
             INNER JOIN colaboradores_ykt.colaboradores AS colb ON assgn.no_teacher = colb.no_colaborador
-            WHERE assgn.id_group = '$id_group' AND sbj.id_academic_area = '$id_academic_area' AND assgn.print_school_report_card = 1 ORDER BY FIELD(sbj.id_subject, 17, 305, 35, 10, 28, 18, 359, 15, 6, 14)
+            WHERE assgn.id_group = '$id_group' AND sbj.id_academic_area = '$id_academic_area' AND assgn.print_school_report_card = 1 $order_by
             ");
 
 
@@ -82,7 +96,8 @@ class DataSchoolReportCardsSecondaryMales extends Connection{
         return $results;
     }
 
-    public function getAveragesStudent($id_assignment){
+    public function getAveragesStudent($id_assignment)
+    {
         $results = array();
 
         $query = $this->conn->query("
@@ -123,11 +138,11 @@ class DataSchoolReportCardsSecondaryMales extends Connection{
                 $totalAttendance = count($AttendanceIndex);
                 if ($totalAttendance > 0) {
                     $total_classes_student_attended = 0;
-                    foreach ($AttendanceIndex AS $att_index) {
+                    foreach ($AttendanceIndex as $att_index) {
                         $id_attendance_index = $att_index->id_attendance_index;
                         $getStudentAttendance = $this->getStudentAttendanceByTypes($id_attendance_index, $id_student);
 
-                        if($getStudentAttendance[0]->attendance > 0){
+                        if ($getStudentAttendance[0]->attendance > 0) {
                             $total_classes_student_attended += $getStudentAttendance[0]->attendance;
                         }
                     }
@@ -149,7 +164,8 @@ class DataSchoolReportCardsSecondaryMales extends Connection{
         return $results;
     }
 
-    public function getAttendanceIndexTeacherReport($id_assignment,  $fechaInicio, $fechaMaxima) {
+    public function getAttendanceIndexTeacherReport($id_assignment,  $fechaInicio, $fechaMaxima)
+    {
 
         $results = array();
 
@@ -170,7 +186,8 @@ class DataSchoolReportCardsSecondaryMales extends Connection{
         return $results;
     }
 
-    public function getStudentAttendanceByTypes($id_att_index, $id_student){
+    public function getStudentAttendanceByTypes($id_att_index, $id_student)
+    {
         $results = array();
 
         $query = $this->conn->query("
@@ -200,6 +217,5 @@ class DataSchoolReportCardsSecondaryMales extends Connection{
         }
 
         return $results;
-
     }
 }

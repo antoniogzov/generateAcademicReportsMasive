@@ -44,7 +44,7 @@ class generalModelReports extends Connection
     {
         $results = array();
 
-        $query = $this->conn->query("SELECT groups.id_group, groups.letter, groups.group_code,groups.hebrew_group, aclvg.degree,CONCAT (colab.apellido_paterno_colaborador, ' ', colab.apellido_materno_colaborador, ' ', colab.nombres_colaborador) AS tutor_name
+        $query = $this->conn->query("SELECT groups.id_group, groups.letter, groups.group_code,groups.hebrew_group, aclvg.id_level_grade, aclvg.degree,CONCAT (colab.apellido_paterno_colaborador, ' ', colab.apellido_materno_colaborador, ' ', colab.nombres_colaborador) AS tutor_name
         	FROM school_control_ykt.groups AS groups
             INNER JOIN school_control_ykt.academic_levels_grade AS aclvg ON groups.id_level_grade = aclvg.id_level_grade
         	INNER JOIN school_control_ykt.academic_levels AS aclv ON aclvg.id_academic_level = aclv.id_academic_level
