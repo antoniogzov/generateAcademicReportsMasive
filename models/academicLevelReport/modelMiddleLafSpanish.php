@@ -123,7 +123,7 @@ class DataSchoolReportCardsSecondaryMales extends Connection
                 FROM iteach_grades_quantitatives.grades_period AS gp
                 INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS fg ON gp.id_final_grade = fg.id_final_grade
                 INNER JOIN iteach_grades_quantitatives.period_calendar AS pc ON gp.id_period_calendar = pc.id_period_calendar 
-                WHERE fg.id_inscription = '$id_inscription' AND fg.id_assignment = '$id_assignment' AND (pc.no_period = 1)
+                WHERE fg.id_inscription = '$id_inscription' AND fg.id_assignment = '$id_assignment' AND (pc.no_period = 1 or pc.no_period = 2)
                 ORDER BY pc.no_period
                 ");
 
