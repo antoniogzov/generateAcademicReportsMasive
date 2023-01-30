@@ -562,7 +562,7 @@ async function getSchoolReportCardSpanishSecondaryMalesLFT(imgLogo, data) {
               },
               {
                 content: "EVALUACIONES",
-                colSpan: 5,
+                colSpan: 4,
                 styles: {
                   halign: "center",
                 },
