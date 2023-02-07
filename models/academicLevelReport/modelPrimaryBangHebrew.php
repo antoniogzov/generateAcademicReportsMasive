@@ -202,4 +202,55 @@ class DataSchoolReportCardsHebrew extends Connection
 
         return $results;
     }
+
+    public function getCommentarySchoolReport($id_group, $id_academic_area, $id_student, $no_period, $id_period_calendar)
+    {
+        $results = array();
+        $sql = "SELECT 
+        learning_map_types_id,
+        id_comments,
+        CASE 
+        WHEN fincom.comments1 IS NULL THEN '-'
+        ELSE fincom.comments1
+        END
+        AS 'comentarios_finales',
+       fincom.no_installment,
+        CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher,
+        CONCAT(mejan.nombre_corto) AS mejanejet_name_teacher,
+        sbj_tp.subject_type
+         FROM school_control_ykt.assignments AS assgn
+        INNER JOIN school_control_ykt.inscriptions AS insc
+        INNER JOIN school_control_ykt.groups AS groups
+        ON groups.id_group = insc.id_group
+        INNER JOIN school_control_ykt.subjects AS sbj
+        ON assgn.id_subject = sbj.id_subject
+        INNER JOIN school_control_ykt.subjects_types AS sbj_tp
+        ON sbj.subject_type_id = sbj_tp.subject_type_id
+        INNER JOIN colaboradores_ykt.colaboradores AS colb
+        ON assgn.no_teacher = colb.no_colaborador
+        LEFT JOIN iteach_grades_quantitatives.period_calendar AS percal ON percal.id_period_calendar = $id_period_calendar
+        LEFT JOIN iteach_grades_quantitatives.final_grades_assignment AS asscassglmp ON assgn.id_assignment = asscassglmp.id_assignment AND asscassglmp.id_student = $id_student
+        LEFT JOIN iteach_grades_quantitatives.grades_period AS grape ON grape.id_final_grade = asscassglmp.id_final_grade AND percal.id_period_calendar = grape.id_period_calendar
+        INNER JOIN iteach_grades_qualitatives.learning_maps AS lm
+        INNER JOIN iteach_grades_qualitatives.associate_assignment_learning_map AS assc ON lm.id_learning_map = assc.id_learning_map 
+        LEFT JOIN iteach_grades_qualitatives.final_comments AS fincom ON fincom.ascc_lm_assgn = assc.ascc_lm_assgn and fincom.id_student = $id_student
+        LEFT JOIN iteach_grades_qualitatives.learning_maps_log  AS learlog ON learlog.ascc_lm_assgn=assc.ascc_lm_assgn AND learlog.id_student = $id_student AND learlog.no_installment = $no_period
+        LEFT JOIN iteach_grades_qualitatives.questions_log_learning_maps AS quesslm ON quesslm.id_historical_learning_maps = learlog.id_historical_learning_maps
+        LEFT JOIN colaboradores_ykt.colaboradores AS mejan ON fincom.no_teacher_fill = mejan.no_colaborador
+        WHERE assc.id_assignment = assgn.id_assignment AND lm.id_learning_map = 24
+         AND assgn.id_group = $id_group
+        AND insc.id_student = $id_student
+        AND sbj.id_academic_area = $id_academic_area
+        AND fincom.no_installment = $no_period
+        ";
+        //echo $sql;
+
+        $query = $this->conn->query($sql);
+
+        while ($row = $query->fetch(PDO::FETCH_OBJ)) {
+            $results[] = $row;
+        }
+
+        return $results;
+    }
 }

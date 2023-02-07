@@ -115,7 +115,8 @@ class DataSchoolReportCardsHebrew extends Connection
 
         AND insc.id_student = $id_student
         AND sbj.id_academic_area = $id_academic_area 
-        AND sbj.id_subject =309";
+        AND sbj.id_subject =309
+        ";
         //echo $sql;
 
         $query = $this->conn->query($sql);

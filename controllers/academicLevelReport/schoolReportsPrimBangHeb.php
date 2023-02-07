@@ -66,7 +66,12 @@ function getBangFemHebPrimSR()
                 );
                 $qualifications[] = $qualifications_period;
 
-                /* CALIFICACIONES GENERALES POR PERIODO */
+                $commentary = "";
+                /* COMENTARIO EN BOLETA */
+                $getCommentaryReport = $model_heb->getCommentarySchoolReport($id_group, $id_academic_area, $index->id_student, $p_h->no_period, $p_h->id_period_calendar);
+                if (!empty($getCommentaryReport)) {
+                    $commentary = $getCommentaryReport[0]->comentarios_finales;
+                }
 
                 /* CALIFICACIONES GENERALES POR PERIODO */
                 $order_by_lang = $_POST['order_by_lang'];
@@ -86,7 +91,8 @@ function getBangFemHebPrimSR()
                 $qualifications_cond_period = array(
                     'id_period_calendar' => $p_h->id_period_calendar,
                     'no_period' => $p_h->no_period,
-                    'period_qualifications' => $array_conductual
+                    'period_qualifications' => $array_conductual,
+                    'comments' => $commentary
                 );
                 $qualifications_cond[] = $qualifications_cond_period;
                 /* CALIFICACIONES CONDUCTUAL     POR PERIODO */

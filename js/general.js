@@ -37,7 +37,25 @@ function reverse(s) {
         return s.split("").reverse().join("");
     }
 }
-
+function fixLetter(str) {
+    const regex = /[a-zA-Z]/;
+    let final_str = '';
+  
+    var lines = str.split(' ');
+    lines.forEach(function callback(currentValue, index, array) {
+      if(!regex.test(currentValue)){
+        final_str += currentValue.split('').reverse().join('');
+      } else {
+        final_str +=  (currentValue);
+      }
+      
+      if ((index + 1) < lines.length) {
+          final_str += ' ';
+      }
+    });
+  
+    return final_str;
+  }
 function RQhighschoolLF(q) {
     if (!isNaN(q)) {
         var q_arr = q.split(".");
