@@ -198,12 +198,9 @@ async function getBangFemHebPrimSR(data) {
         console.log(
           data.groups_heb[i_group].students[0][i_student].qualifications_cond
         );
-        var comments =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
-            .comments;
-        if (comments.length > 0) {
-          comments = fixLetter(comments);
-        }
+
+        var comments = data.groups_heb[i_group].students[0][i_student].qualifications_cond[1].comments;
+        
         const name_subject =
           data.groups_heb[i_group].students[0][
             i_student
@@ -601,6 +598,7 @@ async function getBangFemHebPrimSR(data) {
         ],
       });
       //--- MATERIAS ADEUDADAS ---//
+      console.log('Antes tabla: ' + comments);
       doc.autoTable({
         theme: "plain",
         startY: 251,
@@ -608,13 +606,13 @@ async function getBangFemHebPrimSR(data) {
         margin: {
           left: 14,
         },
-        headStyles: {
-          halign: "left",
-          valign: "middle",
-          font: "VarelaRound-Regular",
-          fillColor: [255, 255, 255],
-          textColor: [0, 0, 0],
-          fontSize: 8,
+        styles: {
+            font: "Yiddishkeit AlefAlefAlef Bold",
+            align: 'right',
+            isInputVisual: false,
+            isOutputVisual: true,
+            isInputRtl: false,
+            isOutputRtl: false
         },
         bodyStyles: {
           font: "Yiddishkeit AlefAlefAlef Bold",
@@ -625,8 +623,8 @@ async function getBangFemHebPrimSR(data) {
         body: [
           [
             {
-              content: fixLetter(comments),
-              styles: { halign: "right" },
+              content: fixLetter('שלום עליכם C Jovany שלום עליכם'),
+              styles: { halign: 'left' },
             },
           ],
         ],
