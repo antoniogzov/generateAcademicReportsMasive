@@ -623,7 +623,7 @@ async function getBangFemHebPrimSR(data) {
         body: [
           [
             {
-              content: fixLetter('שלום עליכם C Jovany שלום עליכם'),
+              content: fixLetter('C Jovany ישיבה כתר תורה C Jovany ישיבה כתר תורה'),
               styles: { halign: 'left' },
             },
           ],
