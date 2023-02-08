@@ -67,10 +67,12 @@ function getBangFemHebPrimSR()
                 $qualifications[] = $qualifications_period;
 
                 $commentary = "";
+                $mejanejet_name_teacher = "";
                 /* COMENTARIO EN BOLETA */
                 $getCommentaryReport = $model_heb->getCommentarySchoolReport($id_group, $id_academic_area, $index->id_student, $p_h->no_period, $p_h->id_period_calendar);
                 if (!empty($getCommentaryReport)) {
                     $commentary = $getCommentaryReport[0]->comentarios_finales;
+                    $mejanejet_name_teacher = $getCommentaryReport[0]->spanish_name_teacher;
                 }
 
                 /* CALIFICACIONES GENERALES POR PERIODO */
@@ -92,7 +94,8 @@ function getBangFemHebPrimSR()
                     'id_period_calendar' => $p_h->id_period_calendar,
                     'no_period' => $p_h->no_period,
                     'period_qualifications' => $array_conductual,
-                    'comments' => $commentary
+                    'comments' => $commentary,
+                    'mejanejet_name' => $mejanejet_name_teacher
                 );
                 $qualifications_cond[] = $qualifications_cond_period;
                 /* CALIFICACIONES CONDUCTUAL     POR PERIODO */

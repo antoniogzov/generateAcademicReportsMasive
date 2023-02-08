@@ -200,7 +200,8 @@ async function getBangFemHebPrimSR(data) {
         );
 
         var comments = data.groups_heb[i_group].students[0][i_student].qualifications_cond[1].comments;
-        
+        var mejanejet_name_teacher = data.groups_heb[i_group].students[0][i_student].qualifications_cond[1].mejanejet_name;
+
         const name_subject =
           data.groups_heb[i_group].students[0][
             i_student
@@ -213,6 +214,10 @@ async function getBangFemHebPrimSR(data) {
               .qualifications_cond[0].period_qualifications[cond]
               .eval_hebrew_name
           );
+
+          if (mejanejet_name_teacher.length>0) {
+            comments += "\n \n" +"—  " + mejanejet_name_teacher;
+          }
         /* const qualif_period_1 = data.groups_heb[i_group].students[0][i_student].qualifications_cond[0].period_qualifications[cond].grade_evaluation_criteria_teacher; */
         const qualif_period_1 =
           data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
@@ -623,8 +628,8 @@ async function getBangFemHebPrimSR(data) {
         body: [
           [
             {
-              content: fixLetter('C Jovany ישיבה כתר תורה C Jovany ישיבה כתר תורה'),
-              styles: { halign: 'left' },
+              content: fixLetter(comments),
+              styles: { halign: 'right' },
             },
           ],
         ],
