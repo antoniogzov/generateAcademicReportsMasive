@@ -304,7 +304,7 @@ async function getBangFemHebPrimSR(data) {
       var font2 = getFont2();
       var font3 = getFont3();
 
-      doc.addFileToVFS("PCSB Hebrew Regular.ttf", font2);
+      doc.addFileToVFS("PCSB Hebrew Regular.ttf", font);
       doc.addFont(
         "PCSB Hebrew Regular.ttf",
         "Yiddishkeit AlefAlefAlef Bold",
