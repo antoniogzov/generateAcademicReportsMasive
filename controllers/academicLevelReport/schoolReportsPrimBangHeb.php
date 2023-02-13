@@ -75,6 +75,14 @@ function getBangFemHebPrimSR()
                     $mejanejet_name_teacher = $getCommentaryReport[0]->spanish_name_teacher;
                 }
 
+                /* COMENTARIO EN BOLETA */
+                $getAbsencesStudent = $model_heb->getAbsencesByStudentPeriod($id_group, $id_academic_area, $index->id_student, $p_h->no_period, $p_h->id_period_calendar);
+                if (!empty($getAbsencesStudent)) {
+                    $absences = $getAbsencesStudent[0]->calificacion;
+                }else{
+                    $absences = "-";
+                }
+
                 /* CALIFICACIONES GENERALES POR PERIODO */
                 $order_by_lang = $_POST['order_by_lang'];
                 $array_st = $model_heb->getQualificationsLangByStudentPeriod($group_heb->id_group, $id_academic_area, $index->id_student, $p_h->id_period_calendar, $order_by_lang);
@@ -95,7 +103,8 @@ function getBangFemHebPrimSR()
                     'no_period' => $p_h->no_period,
                     'period_qualifications' => $array_conductual,
                     'comments' => $commentary,
-                    'mejanejet_name' => $mejanejet_name_teacher
+                    'mejanejet_name' => $mejanejet_name_teacher,
+                    'absences' => $absences
                 );
                 $qualifications_cond[] = $qualifications_cond_period;
                 /* CALIFICACIONES CONDUCTUAL     POR PERIODO */
