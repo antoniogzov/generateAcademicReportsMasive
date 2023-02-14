@@ -28,7 +28,7 @@ $(document).ready(function () {
               var response_data = data;
               console.log(response_data);
               //--- --- ---//
-              getBangFemSpanPrimSR(response_data);
+              getBangMalesHebPrimSR(response_data);
               //--- --- ---//
             } else {
               //--- --- ---//
