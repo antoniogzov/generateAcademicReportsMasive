@@ -743,6 +743,7 @@ async function getBangMalesHebPrimSR(data) {
       doc.addImage(getLogoBangueoloMalesYKTBase64(), "png", 8, 5, 20, 20);
       //--- --- ---//
       doc.save(student_code + ".pdf");
+      Swal.close();
       await timer(3000);
     }
   }
