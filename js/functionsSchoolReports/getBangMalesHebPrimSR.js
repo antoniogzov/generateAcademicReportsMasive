@@ -249,7 +249,7 @@ async function getBangMalesHebPrimSR(data) {
           comments += "\n \n" + "—  " + mejanejet_name_teacher;
         }
         /* const qualif_period_1 = data.groups_heb[i_group].students[0][i_student].qualifications_cond[0].period_qualifications[cond].grade_evaluation_criteria_teacher; */
-        if (
+       /*  if (
           data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
             .period_qualifications[cond-1] != undefined
         ) {
@@ -258,7 +258,19 @@ async function getBangMalesHebPrimSR(data) {
             .period_qualifications[cond-1].grade_evaluation_criteria_teacher;
         }else{
           var qualif_period_1 ="-";
+        } */
+        if (
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
+            .period_qualifications[cond] != undefined
+        ) {
+          var qualif_period_1 =
+            data.groups_heb[i_group].students[0][i_student]
+              .qualifications_cond[0].period_qualifications[cond]
+              .grade_evaluation_criteria_teacher;
+        } else {
+          var qualif_period_1 = "-";
         }
+
         if (
           data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
             .period_qualifications[cond] != undefined
@@ -429,9 +441,9 @@ async function getBangMalesHebPrimSR(data) {
         ],
       });
 
-      //--- TABLA IZQUIERDA ARRIBA---//
+      //--- TABLA ASIGNATURAS---//
       doc.autoTable({
-        startY: 50,
+        startY: 43,
         tableWidth: 135,
         headStyles: {
           fillColor: [255, 255, 255],
@@ -439,12 +451,11 @@ async function getBangMalesHebPrimSR(data) {
           lineWidth: 0.1,
           lineColor: [0, 0, 0],
           font: "Yiddishkeit AlefAlefAlef Bold",
-          fontSize: 10,
+          fontSize: 8,
           valign: "middle",
           halign: "center",
         },
         bodyStyles: {
-          fontSize: 8,
           lineWidth: 0.1,
           textColor: [0, 0, 0],
           lineColor: [0, 0, 0],
@@ -452,16 +463,16 @@ async function getBangMalesHebPrimSR(data) {
           valign: "middle",
           font: "Yiddishkeit AlefAlefAlef Bold",
           fontStyle: "bold",
+          fontSize: 7,
         },
         footStyles: {
-          fontSize: 8,
+          fontSize: 7,
           halign: "center",
           lineWidth: 0.1,
           valign: "middle",
           fillColor: [255, 255, 255],
           textColor: [0, 0, 0],
           lineColor: [0, 0, 0],
-          fontSize: 10,
           font: "Yiddishkeit AlefAlefAlef Bold",
           fontStyle: "bold",
         },
@@ -563,9 +574,9 @@ async function getBangMalesHebPrimSR(data) {
         ],
         body: "",
       }); */
-      //--- TABLA DERECHA ---//
+      //--- TABLA areas de desarrollo ---//
       doc.autoTable({
-        startY: 50,
+        startY: 43,
         tableWidth: 125,
         font: "Yiddishkeit AlefAlefAlef Bold",
         margin: {
@@ -577,13 +588,13 @@ async function getBangMalesHebPrimSR(data) {
           lineWidth: 0.1,
           lineColor: [0, 0, 0],
           font: "Yiddishkeit AlefAlefAlef Bold",
-          fontSize: 9,
+          fontSize: 8,
           valign: "middle",
         },
         bodyStyles: {
           lineWidth: 0.1,
           lineColor: [0, 0, 0],
-          fontSize: 8,
+          fontSize: 7,
           halign: "center",
           valign: "middle",
           textColor: [0, 0, 0],
@@ -656,7 +667,7 @@ async function getBangMalesHebPrimSR(data) {
           fontStyle: "bold",
           lineColor: [0, 0, 0],
           lineWidth: 0.1,
-          fontSize: 7,
+          fontSize: 8,
           valign: "middle",
           halign: "center",
         },
@@ -666,7 +677,7 @@ async function getBangMalesHebPrimSR(data) {
           lineWidth: 0.1,
           lineColor: [0, 0, 0],
           font: "Yiddishkeit AlefAlefAlef Bold",
-          fontSize: 9,
+          fontSize: 7,
           valign: "middle",
           halign: "center",
         },
@@ -688,7 +699,6 @@ async function getBangMalesHebPrimSR(data) {
           fillColor: [255, 255, 255],
           textColor: [0, 0, 0],
           lineColor: [0, 0, 0],
-          fontSize: 10,
           font: "Yiddishkeit AlefAlefAlef Bold",
           fontStyle: "bold",
         },
