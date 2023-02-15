@@ -414,7 +414,7 @@ async function getBangMalesHebPrimSR(data) {
             cellWidth: 50,
           },
           
-          1: {
+          2: {
             cellWidth: 110,
           },
         },
