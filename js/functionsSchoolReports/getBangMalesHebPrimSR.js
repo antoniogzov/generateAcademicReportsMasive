@@ -102,7 +102,15 @@ async function getBangMalesHebPrimSR(data) {
           }
           //   qualif_final =()/;
           //promedio_final += parseFloat(qualif_final);
-          qualif_final = (qualif_final / valid_period).toFixed(1);
+          console.log(qualif_final);
+          if (qualif_final != "-") {
+            if (qualif_final > 0) {
+            qualif_final = (qualif_final / valid_period).toFixed(1);  
+          }else{
+            qualif_final = "-";
+          }
+          }
+          
           //promedio_final += parseFloat(qualif_final);
           sbj_final++;
         }
