@@ -18,15 +18,18 @@ async function getBangMalesHebPrimSR(data) {
       var tutor_name = data.groups_heb[i_group].tutor_name;
       var data_school_report = [];
       var promedios_general = [];
+
       var promedio_p1 = 0;
       var promedio_p2 = 0;
       var promedio_p3 = 0;
       var promedio_p4 = 0;
+
       var promedio_final = 0;
       var sbj_p1 = 0;
       var sbj_p2 = 0;
       var sbj_p3 = 0;
       var sbj_p4 = 0;
+
       var sbj_final = 0;
       for (
         let index = 0;
@@ -46,17 +49,16 @@ async function getBangMalesHebPrimSR(data) {
             data.groups_heb[i_group].students[0][i_student].qualifications[0]
               .period_qualifications[index].hebrew_name
           );
+
         var qualif_period_1 =
-          data.groups_heb[i_group].students[0][i_student].qualifications[0]
-            .period_qualifications[index].calificacion;
+          (data.groups_heb[i_group].students[0][i_student].qualifications[0]
+            .period_qualifications[index].calificacion);
+
         var qualif_period_2 =
           data.groups_heb[i_group].students[0][i_student].qualifications[1]
             .period_qualifications[index].calificacion;
-        var qualif_period_3 =
-          "-";
-        var qualif_period_4 =
-          data.groups_heb[i_group].students[0][i_student].qualifications[3]
-            .period_qualifications[index].calificacion;
+        var qualif_period_3 = "-";
+        var qualif_period_4 ="- ";
 
         /* const qualif_period_1 = "8.3";
                       const qualif_period_2 = "9.5";
@@ -73,28 +75,30 @@ async function getBangMalesHebPrimSR(data) {
           qualif_final = "-";
         } else {
           if (qualif_period_1 != "-") {
-            qualif_final += RQBangFemHebPrim(qualif_period_1);
-            promedio_p1 += RQBangFemHebPrim(qualif_period_1);
+            qualif_period_1 = parseFloat(qualif_period_1);
+            qualif_final += (parseFloat(qualif_period_1));
+            promedio_p1 += (parseFloat(qualif_period_1));
             sbj_p1++;
             valid_period++;
           }
           if (qualif_period_2 != "-") {
-            qualif_final += RQBangFemHebPrim(qualif_period_2);
-            promedio_p2 += RQBangFemHebPrim(qualif_period_2);
+            qualif_period_2 = parseFloat(qualif_period_2 );
+            qualif_final += (parseFloat(qualif_period_2));
+            promedio_p2 += (parseFloat(qualif_period_2));
             sbj_p2++;
             valid_period++;
           }
           if (qualif_period_3 != "-") {
-            qualif_final += RQBangFemHebPrim(qualif_period_3);
-            promedio_p3 += RQBangFemHebPrim(qualif_period_3);
+           /*  qualif_final += ((qualif_period_3));
+            promedio_p3 += ((qualif_period_3));
             sbj_p3++;
-            valid_period++;
+            valid_period++; */
           }
           if (qualif_period_4 != "-") {
-            qualif_final += RQBangFemHebPrim(qualif_period_4);
-            promedio_p4 += RQBangFemHebPrim(qualif_period_4);
+          /*   qualif_final += ((qualif_period_4));
+            promedio_p4 += ((qualif_period_4));
             sbj_p4++;
-            valid_period++;
+            valid_period++; */
           }
           //   qualif_final =()/;
           //promedio_final += parseFloat(qualif_final);
@@ -112,7 +116,7 @@ async function getBangMalesHebPrimSR(data) {
         ];
         data_school_report.push(data_school_report_arr);
       }
-      console.log(promedio_p1);
+
       var num_valid_periods = 0;
       if (promedio_p1 == 0) {
         promedio_p1 = "-";
@@ -148,16 +152,10 @@ async function getBangMalesHebPrimSR(data) {
         promedio_final = (promedio_final / num_valid_periods).toFixed(1);
       }
       var averages = [
-        [
-          "PROMEDIO",
-          promedio_p1,
-          promedio_p2,
-          "-",
-          "-",
-          promedio_final,
-        ],
+        ["PROMEDIO", promedio_p1, promedio_p2, "-", "-", promedio_final],
       ];
       console.log(data_school_report);
+
       var data_school_report_languages = [];
       for (
         let lang = 0;
@@ -184,10 +182,10 @@ async function getBangMalesHebPrimSR(data) {
             .period_qualifications[lang].calificacion;
         var data_school_report_language_arr = [
           name_subject,
-          (qualif_period_1),
-          (qualif_period_2),
-          ("-"),
-          ("-"),
+          qualif_period_1,
+          qualif_period_2,
+          "-",
+          "-",
         ];
         data_school_report_languages.push(data_school_report_language_arr);
         /* data_school_report_languages = [
@@ -249,7 +247,7 @@ async function getBangMalesHebPrimSR(data) {
           comments += "\n \n" + "—  " + mejanejet_name_teacher;
         }
         /* const qualif_period_1 = data.groups_heb[i_group].students[0][i_student].qualifications_cond[0].period_qualifications[cond].grade_evaluation_criteria_teacher; */
-       /*  if (
+        /*  if (
           data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
             .period_qualifications[cond-1] != undefined
         ) {
@@ -283,7 +281,6 @@ async function getBangMalesHebPrimSR(data) {
           var qualif_period_2 = "-";
         }
 
-
         var data_school_report_cond_arr = [
           name_subject,
           qualif_period_1,
@@ -292,7 +289,7 @@ async function getBangMalesHebPrimSR(data) {
           "-",
         ];
         data_school_report_conductual.push(data_school_report_cond_arr);
-       /*  data_school_report_languages = [
+        /*  data_school_report_languages = [
         ["Idioma", "9", "10", "10", "10"],
         ["Escritura", "10", "10", "10", "10"],
         ["Lectura", "10", "10", "10", "10"],
@@ -413,7 +410,7 @@ async function getBangMalesHebPrimSR(data) {
           1: {
             cellWidth: 50,
           },
-          
+
           2: {
             cellWidth: 110,
           },
@@ -501,7 +498,7 @@ async function getBangMalesHebPrimSR(data) {
         foot: averages,
       });
       //--- TABLA INASISTENCIAS---//
-     /*  doc.autoTable({
+      /*  doc.autoTable({
         startY: 50,
         tableWidth: 70,
         margin: {
@@ -725,7 +722,7 @@ async function getBangMalesHebPrimSR(data) {
         ],
         body: data_school_report_languages,
       });
-      
+
       //--- TEXTO DE EQUIVALENCIAS  ---//
       doc.setFontSize(10);
       doc.text(157, 180, "Código de calificaciones:");
@@ -735,7 +732,7 @@ async function getBangMalesHebPrimSR(data) {
       //--- FIRMA DE LA  MORÁ ---//
       doc.setDrawColor(0, 0, 0);
       doc.setFontSize(9);
-      
+
       doc.line(18, 190, 62, 190);
       doc.text(26, 195, "Docente del grupo");
       //--- FIRMA TUTOR ---//

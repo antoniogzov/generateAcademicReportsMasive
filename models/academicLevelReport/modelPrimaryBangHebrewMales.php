@@ -24,6 +24,7 @@ class DataSchoolReportCardsHebrewMales extends Connection
         AS 'promedio_final',
         CASE 
        WHEN grape.grade_period IS NULL AND extra.grade_extraordinary_examen IS NULL  THEN '-'
+       WHEN extra.grade_extraordinary_examen IS NOT NULL THEN extra.grade_extraordinary_examen
        WHEN grape.grade_period IS NOT NULL AND extra.grade_extraordinary_examen IS NULL  THEN grape.grade_period
        WHEN grape.grade_period IS NULL AND extra.grade_extraordinary_examen IS NOT NULL  THEN extra.grade_extraordinary_examen
         END
