@@ -52,12 +52,11 @@ async function getBangFemHebPrimSR(data) {
         var qualif_period_2 =
           data.groups_heb[i_group].students[0][i_student].qualifications[1]
             .period_qualifications[index].calificacion;
-        var qualif_period_3 =
-          data.groups_heb[i_group].students[0][i_student].qualifications[2]
-            .period_qualifications[index].calificacion;
-        var qualif_period_4 =
-          data.groups_heb[i_group].students[0][i_student].qualifications[3]
-            .period_qualifications[index].calificacion;
+        var qualif_period_3 = "-";
+          /* 'data.groups_heb[i_group].students[0][i_student].qualifications[2].period_qualifications[index].calificacion'; */
+        var qualif_period_4 = "-";
+          /* data.groups_heb[i_group].students[0][i_student].qualifications[3]
+            .period_qualifications[index].calificacion; */
 
         /* const qualif_period_1 = "8.3";
                       const qualif_period_2 = "9.5";
@@ -74,26 +73,26 @@ async function getBangFemHebPrimSR(data) {
           qualif_final = "-";
         } else {
           if (qualif_period_1 != "-") {
-            qualif_final += RQBangFemHebPrim(qualif_period_1);
-            promedio_p1 += RQBangFemHebPrim(qualif_period_1);
+            qualif_final += parseFloat(qualif_period_1);
+            promedio_p1 += parseFloat(qualif_period_1);
             sbj_p1++;
             valid_period++;
           }
           if (qualif_period_2 != "-") {
-            qualif_final += RQBangFemHebPrim(qualif_period_2);
-            promedio_p2 += RQBangFemHebPrim(qualif_period_2);
+            qualif_final += parseFloat(qualif_period_2);
+            promedio_p2 += parseFloat(qualif_period_2);
             sbj_p2++;
             valid_period++;
           }
           if (qualif_period_3 != "-") {
-            qualif_final += RQBangFemHebPrim(qualif_period_3);
-            promedio_p3 += RQBangFemHebPrim(qualif_period_3);
+            qualif_final += parseFloat(qualif_period_3);
+            promedio_p3 += parseFloat(qualif_period_3);
             sbj_p3++;
             valid_period++;
           }
           if (qualif_period_4 != "-") {
-            qualif_final += RQBangFemHebPrim(qualif_period_4);
-            promedio_p4 += RQBangFemHebPrim(qualif_period_4);
+            qualif_final += parseFloat(qualif_period_4);
+            promedio_p4 += parseFloat(qualif_period_4);
             sbj_p4++;
             valid_period++;
           }
@@ -526,7 +525,7 @@ async function getBangFemHebPrimSR(data) {
       });
       //--- TABLA DERECHA ---//
       doc.autoTable({
-        startY: 170,
+        startY: 165,
         tableWidth: 180,
         font: "Yiddishkeit AlefAlefAlef Bold",
 
@@ -536,13 +535,13 @@ async function getBangFemHebPrimSR(data) {
           lineWidth: 0.1,
           lineColor: [0, 0, 0],
           font: "Yiddishkeit AlefAlefAlef Bold",
-          fontSize: 9,
+          fontSize: 8,
           valign: "middle",
         },
         bodyStyles: {
           lineWidth: 0.1,
           lineColor: [0, 0, 0],
-          fontSize: 8,
+          fontSize: 7,
           halign: "center",
           valign: "middle",
           textColor: [0, 0, 0],
