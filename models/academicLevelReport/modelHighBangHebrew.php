@@ -109,7 +109,7 @@ class DataSchoolReportCardsHebrew extends Connection
         LEFT JOIN iteach_grades_qualitatives.learning_maps_log  AS learlog ON learlog.ascc_lm_assgn=assc.ascc_lm_assgn AND learlog.id_student = $id_student AND learlog.no_installment = $no_period
         LEFT JOIN iteach_grades_qualitatives.questions_log_learning_maps AS quesslm ON quesslm.id_historical_learning_maps = learlog.id_historical_learning_maps
         LEFT JOIN colaboradores_ykt.colaboradores AS mejan
-        ON fincom.no_teacher_fill = mejan.no_colaborador
+        ON assgn.no_teacher = mejan.no_colaborador
         WHERE assc.id_assignment = assgn.id_assignment AND  learning_map_types_id = 3
          AND assgn.id_group = $id_group
 
