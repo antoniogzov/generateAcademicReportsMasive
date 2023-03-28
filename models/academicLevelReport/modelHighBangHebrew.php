@@ -190,8 +190,7 @@ class DataSchoolReportCardsHebrew extends Connection
     public function getQualificationsCondByStudentPeriod($id_group, $id_academic_area, $id_student, $id_period_calendar, $order_by_cond_heb)
     {
         $results = array();
-        $sql = "SELECT DISTINCT  sbj.name_subject,
-        CASE 
+        $sql = "SELECT  CASE 
         WHEN esou.evaluation_name = 'Asignación libre' THEN ep.manual_name
         ELSE esou.evaluation_name
         END AS evaluation_name,
@@ -208,20 +207,18 @@ class DataSchoolReportCardsHebrew extends Connection
         ELSE esou.hebrew_name
         END
         AS 'eval_hebrew_name'
-        FROM school_control_ykt.subjects AS sbj
-        INNER JOIN school_control_ykt.students AS stud
+        FROM  school_control_ykt.students AS stud
+        INNER JOIN school_control_ykt.subjects AS sbj ON sbj.id_subject = 418
         INNER JOIN school_control_ykt.assignments AS asg ON sbj.id_subject = asg.id_subject
-        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student = stud.id_student
         INNER JOIN iteach_grades_quantitatives.evaluation_plan AS ep ON  ep.id_assignment = asg.id_assignment
         INNER JOIN iteach_grades_quantitatives.evaluation_source AS esou ON esou.id_evaluation_source = ep.id_evaluation_source 
-        LEFT JOIN iteach_grades_quantitatives.grades_evaluation_criteria AS gec ON ep.id_evaluation_plan = gec.id_evaluation_plan
-        LEFT JOIN iteach_grades_quantitatives.final_grades_assignment AS fga oN gec.id_final_grade = fga.id_final_grade AND asg.id_assignment = fga.id_assignment AND insc.id_inscription = fga.id_inscription
-        WHERE ep.id_period_calendar = '$id_period_calendar'
-        AND sbj.id_subject = 418
-        AND ep.manual_name != 'Baile'
-        AND ep.manual_name != 'Canto'
-        AND stud.id_student= '$id_student'
-        AND fga.id_student = '$id_student'
+        INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS fga ON  asg.id_assignment = fga.id_assignment AND fga.id_student = stud.id_student
+        INNER JOIN iteach_grades_quantitatives.grades_period AS grape ON fga.id_final_grade = grape.id_final_grade
+        INNER JOIN iteach_grades_quantitatives.grades_evaluation_criteria AS gec ON gec.id_grade_period = grape.id_grade_period
+        	AND ep.id_evaluation_plan = gec.id_evaluation_plan
+        WHERE sbj.id_subject = 418
+        AND grape.id_period_calendar = $id_period_calendar
+        AND stud.id_student = $id_student
         $order_by_cond_heb
         ";
         //echo $sql;

@@ -19,8 +19,8 @@ async function getBangHighMixedSR(data) {
             var array_all_periods_heb_qualifications_span = data.groups_span[i_group].students[0][ind_std].qualifications_cond;
             var array_all_periods_span_qualifications = data.groups_span[i_group].students[0][ind_std].qualifications;
             var array_all_periods_heb_qualifications = data.groups_heb[i_group].students[0][ind_std].qualifications;
-            if (data.groups_heb[i_group].students[0][ind_std].qualifications[0].period_qualifications_mejanej[0].comentarios_finales != null) {
-                var mejanejet_commit = data.groups_heb[i_group].students[0][ind_std].qualifications[0].period_qualifications_mejanej[0].comentarios_finales;
+            if (data.groups_heb[i_group].students[0][ind_std].qualifications[0].period_qualifications_mejanej[1].comentarios_finales != null) {
+                var mejanejet_commit = data.groups_heb[i_group].students[0][ind_std].qualifications[0].period_qualifications_mejanej[1].comentarios_finales;
             } else {
                 var mejanejet_commit = "-";
             }
@@ -29,8 +29,8 @@ async function getBangHighMixedSR(data) {
             arr_texto = texto.split(". ");
             var span_mejanejet = ". " + arr_texto[1];
             var heb_mejanejet = arr_texto[0];
-            if (data.groups_heb[i_group].students[0][ind_std].qualifications[0].period_qualifications_mejanej[0].mejanejet_name_teacher != null) {
-                var mejanejet_commit_autor = data.groups_heb[i_group].students[0][ind_std].qualifications[0].period_qualifications_mejanej[0].mejanejet_name_teacher;
+            if (data.groups_heb[i_group].students[0][ind_std].qualifications[0].period_qualifications_mejanej[1].mejanejet_name_teacher != null) {
+                var mejanejet_commit_autor = data.groups_heb[i_group].students[0][ind_std].qualifications[0].period_qualifications_mejanej[1].mejanejet_name_teacher;
             } else {
                 var mejanejet_commit_autor = "-";
             }
@@ -100,9 +100,9 @@ async function getBangHighMixedSR(data) {
                     var heb_sbj_name = array_all_periods_heb_qualifications[assignment_period].hebrew_period_qualifications[assignments].hebrew_name;
                     var name_subject = array_all_periods_heb_qualifications[assignment_period].hebrew_period_qualifications[assignments].name_subject;
                     var spanish_name_teacher = array_all_periods_heb_qualifications[assignment_period].hebrew_period_qualifications[assignments].spanish_name_teacher;
-                    var calificacion = RQhighschoolLF(array_all_periods_heb_qualifications[assignment_period].hebrew_period_qualifications[assignments].calificacion);
-                    console.log(calificacion);
-                    var extra = RQhighschoolLF(array_all_periods_heb_qualifications[assignment_period].hebrew_period_qualifications[assignments].extraordinary);
+                    var calificacion = (array_all_periods_heb_qualifications[assignment_period].hebrew_period_qualifications[assignments].calificacion);
+                    /* console.log(calificacion); */
+                    var extra = (array_all_periods_heb_qualifications[assignment_period].hebrew_period_qualifications[assignments].extraordinary);
                     var extr_qualif = extra;
                     var period_qualif = calificacion;
                     if (extr_qualif != "-") {
@@ -171,11 +171,11 @@ async function getBangHighMixedSR(data) {
                     colspan: 2,
                 },
             }, ]);
-            for (let assignments = 0; assignments < array_all_periods_span_qualifications[0].spanish_period_qualifications.length; assignments++) {
+            for (let assignments = 0; assignments < array_all_periods_span_qualifications[1].spanish_period_qualifications.length; assignments++) {
                 var asignatura = [];
-                var heb_sbj_name = array_all_periods_span_qualifications[0].spanish_period_qualifications[assignments].hebrew_name;
-                var name_subject = array_all_periods_span_qualifications[0].spanish_period_qualifications[assignments].name_subject.toUpperCase();
-                var spanish_name_teacher = array_all_periods_span_qualifications[0].spanish_period_qualifications[assignments].spanish_name_teacher.toUpperCase();
+                var heb_sbj_name = array_all_periods_span_qualifications[1].spanish_period_qualifications[assignments].hebrew_name;
+                var name_subject = array_all_periods_span_qualifications[1].spanish_period_qualifications[assignments].name_subject.toUpperCase();
+                var spanish_name_teacher = array_all_periods_span_qualifications[1].spanish_period_qualifications[assignments].spanish_name_teacher.toUpperCase();
                 asignatura.push({
                     content: name_subject,
                     styles: {
@@ -192,7 +192,7 @@ async function getBangHighMixedSR(data) {
                 },
             }, "ALEJANDRA MOTA", "9", "-", "9");
             data_school_assignments_span.push(ingles);*/
-            for (let assignment_period = 0; assignment_period <= 0; assignment_period++) {
+            for (let assignment_period = 1; assignment_period <= 1; assignment_period++) {
                 var sum_period_qual = 0;
                 var sum_valid_asg = 0;
                 var id_period = array_all_periods_span_qualifications[assignment_period].no_period;
@@ -226,14 +226,15 @@ async function getBangHighMixedSR(data) {
                     data_school_averages_span[0].push("-");
                 }
             }
-            for (let assignments = 0; assignments < array_all_periods_span_qualifications[0].spanish_period_qualifications.length; assignments++) {
+            
+            for (let assignments = 0; assignments < array_all_periods_span_qualifications[1].spanish_period_qualifications.length; assignments++) {
                 data_school_assignments_span[assignments].push("-", "-", "-", "-");
             }
             /* CREAR ESTRUCTURA INICIAL AREAS DE DESARROLLO (NOMBRES DE ASIGNATURAS Y PROFESORES) */
-            for (let assignments = 0; assignments < array_all_periods_heb_qualifications_cond[0].period_qualifications.length; assignments++) {
+            for (let assignments = 0; assignments < array_all_periods_heb_qualifications_cond[1].period_qualifications.length; assignments++) {
                 var asignatura = [];
-                var heb_sbj_name = array_all_periods_heb_qualifications_cond[0].period_qualifications[assignments].evaluation_name;
-                var eval_hebrew_name = array_all_periods_heb_qualifications_cond[0].period_qualifications[assignments].eval_hebrew_name;
+                var heb_sbj_name = array_all_periods_heb_qualifications_cond[1].period_qualifications[assignments].evaluation_name;
+                var eval_hebrew_name = array_all_periods_heb_qualifications_cond[1].period_qualifications[assignments].eval_hebrew_name;
                 asignatura.push({
                     content: reverse(eval_hebrew_name) + " - " + reverse(heb_sbj_name),
                     styles: {
@@ -244,7 +245,7 @@ async function getBangHighMixedSR(data) {
             }
             var sum_promedio_final = 0;
             var valid_asg_final = 0;
-            for (let assignment_period = 0; assignment_period < 3; assignment_period++) {
+            for (let assignment_period = 1; assignment_period < 3; assignment_period++) {
                 var array_periods_qualifications = array_all_periods_heb_qualifications_cond[assignment_period].period_qualifications;
                 var prom_period = "-";
                 var final_prom = "-";
@@ -256,10 +257,10 @@ async function getBangHighMixedSR(data) {
               array_all_periods_heb_qualifications_cond[assignment_period]
                 .hebrew_period_qualifications[assignments].spanish_name_teacher;
    */
-                    var calificacion = RQhighschoolLF(array_all_periods_heb_qualifications_cond[assignment_period].period_qualifications[assignments].grade_evaluation_criteria_teacher);
+                    var calificacion = (array_all_periods_heb_qualifications_cond[assignment_period].period_qualifications[assignments].grade_evaluation_criteria_teacher);
                     var calificacion_span_1 = "-";
                     if (array_all_periods_heb_qualifications_span[assignment_period].period_qualifications[assignments] != null) {
-                        var calificacion_span = RQhighschoolLF(array_all_periods_heb_qualifications_span[assignment_period].period_qualifications[assignments].grade_evaluation_criteria_teacher);
+                        var calificacion_span = (array_all_periods_heb_qualifications_span[assignment_period].period_qualifications[assignments].grade_evaluation_criteria_teacher);
                         calificacion_span_1 = calificacion_span;
                         var prom_cond = "-";
                         if (calificacion != "-" && calificacion_span != "-") {
@@ -438,7 +439,7 @@ async function getBangHighMixedSR(data) {
                     }, {
                         content: "Docente",
                     }, {
-                        content: "1er M.",
+                        content: "2do M.",
                     }, {
                         content: "Extra",
                     }, {
