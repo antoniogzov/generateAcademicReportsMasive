@@ -34,7 +34,7 @@ class DataSchoolReportCardsLafontine extends Connection
             FROM school_control_ykt.students AS student
             INNER JOIN school_control_ykt.inscriptions AS inscription ON student.id_student = inscription.id_student
             WHERE inscription.id_group = '$group_id' AND student.status = '1'
-            ORDER BY student.lastname ");
+            ORDER BY student.lastname LIMIT 1");
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
             $results[] = $row;
@@ -399,7 +399,7 @@ class DataSchoolReportCardsLafontine extends Connection
         AND sbj.id_academic_area = $id_academic_area
         AND sbj.id_subject != 417
         AND sbj.id_subject != 418
-        AND sbj.name_subject LIKE 'M1%'
+        AND sbj.name_subject LIKE 'M2%'
         AND assgn.print_school_report_card != 0
         ORDER BY group_type_id, sbj.name_subject ASC";
 

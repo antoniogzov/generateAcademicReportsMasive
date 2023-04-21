@@ -95,7 +95,7 @@ function getBangFemHebPrimSR()
                 $qualifications_lang[] = $qualifications_lang_period;
                 /* CALIFICACIONES GENERALES POR PERIODO */
                 /* CALIFICACIONES CONDUCTUAL POR PERIODO */
-                $order_by_cond_heb = '';
+                $order_by_cond_heb = 'ORDER BY esou.evaluation_name';
                 $array_conductual = $model_heb->getQualificationsCondByStudentPeriodPrimary($group_heb->id_group, $id_academic_area, $index->id_student, $p_h->id_period_calendar, $order_by_cond_heb);
 
                 $qualifications_cond_period = array(

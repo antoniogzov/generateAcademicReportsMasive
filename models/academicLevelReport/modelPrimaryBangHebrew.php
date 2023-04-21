@@ -169,7 +169,7 @@ class DataSchoolReportCardsHebrew extends Connection
     public function getQualificationsCondByStudentPeriodPrimary($id_group, $id_academic_area, $id_student, $id_period_calendar, $order_by_cond_heb)
     {
         $results = array();
-        $sql = "SELECT  sbj.name_subject,
+        $sql = "SELECT  sbj.name_subject, esou.id_evaluation_source,
         CASE 
         WHEN esou.evaluation_name = 'Asignación libre' THEN ep.manual_name
         ELSE esou.evaluation_name

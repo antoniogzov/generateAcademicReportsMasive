@@ -53,9 +53,9 @@ async function getBangFemHebPrimSR(data) {
           data.groups_heb[i_group].students[0][i_student].qualifications[1]
             .period_qualifications[index].calificacion;
         var qualif_period_3 = "-";
-          /* 'data.groups_heb[i_group].students[0][i_student].qualifications[2].period_qualifications[index].calificacion'; */
+        /* 'data.groups_heb[i_group].students[0][i_student].qualifications[2].period_qualifications[index].calificacion'; */
         var qualif_period_4 = "-";
-          /* data.groups_heb[i_group].students[0][i_student].qualifications[3]
+        /* data.groups_heb[i_group].students[0][i_student].qualifications[3]
             .period_qualifications[index].calificacion; */
 
         /* const qualif_period_1 = "8.3";
@@ -104,10 +104,10 @@ async function getBangFemHebPrimSR(data) {
         }
         var data_school_report_arr = [
           name_subject,
-          (qualif_period_1),
-          (qualif_period_2),
-          (qualif_period_3),
-          (qualif_period_4),
+          qualif_period_1,
+          qualif_period_2,
+          qualif_period_3,
+          qualif_period_4,
           qualif_final,
         ];
         data_school_report.push(data_school_report_arr);
@@ -148,7 +148,14 @@ async function getBangFemHebPrimSR(data) {
         promedio_final = (promedio_final / num_valid_periods).toFixed(1);
       }
       var averages = [
-        ["PROMEDIO", promedio_p1, promedio_p2, promedio_p3, promedio_p4, promedio_final],
+        [
+          "PROMEDIO",
+          promedio_p1,
+          promedio_p2,
+          promedio_p3,
+          promedio_p4,
+          promedio_final,
+        ],
       ];
       console.log(data_school_report);
       var data_school_report_languages = [];
@@ -188,24 +195,26 @@ async function getBangFemHebPrimSR(data) {
       ]; */
       }
 
-      var absences= [];
+      var absences = [];
       console.log(
         data.groups_heb[i_group].students[0][i_student].qualifications_cond
       );
-      
+
       for (
         let cond = 0;
         cond <
-        data.groups_heb[i_group].students[0][i_student].qualifications_cond.length;
+        data.groups_heb[i_group].students[0][i_student].qualifications_cond
+          .length;
         cond++
       ) {
-        var absences_period = data.groups_heb[i_group].students[0][i_student].qualifications_cond[cond].absences;
+        var absences_period =
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[
+            cond
+          ].absences;
         absences.push(absences_period);
       }
 
-      console.log(
-        absences
-      );
+      console.log(absences);
       var data_school_report_conductual = [];
       for (
         let cond = 0;
@@ -220,7 +229,7 @@ async function getBangFemHebPrimSR(data) {
         var mejanejet_name_teacher =
           data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
             .mejanejet_name;
-
+       
         const name_subject =
           data.groups_heb[i_group].students[0][
             i_student
@@ -242,14 +251,36 @@ async function getBangFemHebPrimSR(data) {
           data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
             .period_qualifications[cond].grade_evaluation_criteria_teacher;
 
-            if(data.groups_heb[i_group].students[0][i_student].qualifications_cond[1].period_qualifications[cond] != undefined) {
-        var qualif_period_2 =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
-          .period_qualifications[cond].grade_evaluation_criteria_teacher;
+            var id_evaluation_source =
+            data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
+            .period_qualifications[cond].id_evaluation_source;
+            
+            for (
+              let cond2 = 0;
+              cond2 <
+              data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
+                .period_qualifications.length;
+              cond2++
+            ) {
+              if (
+                data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
+                  .period_qualifications[cond2] != undefined
+              ) {
+                if (id_evaluation_source == data.groups_heb[i_group].students[0][i_student]
+                  .qualifications_cond[1].period_qualifications[cond2]
+                  .id_evaluation_source) {
+                    
+                    var qualif_period_2 =
+                  data.groups_heb[i_group].students[0][i_student]
+                    .qualifications_cond[1].period_qualifications[cond2]
+                    .grade_evaluation_criteria_teacher;
+                  } 
+                
+              } else {
+                var qualif_period_2 = "-";
+              }
             }
-            else{
-              var qualif_period_2 = "-";
-            }
+       
         /*  const qualif_period_3 =
             data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
               .period_qualifications[cond].grade_evaluation_criteria_teacher;
@@ -263,6 +294,7 @@ async function getBangFemHebPrimSR(data) {
           "-",
           "-",
         ];
+        qualif_period_2 = "-";
         data_school_report_conductual.push(data_school_report_cond_arr);
         /* data_school_report_languages = [
         ["Idioma", "9", "10", "10", "10"],
@@ -292,7 +324,7 @@ async function getBangFemHebPrimSR(data) {
       window.jsPDF = window.jspdf.jsPDF;
       var doc = new jsPDF("portrait");
       //--- --- ---//
-     /*  doc.addFileToVFS("assets/fonts/Yiddishkeit AlefAlefAlef Bold.ttf");
+      /*  doc.addFileToVFS("assets/fonts/Yiddishkeit AlefAlefAlef Bold.ttf");
       doc.addFont(
         "assets/fonts/Yiddishkeit AlefAlefAlef Bold.ttf",
         "Yiddishkeit AlefAlefAlef Bold ",
