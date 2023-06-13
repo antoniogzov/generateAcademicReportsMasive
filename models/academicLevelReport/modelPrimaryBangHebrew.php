@@ -98,6 +98,7 @@ class DataSchoolReportCardsHebrew extends Connection
         AND evplan.id_evaluation_source = 53
         AND sbj.id_subject = 417
         ";
+        echo $sql;
         $query = $this->conn->query($sql);
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
@@ -175,6 +176,7 @@ class DataSchoolReportCardsHebrew extends Connection
         ELSE esou.evaluation_name
         END AS evaluation_name,
         ep.manual_name, 
+        esou.id_evaluation_source,
         ep.id_period_calendar,
         fga.id_final_grade,
         CASE 
@@ -200,6 +202,7 @@ class DataSchoolReportCardsHebrew extends Connection
         WHERE grape.id_period_calendar = '$id_period_calendar' 
         AND sbj.id_subject = 416
         AND gps.id_group = $id_group
+        AND esou.evaluation_name != '-INASISTENCIAS *'
         AND stud.id_student = $id_student  
         $order_by_cond_heb
         ";

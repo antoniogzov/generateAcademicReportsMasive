@@ -101,6 +101,7 @@ class DataSchoolReportCardsHebrewMales extends Connection
         AND evplan.id_evaluation_source = 53
         AND sbj.id_subject = 417
         ";
+        echo $sql;
         $query = $this->conn->query($sql);
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
@@ -180,6 +181,7 @@ class DataSchoolReportCardsHebrewMales extends Connection
         ep.manual_name, 
         ep.id_period_calendar,
         fga.id_final_grade,
+        esou.id_evaluation_source,
         CASE 
         WHEN gec.grade_evaluation_criteria_teacher  IS NULL THEN '-'
         ELSE gec.grade_evaluation_criteria_teacher

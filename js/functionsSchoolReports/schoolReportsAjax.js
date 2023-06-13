@@ -292,6 +292,7 @@ $(document).ready(function () {
         //--- --- ---//
         break;
       default:
+        console.log("SIN FUNCION");
         break;
     }
   });

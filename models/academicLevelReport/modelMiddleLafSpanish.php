@@ -32,7 +32,7 @@ class DataSchoolReportCardsSecondaryMales extends Connection
             INNER JOIN school_control_ykt.groups AS groups ON lvl_comb.id_campus = groups.id_campus AND lvl_comb.id_section = groups.id_section
             INNER JOIN school_control_ykt.academic_levels AS aclv ON lvl_comb.id_academic_level = aclv.id_academic_level
             INNER JOIN school_control_ykt.academic_levels_grade AS aclvg ON groups.id_level_grade = aclvg.id_level_grade AND lvl_comb.id_academic_level = aclvg.id_academic_level
-            WHERE lvl_comb.id_level_combination = '$id_level_combination' AND groups.group_code = 'SC2-LFV-B'
+            WHERE lvl_comb.id_level_combination = '$id_level_combination'
             ");
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
@@ -52,7 +52,7 @@ class DataSchoolReportCardsSecondaryMales extends Connection
             FROM school_control_ykt.students AS student
             INNER JOIN school_control_ykt.inscriptions AS inscription ON student.id_student = inscription.id_student
             WHERE inscription.id_group = '$group_id' AND student.status = 1 
-            ORDER BY student.lastname LIMIT 1
+            ORDER BY student.lastname
             ");
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
@@ -123,7 +123,7 @@ class DataSchoolReportCardsSecondaryMales extends Connection
                 FROM iteach_grades_quantitatives.grades_period AS gp
                 INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS fg ON gp.id_final_grade = fg.id_final_grade
                 INNER JOIN iteach_grades_quantitatives.period_calendar AS pc ON gp.id_period_calendar = pc.id_period_calendar 
-                WHERE fg.id_inscription = '$id_inscription' AND fg.id_assignment = '$id_assignment' AND (pc.no_period = 1 or pc.no_period = 2)
+                WHERE fg.id_inscription = '$id_inscription' AND fg.id_assignment = '$id_assignment' AND (pc.no_period = 1 or pc.no_period = 2 or pc.no_period = 3)
                 ORDER BY pc.no_period
                 ");
 

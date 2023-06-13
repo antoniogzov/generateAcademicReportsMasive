@@ -52,7 +52,8 @@ async function getBangFemHebPrimSR(data) {
         var qualif_period_2 =
           data.groups_heb[i_group].students[0][i_student].qualifications[1]
             .period_qualifications[index].calificacion;
-        var qualif_period_3 = "-";
+        var qualif_period_3 = data.groups_heb[i_group].students[0][i_student].qualifications[2]
+        .period_qualifications[index].calificacion;
         /* 'data.groups_heb[i_group].students[0][i_student].qualifications[2].period_qualifications[index].calificacion'; */
         var qualif_period_4 = "-";
         /* data.groups_heb[i_group].students[0][i_student].qualifications[3]
@@ -211,7 +212,8 @@ async function getBangFemHebPrimSR(data) {
           data.groups_heb[i_group].students[0][i_student].qualifications_cond[
             cond
           ].absences;
-        absences.push(absences_period);
+          
+        absences.push([absences_period]);
       }
 
       console.log(absences);
@@ -224,10 +226,10 @@ async function getBangFemHebPrimSR(data) {
         cond++
       ) {
         var comments =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
             .comments;
         var mejanejet_name_teacher =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
             .mejanejet_name;
        
         const name_subject =
@@ -280,7 +282,35 @@ async function getBangFemHebPrimSR(data) {
                 var qualif_period_2 = "-";
               }
             }
-       
+
+            
+
+            for (
+              let cond3 = 0;
+              cond3 <
+              data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
+                .period_qualifications.length;
+              cond3++
+            ) {
+            if (
+              data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
+                .period_qualifications[cond3] != undefined
+            ) {
+              if (id_evaluation_source == data.groups_heb[i_group].students[0][i_student]
+                .qualifications_cond[2].period_qualifications[cond3]
+                .id_evaluation_source) {
+                  
+                  var qualif_period_3 =
+                data.groups_heb[i_group].students[0][i_student]
+                  .qualifications_cond[2].period_qualifications[cond3]
+                  .grade_evaluation_criteria_teacher;
+                } 
+              
+            } else {
+              var qualif_period_3 = "-";
+            }
+            }
+
         /*  const qualif_period_3 =
             data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
               .period_qualifications[cond].grade_evaluation_criteria_teacher;
@@ -291,10 +321,11 @@ async function getBangFemHebPrimSR(data) {
           name_subject,
           qualif_period_1,
           qualif_period_2,
-          "-",
+          qualif_period_3,
           "-",
         ];
         qualif_period_2 = "-";
+        qualif_period_3 = "-";
         data_school_report_conductual.push(data_school_report_cond_arr);
         /* data_school_report_languages = [
         ["Idioma", "9", "10", "10", "10"],

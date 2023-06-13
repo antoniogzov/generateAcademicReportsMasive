@@ -51,14 +51,16 @@ async function getBangMalesHebPrimSR(data) {
           );
 
         var qualif_period_1 =
-          (data.groups_heb[i_group].students[0][i_student].qualifications[0]
-            .period_qualifications[index].calificacion);
+          data.groups_heb[i_group].students[0][i_student].qualifications[0]
+            .period_qualifications[index].calificacion;
 
         var qualif_period_2 =
           data.groups_heb[i_group].students[0][i_student].qualifications[1]
             .period_qualifications[index].calificacion;
-        var qualif_period_3 = "-";
-        var qualif_period_4 ="- ";
+        var qualif_period_3 =
+          data.groups_heb[i_group].students[0][i_student].qualifications[2]
+            .period_qualifications[index].calificacion;
+        var qualif_period_4 = "- ";
 
         /* const qualif_period_1 = "8.3";
                       const qualif_period_2 = "9.5";
@@ -76,26 +78,27 @@ async function getBangMalesHebPrimSR(data) {
         } else {
           if (qualif_period_1 != "-") {
             qualif_period_1 = parseFloat(qualif_period_1);
-            qualif_final += (parseFloat(qualif_period_1));
-            promedio_p1 += (parseFloat(qualif_period_1));
+            qualif_final += parseFloat(qualif_period_1);
+            promedio_p1 += parseFloat(qualif_period_1);
             sbj_p1++;
             valid_period++;
           }
           if (qualif_period_2 != "-") {
-            qualif_period_2 = parseFloat(qualif_period_2 );
-            qualif_final += (parseFloat(qualif_period_2));
-            promedio_p2 += (parseFloat(qualif_period_2));
+            qualif_period_2 = parseFloat(qualif_period_2);
+            qualif_final += parseFloat(qualif_period_2);
+            promedio_p2 += parseFloat(qualif_period_2);
             sbj_p2++;
             valid_period++;
           }
           if (qualif_period_3 != "-") {
-           /*  qualif_final += ((qualif_period_3));
-            promedio_p3 += ((qualif_period_3));
+            qualif_period_3 = parseFloat(qualif_period_3);
+            qualif_final += parseFloat(qualif_period_3);
+            promedio_p3 += parseFloat(qualif_period_3);
             sbj_p3++;
-            valid_period++; */
+            valid_period++;
           }
           if (qualif_period_4 != "-") {
-          /*   qualif_final += ((qualif_period_4));
+            /*   qualif_final += ((qualif_period_4));
             promedio_p4 += ((qualif_period_4));
             sbj_p4++;
             valid_period++; */
@@ -105,12 +108,12 @@ async function getBangMalesHebPrimSR(data) {
           console.log(qualif_final);
           if (qualif_final != "-") {
             if (qualif_final > 0) {
-            qualif_final = (qualif_final / valid_period).toFixed(1);  
-          }else{
-            qualif_final = "-";
+              qualif_final = (qualif_final / valid_period).toFixed(1);
+            } else {
+              qualif_final = "-";
+            }
           }
-          }
-          
+
           //promedio_final += parseFloat(qualif_final);
           sbj_final++;
         }
@@ -160,7 +163,14 @@ async function getBangMalesHebPrimSR(data) {
         promedio_final = (promedio_final / num_valid_periods).toFixed(1);
       }
       var averages = [
-        ["PROMEDIO", promedio_p1, promedio_p2, "-", "-", promedio_final],
+        [
+          "PROMEDIO",
+          promedio_p1,
+          promedio_p2,
+          promedio_p3,
+          "-",
+          promedio_final,
+        ],
       ];
       console.log(data_school_report);
 
@@ -192,7 +202,7 @@ async function getBangMalesHebPrimSR(data) {
           name_subject,
           qualif_period_1,
           qualif_period_2,
-          "-",
+          qualif_period_3,
           "-",
         ];
         data_school_report_languages.push(data_school_report_language_arr);
@@ -221,9 +231,8 @@ async function getBangMalesHebPrimSR(data) {
           ].absences;
         absences.push(absences_period);
       }
-
-      console.log(absences);
       var data_school_report_conductual = [];
+
       for (
         let cond = 0;
         cond <
@@ -231,11 +240,20 @@ async function getBangMalesHebPrimSR(data) {
           .period_qualifications.length;
         cond++
       ) {
+        if (data.groups_heb[i_group].students[0][i_student]
+          .qualifications_cond[1].period_qualifications[cond] != undefined) {
+            var heb_name = data.groups_heb[i_group].students[0][i_student]
+            .qualifications_cond[1].period_qualifications[cond]
+            .eval_hebrew_name;  
+        }else{
+          var heb_name = "";
+        }
+        
         var comments =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
             .comments;
         var mejanejet_name_teacher =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
             .mejanejet_name;
 
         const name_subject =
@@ -246,69 +264,109 @@ async function getBangMalesHebPrimSR(data) {
           ].evaluation_name.toUpperCase() +
           "\n" +
           reverse(
-            data.groups_heb[i_group].students[0][i_student]
-              .qualifications_cond[1].period_qualifications[cond]
-              .eval_hebrew_name
+            heb_name
           );
 
         if (mejanejet_name_teacher.length > 0) {
           comments += "\n \n" + "—  " + mejanejet_name_teacher;
         }
-        /* const qualif_period_1 = data.groups_heb[i_group].students[0][i_student].qualifications_cond[0].period_qualifications[cond].grade_evaluation_criteria_teacher; */
-        /*  if (
+
+        var id_evaluation_source =
+        data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
+        .period_qualifications[cond].id_evaluation_source;
+        
+
+        for (
+          let cond1 = 0;
+          cond1 <
           data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
-            .period_qualifications[cond-1] != undefined
+            .period_qualifications.length;
+          cond1++
         ) {
-        var qualif_period_1 =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
-            .period_qualifications[cond-1].grade_evaluation_criteria_teacher;
-        }else{
-          var qualif_period_1 ="-";
-        } */
-        if (
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
-            .period_qualifications[cond] != undefined
-        ) {
-          var qualif_period_1 =
-            data.groups_heb[i_group].students[0][i_student]
-              .qualifications_cond[0].period_qualifications[cond]
-              .grade_evaluation_criteria_teacher;
-        } else {
-          var qualif_period_1 = "-";
+          if (
+            data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
+              .period_qualifications[cond1] != undefined
+          ) {
+            if (id_evaluation_source == data.groups_heb[i_group].students[0][i_student]
+              .qualifications_cond[0].period_qualifications[cond1]
+              .id_evaluation_source) {
+                
+                var qualif_period_1 =
+              data.groups_heb[i_group].students[0][i_student]
+                .qualifications_cond[0].period_qualifications[cond1]
+                .grade_evaluation_criteria_teacher;
+              } 
+            
+          } else {
+            var qualif_period_1 = "-";
+          }
         }
 
-        if (
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
-            .period_qualifications[cond] != undefined
-        ) {
-          var qualif_period_2 =
-            data.groups_heb[i_group].students[0][i_student]
-              .qualifications_cond[1].period_qualifications[cond]
-              .grade_evaluation_criteria_teacher;
-        } else {
-          var qualif_period_2 = "-";
-        }
+
+         
+            for (
+              let cond2 = 0;
+              cond2 <
+              data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
+                .period_qualifications.length;
+              cond2++
+            ) {
+              if (
+                data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
+                  .period_qualifications[cond2] != undefined
+              ) {
+                if (id_evaluation_source == data.groups_heb[i_group].students[0][i_student]
+                  .qualifications_cond[1].period_qualifications[cond2]
+                  .id_evaluation_source) {
+                    
+                    var qualif_period_2 =
+                  data.groups_heb[i_group].students[0][i_student]
+                    .qualifications_cond[1].period_qualifications[cond2]
+                    .grade_evaluation_criteria_teacher;
+                  } 
+                
+              } else {
+                var qualif_period_2 = "-";
+              }
+            }
+
+            
+
+            for (
+              let cond3 = 0;
+              cond3 <
+              data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
+                .period_qualifications.length;
+              cond3++
+            ) {
+            if (
+              data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
+                .period_qualifications[cond3] != undefined
+            ) {
+              if (id_evaluation_source == data.groups_heb[i_group].students[0][i_student]
+                .qualifications_cond[2].period_qualifications[cond3]
+                .id_evaluation_source) {
+                  
+                  var qualif_period_3 =
+                data.groups_heb[i_group].students[0][i_student]
+                  .qualifications_cond[2].period_qualifications[cond3]
+                  .grade_evaluation_criteria_teacher;
+                } 
+              
+            } else {
+              var qualif_period_3 = "-";
+            }
+            }
 
         var data_school_report_cond_arr = [
           name_subject,
           qualif_period_1,
           qualif_period_2,
-          "-",
+          qualif_period_3,
           "-",
         ];
         data_school_report_conductual.push(data_school_report_cond_arr);
-        /*  data_school_report_languages = [
-        ["Idioma", "9", "10", "10", "10"],
-        ["Escritura", "10", "10", "10", "10"],
-        ["Lectura", "10", "10", "10", "10"],
-      ]; */
       }
-      /* var data_school_report_conductual = [
-      ["Ausencias", "10", "9", "10", "10"],
-      ["Retardos", "10", "10", "10", "10"],
-      ["Uniforme", "10", "10", "10", "10"],
-      ["Conducta", "10", "9", "9", "9"],
-    ]; */
       //--- --- ---//
       var technical_director = tutor_name;
       //--- --- ---//
@@ -384,7 +442,7 @@ async function getBangMalesHebPrimSR(data) {
           [
             {
               content:
-                "Yeshivá Kéter Torá Bangueolo Isaac Saba Mastri \n Primaria Varones Hebreo                         Reporte de Calificaciones",
+                "Yeshivá Kéter Torá Bangueolo Isaac Saba Masri \n Primaria Varones Hebreo                         Reporte de Calificaciones",
               styles: { halign: "center", fontSize: 13 },
             },
           ],
