@@ -55,9 +55,9 @@ async function getBangFemHebPrimSR(data) {
         var qualif_period_3 = data.groups_heb[i_group].students[0][i_student].qualifications[2]
         .period_qualifications[index].calificacion;
         /* 'data.groups_heb[i_group].students[0][i_student].qualifications[2].period_qualifications[index].calificacion'; */
-        var qualif_period_4 = "-";
-        /* data.groups_heb[i_group].students[0][i_student].qualifications[3]
-            .period_qualifications[index].calificacion; */
+        /* var qualif_period_4 = "-"; */
+        var qualif_period_4 =  data.groups_heb[i_group].students[0][i_student].qualifications[3]
+            .period_qualifications[index].calificacion;
 
         /* const qualif_period_1 = "8.3";
                       const qualif_period_2 = "9.5";
@@ -185,6 +185,7 @@ async function getBangFemHebPrimSR(data) {
             .period_qualifications[lang].calificacion;
         var data_school_report_language_arr = [
           RQBangFemHebPrim(qualif_period_1),
+          RQBangFemHebPrim(qualif_period_2),
           RQBangFemHebPrim(qualif_period_3),
           RQBangFemHebPrim(qualif_period_4),
         ];
@@ -216,7 +217,17 @@ async function getBangFemHebPrimSR(data) {
         absences.push([absences_period]);
       }
 
-      console.log(absences);
+
+      var anexa = [];
+     
+        var anexa_period =
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[
+            3
+          ].getExtraordinaryExams;
+          
+        anexa.push(["NABÍ", anexa_period]);
+     
+      /* console.log(absences); */
       var data_school_report_conductual = [];
       for (
         let cond = 0;
@@ -311,6 +322,32 @@ async function getBangFemHebPrimSR(data) {
             }
             }
 
+            for (
+              let cond4 = 0;
+              cond4 <
+              data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
+                .period_qualifications.length;
+              cond4++
+            ) {
+            if (
+              data.groups_heb[i_group].students[0][i_student].qualifications_cond[3]
+                .period_qualifications[cond4] != undefined
+            ) {
+              if (id_evaluation_source == data.groups_heb[i_group].students[0][i_student]
+                .qualifications_cond[3].period_qualifications[cond4]
+                .id_evaluation_source) {
+                  
+                  var qualif_period_4 =
+                data.groups_heb[i_group].students[0][i_student]
+                  .qualifications_cond[3].period_qualifications[cond4]
+                  .grade_evaluation_criteria_teacher;
+                } 
+              
+            } else {
+              var qualif_period_4 = "-";
+            }
+            }
+
         /*  const qualif_period_3 =
             data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
               .period_qualifications[cond].grade_evaluation_criteria_teacher;
@@ -322,7 +359,7 @@ async function getBangFemHebPrimSR(data) {
           qualif_period_1,
           qualif_period_2,
           qualif_period_3,
-          "-",
+          qualif_period_4,
         ];
         qualif_period_2 = "-";
         qualif_period_3 = "-";
@@ -586,9 +623,77 @@ async function getBangFemHebPrimSR(data) {
         ],
         body: "",
       });
+
+      //--- TABLA EXTRAORDINARIO ---//
+      /* doc.autoTable({
+        startY: 75,
+        tableWidth: 70,
+        margin: {
+          left: 125,
+        },
+        headStyles: {
+          fillColor: [255, 255, 255],
+          textColor: [0, 0, 0],
+          font: "Yiddishkeit AlefAlefAlef Bold",
+          fontStyle: "bold",
+          lineColor: [0, 0, 0],
+          lineWidth: 0.1,
+          fontSize: 7,
+          valign: "middle",
+          halign: "center",
+        },
+        headStyles: {
+          fillColor: [255, 255, 255],
+          textColor: [0, 0, 0],
+          lineWidth: 0.1,
+          lineColor: [0, 0, 0],
+          font: "Yiddishkeit AlefAlefAlef Bold",
+          fontSize: 9,
+          valign: "middle",
+          halign: "center",
+        },
+        bodyStyles: {
+          fontSize: 8,
+          lineWidth: 0.1,
+          textColor: [0, 0, 0],
+          lineColor: [0, 0, 0],
+          halign: "center",
+          valign: "middle",
+          font: "Yiddishkeit AlefAlefAlef Bold",
+          fontStyle: "bold",
+        },
+        footStyles: {
+          fontSize: 8,
+          halign: "center",
+          lineWidth: 0.1,
+          valign: "middle",
+          fillColor: [255, 255, 255],
+          textColor: [0, 0, 0],
+          lineColor: [0, 0, 0],
+          fontSize: 10,
+          font: "Yiddishkeit AlefAlefAlef Bold",
+          fontStyle: "bold",
+        },
+        head: [
+          [
+            {
+              content: "CALIFICACIÓN ANEXA",
+              colSpan: 2,
+              styles: {
+                halign: "center",
+              },
+            },
+          ],
+          //--- --- ---//
+          ["EXAMEN", "CALIF."],
+          //--- --- ---//
+        ],
+        body: anexa,
+      }); */
+
       //--- TABLA DERECHA ---//
       doc.autoTable({
-        startY: 165,
+        startY: 175,
         tableWidth: 180,
         font: "Yiddishkeit AlefAlefAlef Bold",
 

@@ -56,7 +56,7 @@ class DataSchoolReportCardsHebrew extends Connection
          AND assgn.id_group = $id_group
         AND insc.id_student = $id_student
         AND sbj.id_academic_area = $id_academic_area 
-        AND sbj.id_subject != 416
+        AND sbj.id_subject != 416 AND sbj.id_subject != 561
         AND sbj.id_subject !=323
         AND assgn.print_school_report_card = 1
             $order_by_gral";
@@ -98,7 +98,45 @@ class DataSchoolReportCardsHebrew extends Connection
         AND evplan.id_evaluation_source = 53
         AND sbj.id_subject = 417
         ";
-        echo $sql;
+        //echo $sql;
+        $query = $this->conn->query($sql);
+
+        while ($row = $query->fetch(PDO::FETCH_OBJ)) {
+            $results[] = $row;
+        }
+
+        return $results;
+    }
+
+    public function getExtraordinaryExams($id_group, $id_academic_area, $id_student, $no_period, $id_period_calendar)
+    {
+        $results = array();
+        //$id_period_calendar = $id_period_calendar-4;
+        $sql = "SELECT DISTINCT
+        CASE 
+         WHEN gec.grade_evaluation_criteria_teacher IS NULL THEN '-'
+         ELSE gec.grade_evaluation_criteria_teacher
+         END
+         AS 'calificacion',
+         percal.no_period
+         FROM school_control_ykt.students AS stud
+        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student= stud.id_student
+        INNER JOIN school_control_ykt.groups AS groups ON groups.id_group = insc.id_group
+        INNER JOIN  school_control_ykt.assignments AS assgn ON assgn.id_group = groups.id_group
+        INNER JOIN school_control_ykt.subjects AS sbj ON assgn.id_subject = sbj.id_subject
+        INNER JOIN iteach_grades_quantitatives.period_calendar AS percal
+        INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS fga ON assgn.id_assignment = fga.id_assignment AND fga.id_student = stud.id_student
+        INNER JOIN iteach_grades_quantitatives.grades_period AS grape ON grape.id_final_grade = fga.id_final_grade AND percal.id_period_calendar = grape.id_period_calendar
+        INNER JOIN iteach_grades_quantitatives.grades_evaluation_criteria AS gec ON gec.id_grade_period = grape.id_grade_period
+        INNER JOIN iteach_grades_quantitatives.evaluation_plan AS evplan ON gec.id_evaluation_plan = gec.id_evaluation_plan
+        WHERE percal.id_period_calendar = $id_period_calendar
+         AND assgn.id_group = $id_group
+        AND insc.id_student = $id_student
+        AND evplan.id_evaluation_source = 27
+        AND assgn.id_subject = 561
+
+        ";
+        /* echo $sql; */
         $query = $this->conn->query($sql);
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
