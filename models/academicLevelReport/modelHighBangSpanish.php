@@ -119,4 +119,36 @@ class DataSchoolReportCardsSpanish extends Connection
 
         return $results;
     }
+
+    public function getExtraordinaryExams($id_group, $id_academic_area, $id_student, $no_period, $id_period_calendar)
+    {
+        $results = array();
+        //$id_period_calendar = $id_period_calendar-4;
+        $sql = "SELECT DISTINCT assgn.id_assignment,  evplan.id_period_calendar,   CASE 
+        WHEN gec.grade_evaluation_criteria_teacher IS NULL THEN '-'
+        ELSE gec.grade_evaluation_criteria_teacher
+        END
+        AS 'calificacion',  fga.id_final_grade, percal.no_period, manual_name
+        FROM school_control_ykt.students AS stud
+       INNER JOIN  school_control_ykt.assignments AS assgn 
+       INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student= stud.id_student
+       INNER JOIN school_control_ykt.groups AS groups ON groups.id_group = insc.id_group AND groups.group_type_id = 2
+        INNER JOIN iteach_grades_quantitatives.period_calendar AS percal
+       INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS fga ON assgn.id_assignment = fga.id_assignment AND fga.id_student = stud.id_student
+       INNER JOIN iteach_grades_quantitatives.grades_period AS grape ON grape.id_final_grade = fga.id_final_grade AND percal.id_period_calendar = grape.id_period_calendar
+       INNER JOIN iteach_grades_quantitatives.grades_evaluation_criteria AS gec ON gec.id_grade_period = grape.id_grade_period
+       INNER JOIN iteach_grades_quantitatives.evaluation_plan AS evplan ON gec.id_evaluation_plan = evplan.id_evaluation_plan
+        WHERE percal.id_period_calendar = $id_period_calendar
+        AND insc.id_student = $id_student
+        AND assgn.id_subject = 829
+        ";
+        //echo $sql;
+        $query = $this->conn->query($sql);
+
+        while ($row = $query->fetch(PDO::FETCH_OBJ)) {
+            $results[] = $row;
+        }
+
+        return $results;
+    }
 }

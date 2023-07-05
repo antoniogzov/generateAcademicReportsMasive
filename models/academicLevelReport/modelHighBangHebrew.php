@@ -72,6 +72,41 @@ class DataSchoolReportCardsHebrew extends Connection
         return $results;
     }
 
+    public function getExtraordinaryExams($id_group, $id_academic_area, $id_student, $no_period, $id_period_calendar)
+    {
+        $results = array();
+        //$id_period_calendar = $id_period_calendar-4;
+        $sql = "SELECT DISTINCT
+        CASE 
+         WHEN gec.grade_evaluation_criteria_teacher IS NULL THEN '-'
+         ELSE gec.grade_evaluation_criteria_teacher
+         END
+         AS 'calificacion',
+         manual_name,
+         percal.no_period
+        FROM school_control_ykt.students AS stud
+        INNER JOIN  school_control_ykt.assignments AS assgn 
+        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student= stud.id_student
+        INNER JOIN school_control_ykt.groups AS groups ON groups.id_group = insc.id_group AND groups.group_type_id = 2
+         INNER JOIN iteach_grades_quantitatives.period_calendar AS percal
+        INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS fga ON assgn.id_assignment = fga.id_assignment AND fga.id_student = stud.id_student
+        INNER JOIN iteach_grades_quantitatives.grades_period AS grape ON grape.id_final_grade = fga.id_final_grade AND percal.id_period_calendar = grape.id_period_calendar
+        INNER JOIN iteach_grades_quantitatives.grades_evaluation_criteria AS gec ON gec.id_grade_period = grape.id_grade_period
+        INNER JOIN iteach_grades_quantitatives.evaluation_plan AS evplan ON assgn.id_assignment = evplan.id_assignment AND percal.id_period_calendar = evplan.id_period_calendar
+        
+        WHERE percal.id_period_calendar = $id_period_calendar
+        AND insc.id_student = $id_student
+        AND assgn.id_subject = 829
+        ";
+        //echo $sql;
+        $query = $this->conn->query($sql);
+
+        while ($row = $query->fetch(PDO::FETCH_OBJ)) {
+            $results[] = $row;
+        }
+
+        return $results;
+    }
     public function getQualificationsMejanejet($id_group, $id_academic_area, $id_student, $no_period, $id_period_calendar)
     {
         $results = array();
@@ -102,7 +137,6 @@ class DataSchoolReportCardsHebrew extends Connection
         ON assgn.id_assignment = asscassglmp.id_assignment AND asscassglmp.id_student = $id_student
         LEFT JOIN iteach_grades_quantitatives.grades_period AS grape
         ON grape.id_final_grade = asscassglmp.id_final_grade AND percal.id_period_calendar = grape.id_period_calendar
-        LEFT JOIN iteach_grades_quantitatives.extraordinary_exams AS extrexam ON extrexam.id_final_grade = asscassglmp.id_final_grade AND extrexam.id_grade_period = grape.id_grade_period 
         INNER JOIN iteach_grades_qualitatives.learning_maps AS lm
         INNER JOIN iteach_grades_qualitatives.associate_assignment_learning_map AS assc ON lm.id_learning_map = assc.id_learning_map 
         LEFT JOIN iteach_grades_qualitatives.final_comments AS fincom ON fincom.ascc_lm_assgn = assc.ascc_lm_assgn and fincom.id_student = $id_student

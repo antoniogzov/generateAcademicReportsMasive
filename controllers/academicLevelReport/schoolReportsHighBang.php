@@ -84,6 +84,11 @@ function getbangFemalesMixedHighSR()
                 );
                 $qualifications_lang[] = $qualifications_lang_period;
                 /* CALIFICACIONES GENERALES POR PERIODO */
+
+                /* EXTRAORDINARIOS EN BOLETA */
+                /* $getExtraordinaryExams = $model_heb->getExtraordinaryExams($id_group, '1', $index->id_student, $p_h->no_period, $p_h->id_period_calendar); */
+                
+
                 /* CALIFICACIONES CONDUCTUAL POR PERIODO */
                 $order_by_cond_heb = "AND (ep.id_evaluation_source = 15 OR ep.id_evaluation_source = 24 OR ep.id_evaluation_source = 8 OR ep.id_evaluation_source = 25 OR ep.id_evaluation_source = 11 OR ep.id_evaluation_source = 16) ORDER BY FIELD(ep.id_evaluation_source, 15, 24, 8, 25, 11, 16) ASC";
                 $array_conductual = $model_heb->getQualificationsCondByStudentPeriod($group_heb->id_group, $id_academic_area_heb, $index->id_student, $p_h->id_period_calendar,$order_by_cond_heb);
@@ -156,10 +161,13 @@ function getbangFemalesMixedHighSR()
                 $array_conductual = $model_span->getQualificationsCondByStudentPeriodSpan($group_span->id_group, $id_academic_area_span, $index->id_student, $p_h->id_period_calendar,$order_by_cond_span);
                 
 
+                $getExtraordinaryExams = $model_span->getExtraordinaryExams($id_group, '1', $index->id_student, $p_h->no_period, $p_h->id_period_calendar);
+
                 $qualifications_cond_period = array(
                     'id_period_calendar' => $p_h->id_period_calendar,
                     'no_period' => $p_h->no_period,
-                    'period_qualifications' => $array_conductual
+                    'period_qualifications' => $array_conductual,
+                    'getExtraordinaryExams' => $getExtraordinaryExams
                 );
                 $qualifications_cond[] = $qualifications_cond_period;
                 /* CALIFICACIONES CONDUCTUAL     POR PERIODO */
@@ -170,7 +178,7 @@ function getbangFemalesMixedHighSR()
                     'student' => $index,
                     'qualifications' => $qualifications,
                     'qualifications_lang' => $qualifications_lang,
-                    'qualifications_cond' => $qualifications_cond
+                    'qualifications_cond' => $qualifications_cond,
                 );
             /* $students[] = $array_st; */
         }
