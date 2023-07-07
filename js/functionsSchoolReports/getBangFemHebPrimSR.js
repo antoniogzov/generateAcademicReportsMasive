@@ -237,10 +237,10 @@ async function getBangFemHebPrimSR(data) {
         cond++
       ) {
         var comments =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[3]
             .comments;
         var mejanejet_name_teacher =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[3]
             .mejanejet_name;
        
         const name_subject =
@@ -625,7 +625,7 @@ async function getBangFemHebPrimSR(data) {
       });
 
       //--- TABLA EXTRAORDINARIO ---//
-      /* doc.autoTable({
+      doc.autoTable({
         startY: 75,
         tableWidth: 70,
         margin: {
@@ -685,11 +685,10 @@ async function getBangFemHebPrimSR(data) {
             },
           ],
           //--- --- ---//
-          ["EXAMEN", "CALIF."],
           //--- --- ---//
         ],
         body: anexa,
-      }); */
+      });
 
       //--- TABLA DERECHA ---//
       doc.autoTable({
