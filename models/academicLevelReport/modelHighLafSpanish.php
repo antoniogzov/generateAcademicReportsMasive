@@ -399,7 +399,7 @@ class DataSchoolReportCardsLafontine extends Connection
         AND sbj.id_academic_area = $id_academic_area
         AND sbj.id_subject != 417
         AND sbj.id_subject != 418
-        AND sbj.name_subject LIKE 'M2%'
+        AND sbj.name_subject LIKE 'M3%'
         AND assgn.print_school_report_card != 0
         ORDER BY group_type_id, sbj.name_subject ASC";
 

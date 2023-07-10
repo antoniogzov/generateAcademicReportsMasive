@@ -57,7 +57,7 @@ async function getLFHighSpanSR(imgLogo, data) {
                 }
             }
             ///-- CALIFICACIONES -- ///
-            for (let assignment_period = 1; assignment_period <= 1; assignment_period++) {
+            for (let assignment_period = 2; assignment_period <= 2; assignment_period++) {
                 assignment = [];
                 for (let period_qualifs = 0; period_qualifs < array_all_periods_span_qualifications[assignment_period].spanish_period_qualifications.length; period_qualifs++) {
                     console.log(array_all_periods_span_qualifications[assignment_period].spanish_period_qualifications[period_qualifs].no_period);
@@ -193,7 +193,7 @@ async function getLFHighSpanSR(imgLogo, data) {
                             halign: "left"
                         },
                     }, {
-                        content: "Módulo: 2",
+                        content: "Módulo: 3",
                         styles: {
                             halign: "right"
                         },
@@ -251,7 +251,7 @@ async function getLFHighSpanSR(imgLogo, data) {
                     }, {
                         content: "Tipo de materia",
                     }, {
-                        content: "Calificación M2",
+                        content: "Calificación M3",
                     }, ],
                     //--- --- ---//
                 ],
