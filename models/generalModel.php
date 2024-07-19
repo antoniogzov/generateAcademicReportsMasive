@@ -69,7 +69,7 @@ class generalModelReports extends Connection
             INNER JOIN school_control_ykt.subjects AS sbj ON assgn.id_subject = sbj.id_subject
             INNER JOIN school_control_ykt.subjects_types AS sbj_tp ON sbj.subject_type_id = sbj_tp.subject_type_id
             INNER JOIN colaboradores_ykt.colaboradores AS colb ON assgn.no_teacher = colb.no_colaborador
-            WHERE assgn.id_group = '$id_group' AND sbj.id_subject !=323 AND sbj.id_academic_area = '$id_academic_area' AND assgn.print_school_report_card = 1 AND sbj.id_subject != 416 AND sbj.id_subject != 417 AND sbj.id_subject != 418  ORDER BY sbj.name_subject ASC"
+            WHERE assgn.id_group = '$id_group' AND sbj.id_subject !=323 AND sbj.id_academic_area = '$id_academic_area' AND assgn.print_school_report_card = 1 AND assgn.assignment_active = 1 AND sbj.id_subject != 416 AND sbj.id_subject != 417 AND sbj.id_subject != 418  ORDER BY sbj.name_subject ASC"
         );
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {

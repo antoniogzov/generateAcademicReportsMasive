@@ -144,11 +144,12 @@ function getbangFemalesMixedHighSR()
             $qualifications = array();
             $qualifications_lang = array();
             $qualifications_cond = array();
-
+            $getSpecialGroup = $model_span->getSpecialGroup($index->id_student);
             foreach ($periods_span as $p_h) {
                 /* CALIFICACIONES GENERALES POR PERIODO */
                 $order_by_gral = $_POST['order_by_gral'];
                 $array_spanish = $model_span->getQualificationsByStudentPeriodHighSchoolSpan($group_span->id_group, '1', $index->id_student, $p_h->no_period, $p_h->id_period_calendar, $order_by_gral);
+                
                 //$array_spanish_speciality = $model->getQualificationsByStudentPeriodHighSchoolSpanSpeciality($group_span->id_group, '1', $index->id_student, $p_h->no_period, $p_h->id_period_calendar, $order_by_gral);
                 //$array_spanish[]= $array_spanish_speciality;
                 $qualifications_period = array(
@@ -179,6 +180,7 @@ function getbangFemalesMixedHighSR()
                     'qualifications' => $qualifications,
                     'qualifications_lang' => $qualifications_lang,
                     'qualifications_cond' => $qualifications_cond,
+                    'students_groups' => $getSpecialGroup,
                 );
             /* $students[] = $array_st; */
         }

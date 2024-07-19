@@ -40,7 +40,7 @@ $(document).ready(function () {
           });
         //--- --- ---//
         break;
-      
+
       case "5":
         //console.log("getBangFemSpanPrimSR()");
         //--- --- ---//
@@ -173,6 +173,7 @@ $(document).ready(function () {
               Swal.close();
               //--- --- ---//
             } else {
+              console.log(data);
               //--- --- ---//
               //--- --- ---//
             }
@@ -200,8 +201,8 @@ $(document).ready(function () {
           },
         })
           .done(function (data) {
-            console.log(data);
             var data = JSON.parse(data);
+            console.log(data);
             if (data.response) {
               var response_data = data;
               //--- --- ---//

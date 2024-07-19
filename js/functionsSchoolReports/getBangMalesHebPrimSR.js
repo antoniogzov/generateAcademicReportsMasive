@@ -124,7 +124,7 @@ async function getBangMalesHebPrimSR(data) {
           name_subject,
           qualif_period_1,
           qualif_period_2,
-          qualif_period_3,
+          qualif_period_3 ,
           qualif_period_4,
           qualif_final,
         ];
@@ -146,6 +146,7 @@ async function getBangMalesHebPrimSR(data) {
         promedio_final = promedio_final + parseFloat(promedio_p2);
         num_valid_periods++;
       }
+     // promedio_p3 = 0
       if (promedio_p3 == 0) {
         promedio_p3 = "-";
       } else {
@@ -207,6 +208,7 @@ async function getBangMalesHebPrimSR(data) {
           qualif_period_2,
           qualif_period_3,
           qualif_period_4,
+          "-",
         ];
         data_school_report_languages.push(data_school_report_language_arr);
         /* data_school_report_languages = [
@@ -239,17 +241,17 @@ async function getBangMalesHebPrimSR(data) {
       for (
         let cond = 0;
         cond <
-        data.groups_heb[i_group].students[0][i_student].qualifications_cond[3]
+        data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
           .period_qualifications.length;
         cond++
       ) {
         if (
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[3]
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
             .period_qualifications[cond] != undefined
         ) {
           var heb_name =
             data.groups_heb[i_group].students[0][i_student]
-              .qualifications_cond[3].period_qualifications[cond]
+              .qualifications_cond[2].period_qualifications[cond]
               .eval_hebrew_name;
         } else {
           var heb_name = "";
@@ -265,7 +267,7 @@ async function getBangMalesHebPrimSR(data) {
         const name_subject =
           data.groups_heb[i_group].students[0][
             i_student
-          ].qualifications_cond[3].period_qualifications[
+          ].qualifications_cond[2].period_qualifications[
             cond
           ].evaluation_name.toUpperCase() +
           "\n" +
@@ -281,13 +283,13 @@ async function getBangMalesHebPrimSR(data) {
         qualif_period_4 = "-";
 
         var id_evaluation_source =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[3]
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
             .period_qualifications[cond].id_evaluation_source;
 
         for (
           let cond1 = 0;
           cond1 <
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
             .period_qualifications.length;
           cond1++
         ) {
@@ -364,6 +366,7 @@ async function getBangMalesHebPrimSR(data) {
             var qualif_period_3 = "-";
           }
         }
+       // var qualif_period_3 = "-";
 
         for (
           let cond4 = 0;
@@ -400,7 +403,7 @@ async function getBangMalesHebPrimSR(data) {
           qualif_period_1,
           qualif_period_2,
           qualif_period_3,
-          qualif_period_4,
+          qualif_period_4
         ];
         data_school_report_conductual.push(data_school_report_cond_arr);
       }

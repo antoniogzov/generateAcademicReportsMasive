@@ -110,7 +110,7 @@ class DataSchoolReportCardsHebrew extends Connection
     public function getQualificationsMejanejet($id_group, $id_academic_area, $id_student, $no_period, $id_period_calendar)
     {
         $results = array();
-        $sql = "SELECT 
+        $sql = "SELECT DISTINCT
         
         CASE 
         WHEN fincom.comments1 IS NULL THEN '-'
@@ -242,8 +242,10 @@ class DataSchoolReportCardsHebrew extends Connection
         END
         AS 'eval_hebrew_name'
         FROM  school_control_ykt.students AS stud
-        INNER JOIN school_control_ykt.subjects AS sbj ON sbj.id_subject = 418
-        INNER JOIN school_control_ykt.assignments AS asg ON sbj.id_subject = asg.id_subject
+        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student = stud.id_student
+        INNER JOIN school_control_ykt.groups AS gps ON gps.id_group = insc.id_group AND gps.group_type_id = 1
+        INNER JOIN school_control_ykt.assignments AS asg ON gps.id_group = asg.id_group
+        INNER JOIN school_control_ykt.subjects AS sbj ON sbj.id_subject = asg.id_subject AND sbj.id_subject = 418
         INNER JOIN iteach_grades_quantitatives.evaluation_plan AS ep ON  ep.id_assignment = asg.id_assignment
         INNER JOIN iteach_grades_quantitatives.evaluation_source AS esou ON esou.id_evaluation_source = ep.id_evaluation_source 
         INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS fga ON  asg.id_assignment = fga.id_assignment AND fga.id_student = stud.id_student

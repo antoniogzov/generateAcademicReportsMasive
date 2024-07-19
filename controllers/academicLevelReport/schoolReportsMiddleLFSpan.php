@@ -13,7 +13,7 @@ $function();
 function getLafMalesSpanMiddleSR()
 {
     $response = array();
-
+//echo "here";
     $id_level_combination_span = $_POST['id_level_combination'];
     $id_group = $_POST['id_group'];
     $id_academic_area = $_POST['id_academic_area'];

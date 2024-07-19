@@ -52,12 +52,13 @@ async function getBangFemHebPrimSR(data) {
         var qualif_period_2 =
           data.groups_heb[i_group].students[0][i_student].qualifications[1]
             .period_qualifications[index].calificacion;
-        var qualif_period_3 = data.groups_heb[i_group].students[0][i_student].qualifications[2]
-        .period_qualifications[index].calificacion;
+        var qualif_period_3 =
+          data.groups_heb[i_group].students[0][i_student].qualifications[2]
+            .period_qualifications[index].calificacion;
         /* 'data.groups_heb[i_group].students[0][i_student].qualifications[2].period_qualifications[index].calificacion'; */
         /* var qualif_period_4 = "-"; */
-        var qualif_period_4 =  data.groups_heb[i_group].students[0][i_student].qualifications[3]
-            .period_qualifications[index].calificacion;
+        /*  var qualif_period_4 =  data.groups_heb[i_group].students[0][i_student].qualifications[3]
+            .period_qualifications[index].calificacion; */
 
         /* const qualif_period_1 = "8.3";
                       const qualif_period_2 = "9.5";
@@ -68,8 +69,7 @@ async function getBangFemHebPrimSR(data) {
         if (
           qualif_period_1 == "-" &&
           qualif_period_2 == "-" &&
-          qualif_period_3 == "-" &&
-          qualif_period_4 == "-"
+          qualif_period_3 == "-"
         ) {
           qualif_final = "-";
         } else {
@@ -91,12 +91,12 @@ async function getBangFemHebPrimSR(data) {
             sbj_p3++;
             valid_period++;
           }
-          if (qualif_period_4 != "-") {
+          /* if (qualif_period_4 != "-") {
             qualif_final += parseFloat(qualif_period_4);
             promedio_p4 += parseFloat(qualif_period_4);
             sbj_p4++;
             valid_period++;
-          }
+          } */
           //   qualif_final =()/;
           //promedio_final += parseFloat(qualif_final);
           qualif_final = (qualif_final / valid_period).toFixed(1);
@@ -108,7 +108,6 @@ async function getBangFemHebPrimSR(data) {
           qualif_period_1,
           qualif_period_2,
           qualif_period_3,
-          qualif_period_4,
           qualif_final,
         ];
         data_school_report.push(data_school_report_arr);
@@ -136,27 +135,20 @@ async function getBangFemHebPrimSR(data) {
         promedio_final = promedio_final + parseFloat(promedio_p3);
         num_valid_periods++;
       }
-      if (promedio_p4 == 0) {
+      /*  if (promedio_p4 == 0) {
         promedio_p4 = "-";
       } else {
         promedio_p4 = (promedio_p4 / sbj_p4).toFixed(1);
         promedio_final = promedio_final + parseFloat(promedio_p4);
         num_valid_periods++;
-      }
+      } */
       if (promedio_final == 0) {
         promedio_final = "-";
       } else {
         promedio_final = (promedio_final / num_valid_periods).toFixed(1);
       }
       var averages = [
-        [
-          "PROMEDIO",
-          promedio_p1,
-          promedio_p2,
-          promedio_p3,
-          promedio_p4,
-          promedio_final,
-        ],
+        ["PROMEDIO", promedio_p1, promedio_p2, promedio_p3, promedio_final],
       ];
       console.log(data_school_report);
       var data_school_report_languages = [];
@@ -180,14 +172,13 @@ async function getBangFemHebPrimSR(data) {
         const qualif_period_3 =
           data.groups_heb[i_group].students[0][i_student].qualifications_lang[2]
             .period_qualifications[lang].calificacion;
-        const qualif_period_4 =
+        /*  const qualif_period_4 =
           data.groups_heb[i_group].students[0][i_student].qualifications_lang[3]
-            .period_qualifications[lang].calificacion;
+            .period_qualifications[lang].calificacion; */
         var data_school_report_language_arr = [
           RQBangFemHebPrim(qualif_period_1),
           RQBangFemHebPrim(qualif_period_2),
           RQBangFemHebPrim(qualif_period_3),
-          RQBangFemHebPrim(qualif_period_4),
         ];
         // data_school_report.push(data_school_report_language_arr);
         /* data_school_report_languages = [
@@ -213,36 +204,36 @@ async function getBangFemHebPrimSR(data) {
           data.groups_heb[i_group].students[0][i_student].qualifications_cond[
             cond
           ].absences;
-          
+
         absences.push([absences_period]);
       }
 
-
       var anexa = [];
-     
-        var anexa_period =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[
-            3
-          ].getExtraordinaryExams;
-          
-        anexa.push(["NABÍ", anexa_period]);
-     
+
+      var anexa_period =
+        data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
+          .getExtraordinaryExams;
+
+      anexa.push(["NABÍ", anexa_period]);
+
       /* console.log(absences); */
       var data_school_report_conductual = [];
       for (
         let cond = 0;
         cond <
-        data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
+        data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
           .period_qualifications.length;
         cond++
       ) {
         var comments =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[3]
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
             .comments;
         var mejanejet_name_teacher =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[3]
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
             .mejanejet_name;
-       
+        if (comments.length == 0) {
+          comments = "";
+        }
         const name_subject =
           data.groups_heb[i_group].students[0][
             i_student
@@ -258,70 +249,72 @@ async function getBangFemHebPrimSR(data) {
 
         if (mejanejet_name_teacher.length > 0) {
           comments += "\n \n" + "—  " + mejanejet_name_teacher;
+        } else {
+          comments += "\n \n" + "—  " + "";
         }
         /* const qualif_period_1 = data.groups_heb[i_group].students[0][i_student].qualifications_cond[0].period_qualifications[cond].grade_evaluation_criteria_teacher; */
         const qualif_period_1 =
           data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
             .period_qualifications[cond].grade_evaluation_criteria_teacher;
 
-            var id_evaluation_source =
-            data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
+        var id_evaluation_source =
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
             .period_qualifications[cond].id_evaluation_source;
-            
-            for (
-              let cond2 = 0;
-              cond2 <
-              data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
-                .period_qualifications.length;
-              cond2++
-            ) {
-              if (
-                data.groups_heb[i_group].students[0][i_student].qualifications_cond[1]
-                  .period_qualifications[cond2] != undefined
-              ) {
-                if (id_evaluation_source == data.groups_heb[i_group].students[0][i_student]
-                  .qualifications_cond[1].period_qualifications[cond2]
-                  .id_evaluation_source) {
-                    
-                    var qualif_period_2 =
-                  data.groups_heb[i_group].students[0][i_student]
-                    .qualifications_cond[1].period_qualifications[cond2]
-                    .grade_evaluation_criteria_teacher;
-                  } 
-                
-              } else {
-                var qualif_period_2 = "-";
-              }
-            }
 
-            
-
-            for (
-              let cond3 = 0;
-              cond3 <
-              data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
-                .period_qualifications.length;
-              cond3++
-            ) {
+        for (
+          let cond2 = 0;
+          cond2 <
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
+            .period_qualifications.length;
+          cond2++
+        ) {
+          if (
+            data.groups_heb[i_group].students[0][i_student]
+              .qualifications_cond[1].period_qualifications[cond2] != undefined
+          ) {
             if (
-              data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
-                .period_qualifications[cond3] != undefined
+              id_evaluation_source ==
+              data.groups_heb[i_group].students[0][i_student]
+                .qualifications_cond[1].period_qualifications[cond2]
+                .id_evaluation_source
             ) {
-              if (id_evaluation_source == data.groups_heb[i_group].students[0][i_student]
+              var qualif_period_2 =
+                data.groups_heb[i_group].students[0][i_student]
+                  .qualifications_cond[1].period_qualifications[cond2]
+                  .grade_evaluation_criteria_teacher;
+            }
+          } else {
+            var qualif_period_2 = "-";
+          }
+        }
+
+        for (
+          let cond3 = 0;
+          cond3 <
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
+            .period_qualifications.length;
+          cond3++
+        ) {
+          if (
+            data.groups_heb[i_group].students[0][i_student]
+              .qualifications_cond[2].period_qualifications[cond3] != undefined
+          ) {
+            if (
+              id_evaluation_source ==
+              data.groups_heb[i_group].students[0][i_student]
                 .qualifications_cond[2].period_qualifications[cond3]
-                .id_evaluation_source) {
-                  
-                  var qualif_period_3 =
+                .id_evaluation_source
+            ) {
+              var qualif_period_3 =
                 data.groups_heb[i_group].students[0][i_student]
                   .qualifications_cond[2].period_qualifications[cond3]
                   .grade_evaluation_criteria_teacher;
-                } 
-              
-            } else {
-              var qualif_period_3 = "-";
             }
-            }
-
+          } else {
+            var qualif_period_3 = "-";
+          }
+        }
+        /* 
             for (
               let cond4 = 0;
               cond4 <
@@ -346,7 +339,7 @@ async function getBangFemHebPrimSR(data) {
             } else {
               var qualif_period_4 = "-";
             }
-            }
+            } */
 
         /*  const qualif_period_3 =
             data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
@@ -359,7 +352,6 @@ async function getBangFemHebPrimSR(data) {
           qualif_period_1,
           qualif_period_2,
           qualif_period_3,
-          qualif_period_4,
         ];
         qualif_period_2 = "-";
         qualif_period_3 = "-";
@@ -536,14 +528,14 @@ async function getBangFemHebPrimSR(data) {
             },
             {
               content: "PERIODOS",
-              colSpan: 5,
+              colSpan: 4,
               styles: {
                 halign: "center",
               },
             },
           ],
           //--- --- ---//
-          ["I", "II", "III", "IV", "Final"],
+          ["I", "II", "III", "Final"],
           //--- --- ---//
         ],
         body: data_school_report,
@@ -610,14 +602,14 @@ async function getBangFemHebPrimSR(data) {
             },
             {
               content: "PERIODOS",
-              colSpan: 4,
+              colSpan: 3,
               styles: {
                 halign: "center",
               },
             },
           ],
           //--- --- ---//
-          ["I", "II", "III", "IV"],
+          ["I", "II", "III"],
           absences,
           //--- --- ---//
         ],
@@ -625,71 +617,72 @@ async function getBangFemHebPrimSR(data) {
       });
 
       //--- TABLA EXTRAORDINARIO ---//
-      doc.autoTable({
-        startY: 75,
-        tableWidth: 70,
-        margin: {
-          left: 125,
-        },
-        headStyles: {
-          fillColor: [255, 255, 255],
-          textColor: [0, 0, 0],
-          font: "Yiddishkeit AlefAlefAlef Bold",
-          fontStyle: "bold",
-          lineColor: [0, 0, 0],
-          lineWidth: 0.1,
-          fontSize: 7,
-          valign: "middle",
-          halign: "center",
-        },
-        headStyles: {
-          fillColor: [255, 255, 255],
-          textColor: [0, 0, 0],
-          lineWidth: 0.1,
-          lineColor: [0, 0, 0],
-          font: "Yiddishkeit AlefAlefAlef Bold",
-          fontSize: 9,
-          valign: "middle",
-          halign: "center",
-        },
-        bodyStyles: {
-          fontSize: 8,
-          lineWidth: 0.1,
-          textColor: [0, 0, 0],
-          lineColor: [0, 0, 0],
-          halign: "center",
-          valign: "middle",
-          font: "Yiddishkeit AlefAlefAlef Bold",
-          fontStyle: "bold",
-        },
-        footStyles: {
-          fontSize: 8,
-          halign: "center",
-          lineWidth: 0.1,
-          valign: "middle",
-          fillColor: [255, 255, 255],
-          textColor: [0, 0, 0],
-          lineColor: [0, 0, 0],
-          fontSize: 10,
-          font: "Yiddishkeit AlefAlefAlef Bold",
-          fontStyle: "bold",
-        },
-        head: [
-          [
-            {
-              content: "CALIFICACIÓN ANEXA",
-              colSpan: 2,
-              styles: {
-                halign: "center",
+     /*  if (anexa.length > 0) {
+        doc.autoTable({
+          startY: 75,
+          tableWidth: 70,
+          margin: {
+            left: 125,
+          },
+          headStyles: {
+            fillColor: [255, 255, 255],
+            textColor: [0, 0, 0],
+            font: "Yiddishkeit AlefAlefAlef Bold",
+            fontStyle: "bold",
+            lineColor: [0, 0, 0],
+            lineWidth: 0.1,
+            fontSize: 7,
+            valign: "middle",
+            halign: "center",
+          },
+          headStyles: {
+            fillColor: [255, 255, 255],
+            textColor: [0, 0, 0],
+            lineWidth: 0.1,
+            lineColor: [0, 0, 0],
+            font: "Yiddishkeit AlefAlefAlef Bold",
+            fontSize: 9,
+            valign: "middle",
+            halign: "center",
+          },
+          bodyStyles: {
+            fontSize: 8,
+            lineWidth: 0.1,
+            textColor: [0, 0, 0],
+            lineColor: [0, 0, 0],
+            halign: "center",
+            valign: "middle",
+            font: "Yiddishkeit AlefAlefAlef Bold",
+            fontStyle: "bold",
+          },
+          footStyles: {
+            fontSize: 8,
+            halign: "center",
+            lineWidth: 0.1,
+            valign: "middle",
+            fillColor: [255, 255, 255],
+            textColor: [0, 0, 0],
+            lineColor: [0, 0, 0],
+            fontSize: 10,
+            font: "Yiddishkeit AlefAlefAlef Bold",
+            fontStyle: "bold",
+          },
+          head: [
+            [
+              {
+                content: "CALIFICACIÓN ANEXA",
+                colSpan: 2,
+                styles: {
+                  halign: "center",
+                },
               },
-            },
+            ],
+            //--- --- ---//
+            //--- --- ---//
           ],
-          //--- --- ---//
-          //--- --- ---//
-        ],
-        body: anexa,
-      });
-
+          body: anexa,
+        });
+      } */
       //--- TABLA DERECHA ---//
       doc.autoTable({
         startY: 175,
@@ -735,7 +728,7 @@ async function getBangFemHebPrimSR(data) {
             },
             {
               content: "PERIODOS",
-              colSpan: 4,
+              colSpan: 3,
               styles: {
                 halign: "center",
               },
@@ -757,12 +750,6 @@ async function getBangFemHebPrimSR(data) {
             },
             {
               content: "3",
-              styles: {
-                halign: "center",
-              },
-            },
-            {
-              content: "4",
               styles: {
                 halign: "center",
               },
@@ -873,7 +860,7 @@ async function getBangFemHebPrimSR(data) {
       console.log("Antes tabla: " + comments);
       doc.autoTable({
         theme: "plain",
-        startY: 251,
+        startY: 241,
         tableWidth: 100,
         margin: {
           left: 14,

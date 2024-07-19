@@ -106,6 +106,7 @@ class DataSchoolReportCardsSecondaryMales extends Connection
             INNER JOIN school_control_ykt.inscriptions AS ins ON assignment.id_group = ins.id_group
             INNER JOIN school_control_ykt.students AS student ON ins.id_student = student.id_student
             WHERE assignment.id_assignment = '$id_assignment'
+            LIMIT 1
             ");
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
@@ -176,6 +177,7 @@ class DataSchoolReportCardsSecondaryMales extends Connection
             (SELECT id_attendance_index
                FROM attendance_records.attendance_index AS t2
                WHERE t1.id_assignment = t2.id_assignment AND DATE(t2.apply_date) = DATE(t1.apply_date) AND t1.class_block = t2.class_block
+               AND valid_assistance = 1
                ORDER BY t2.id_attendance_index DESC LIMIT 1)
             ");
 

@@ -12,7 +12,7 @@ class DataSchoolReportCardsHebrew extends Connection
     public function getQualificationsByStudentPeriod($id_group, $id_academic_area, $id_student, $no_period, $id_period_calendar, $order_by_gral)
     {
         $results = array();
-        $sql = "SELECT 
+        $sql = "SELECT DISTINCT
         assgn.id_assignment,
         asscassglmp.id_final_grade,
         percal.no_period,
@@ -120,7 +120,7 @@ class DataSchoolReportCardsHebrew extends Connection
          AS 'calificacion',
          percal.no_period
          FROM school_control_ykt.students AS stud
-        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student= stud.id_student
+        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student = stud.id_student
         INNER JOIN school_control_ykt.groups AS groups ON groups.id_group = insc.id_group
         INNER JOIN  school_control_ykt.assignments AS assgn ON assgn.id_group = groups.id_group
         INNER JOIN school_control_ykt.subjects AS sbj ON assgn.id_subject = sbj.id_subject
@@ -132,11 +132,10 @@ class DataSchoolReportCardsHebrew extends Connection
         WHERE percal.id_period_calendar = $id_period_calendar
          AND assgn.id_group = $id_group
         AND insc.id_student = $id_student
-        AND evplan.id_evaluation_source = 27
         AND assgn.id_subject = 561
 
         ";
-        /* echo $sql; */
+        //echo $sql;
         $query = $this->conn->query($sql);
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {

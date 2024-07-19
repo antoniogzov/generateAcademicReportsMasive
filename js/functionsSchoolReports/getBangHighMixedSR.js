@@ -13,6 +13,7 @@ async function getBangHighMixedSR(data) {
       var valid_structure = 0;
       var data_school_assignments = [];
       var data_school_assignments_span = [];
+      var data_ids_assignments_span = [];
       var data_school_averages_heb = [];
       var data_school_averages_span = [];
       var data_school_conductual = [];
@@ -24,6 +25,12 @@ async function getBangHighMixedSR(data) {
         ].student.student_name.toUpperCase();
       var student_hebrew_name =
         data.groups_heb[i_group].students[0][ind_std].student.hebrew_name;
+
+        var special_group =
+        data.groups_span[i_group].students[0][ind_std].students_groups[0].group_code;
+
+      var pending_assignments = "";
+
       var array_all_periods_heb_qualifications_cond =
         data.groups_heb[i_group].students[0][ind_std].qualifications_cond;
       var array_all_periods_heb_qualifications_span =
@@ -218,12 +225,19 @@ async function getBangHighMixedSR(data) {
       ) {
         valid_qualif = 0;
         calif_final = 0;
+
         var calif_p1 = data_school_assignments[assignments][0];
         var calif_p2 = data_school_assignments[assignments][1];
         var calif_p3 = data_school_assignments[assignments][2];
         if (calif_p1 != "-") {
           valid_qualif++;
           calif_final = calif_final + parseFloat(calif_p1);
+          if (
+            calif_p1 < 6 ||
+            (calif_p1 < 6 && extr_qualif != "-" && extr_qualif < 6)
+          ) {
+            pending_assignments += name_subject + ", ";
+          }
         }
         if (calif_p2 != "-") {
           valid_qualif++;
@@ -235,6 +249,9 @@ async function getBangHighMixedSR(data) {
         }
         if (valid_qualif != 0) {
           var calif_final = (calif_final / valid_qualif).toFixed(0);
+        }
+        if (extr_qualif != "-") {
+          calif_final = extr_qualif;
         }
         data_school_assignments[assignments].unshift("-", "-", calif_final);
       }
@@ -294,86 +311,85 @@ async function getBangHighMixedSR(data) {
                 },
             }, "ALEJANDRA MOTA", "9", "-", "9");
             data_school_assignments_span.push(ingles);*/
-      for (
-        let assignment_period = 2;
-        assignment_period <= 2;
-        assignment_period++
-      ) {
-        var sum_period_qual = 0;
-        var sum_valid_asg = 0;
-        var id_period =
-          array_all_periods_span_qualifications[assignment_period].no_period;
-        var array_periods_qualifications =
-          array_all_periods_span_qualifications[assignment_period]
-            .spanish_period_qualifications;
-        for (
-          let assignments = 0;
-          assignments < array_periods_qualifications.length;
-          assignments++
-        ) {
-          var asignatura = [];
-          var extra = RQhighschoolLF(
-            array_all_periods_span_qualifications[assignment_period]
-              .spanish_period_qualifications[assignments].extraordinary
-          );
-          var calificacion = RQhighschoolLF(
-            array_all_periods_span_qualifications[assignment_period]
-              .spanish_period_qualifications[assignments].calificacion
-          );
-          var extr_qualif = extra;
-          var period_qualif = calificacion;
-          if (extr_qualif != "-") {
-            sum_period_qual = sum_period_qual + parseFloat(extr_qualif);
-            sum_valid_asg++;
-            var cal_final = extr_qualif;
-          } else {
-            if (calificacion != "-") {
-              sum_period_qual = sum_period_qual + parseFloat(calificacion);
-              sum_valid_asg++;
-              var cal_final = calificacion;
-            }
-          }
-          data_school_assignments_span[assignments].push(
-            period_qualif,
-            extra,
-            cal_final
-          );
-          cal_final = "-";
-        }
-        if (sum_period_qual != 0 && sum_valid_asg != 0) {
-          var prom_period = (sum_period_qual / sum_valid_asg).toFixed(1);
-          data_school_averages_span[0].push("", "", prom_period);
-          sum_period_qual = 0;
-          sum_valid_asg = 0;
-        } else {
-          data_school_averages_span[0].push("-");
-        }
-      }
 
+      var assignment_period = 2;
+
+      var sum_period_qual = 0;
+      var sum_valid_asg = 0;
+      var id_period =
+        array_all_periods_span_qualifications[assignment_period].no_period;
+      var array_periods_qualifications =
+        array_all_periods_span_qualifications[assignment_period]
+          .spanish_period_qualifications;
       for (
         let assignments = 0;
+        assignments < array_periods_qualifications.length;
+        assignments++
+      ) {
+        var asignatura = [];
+        var extra = RQhighschoolLF(
+          array_all_periods_span_qualifications[assignment_period]
+            .spanish_period_qualifications[assignments].extraordinary
+        );
+        var calificacion = RQhighschoolLF(
+          array_all_periods_span_qualifications[assignment_period]
+            .spanish_period_qualifications[assignments].calificacion
+        );
+        var extr_qualif = extra;
+        var period_qualif = calificacion;
+        if (extr_qualif != "-") {
+          sum_period_qual = sum_period_qual + parseFloat(extr_qualif);
+          sum_valid_asg++;
+          var cal_final = extr_qualif;
+        } else {
+          if (calificacion != "-") {
+            sum_period_qual = sum_period_qual + parseFloat(calificacion);
+            sum_valid_asg++;
+            var cal_final = calificacion;
+          }
+        }
+        data_school_assignments_span[assignments].push(
+          period_qualif,
+          extra,
+          cal_final
+        );
+        data_ids_assignments_span.push(array_all_periods_span_qualifications[assignment_period].spanish_period_qualifications[assignments].id_assignment);
+        cal_final = "-";
+      }
+
+      if (sum_period_qual != 0 && sum_valid_asg != 0) {
+        var prom_period = (sum_period_qual / sum_valid_asg).toFixed(1);
+        data_school_averages_span[0].push("", "", prom_period);
+        sum_period_qual = 0;
+        sum_valid_asg = 0;
+      } else {
+        data_school_averages_span[0].push("-");
+      }
+
+      /* for (
+        let assignments = 0;
         assignments <
-        array_all_periods_span_qualifications[2].spanish_period_qualifications
+        array_all_periods_span_qualifications[0].spanish_period_qualifications
           .length;
         assignments++
       ) {
         data_school_assignments_span[assignments].push("-", "-", "-", "-");
-      }
+      } */
       /* CREAR ESTRUCTURA INICIAL AREAS DE DESARROLLO (NOMBRES DE ASIGNATURAS Y PROFESORES) */
       for (
         let assignments = 0;
         assignments <
-        array_all_periods_heb_qualifications_cond[2].period_qualifications
+        array_all_periods_heb_qualifications_cond[1].period_qualifications
           .length;
         assignments++
       ) {
         var asignatura = [];
         var heb_sbj_name =
-          array_all_periods_heb_qualifications_cond[2].period_qualifications[
+          array_all_periods_heb_qualifications_cond[1].period_qualifications[
             assignments
           ].evaluation_name;
         var eval_hebrew_name =
-          array_all_periods_heb_qualifications_cond[2].period_qualifications[
+          array_all_periods_heb_qualifications_cond[1].period_qualifications[
             assignments
           ].eval_hebrew_name;
         asignatura.push({
@@ -459,6 +475,15 @@ async function getBangHighMixedSR(data) {
         anexa.push([name_anexa, calif_anexa]);
       }
 
+      var ass_pend = 0;
+      data_school_assignments_span.forEach((element) => {
+        if (element[4] < 6) {
+          pending_assignments += data_ids_assignments_span[ass_pend] + ' - ' + element[0].content + " | ";
+        }
+        ass_pend++;
+      });
+      var substr_int = pending_assignments.length - 2;
+      pending_assignments = pending_assignments.substring(0, substr_int);
       /////////////////////////////////////////////////////////////////////////
       /* Isntancia JsPDF */
       window.jsPDF = window.jspdf.jsPDF;
@@ -478,7 +503,7 @@ async function getBangHighMixedSR(data) {
       doc.text(8, 28, student_name);
       doc.setFontSize(9);
       doc.text(8, 32, student_code + " | ");
-      doc.text(25, 32, group_name);
+      doc.text(25, 32, (group_name + " | " + special_group));
       //  doc.text(119, 10, reverse("בנות כתר תורה")); // ESCUELA DE NIÑAS KETER TORÁ
       doc.setFontSize(14);
       //doc.text(124, 16, reverse("שנת לימודים תשפ''ב"));
@@ -487,6 +512,7 @@ async function getBangHighMixedSR(data) {
       doc.setR2L(false);
       doc.setFontSize(10);
       doc.setFontSize(7);
+
       /* doc.text(261, 8, "MÉXICO"); */
       //doc.text(262, 11, reverse("מקסיקו"));
       /* 
@@ -523,10 +549,10 @@ async function getBangHighMixedSR(data) {
           fillColor: [191, 95, 130],
           textColor: [255, 255, 255],
           lineColor: [191, 95, 130],
-          fontSize: 9,
+          fontSize: 8,
         },
         bodyStyles: {
-          fontSize: 8,
+          fontSize: 7,
           halign: "right",
           valign: "middle",
           lineColor: [255, 255, 255],
@@ -639,10 +665,10 @@ async function getBangHighMixedSR(data) {
               content: "Docente",
             },
             {
-              content: "3er M.",
+              content: "3cer M.",
             },
             {
-              content: "Extra",
+              content: "Extra. / Mod.",
             },
             {
               content: "C.F.",
@@ -721,6 +747,7 @@ async function getBangHighMixedSR(data) {
         });
       }
       /* MATERIAS PENDIENTES ESPAÑOL */
+
       doc.text(60, 177, "Materias que adeuda actualmente:");
       doc.setFontSize(7);
       doc.setTextColor(255, 0, 0);
@@ -729,6 +756,7 @@ async function getBangHighMixedSR(data) {
         199,
         "* El año escolar se repite si se reprueban mas de 3 materias"
       );
+
       doc.setTextColor(0, 0, 0);
       doc.autoTable({
         startY: 179,
@@ -743,7 +771,7 @@ async function getBangHighMixedSR(data) {
           fillColor: [255, 216, 171],
           textColor: [0, 0, 0],
           lineColor: [255, 216, 171],
-          fontSize: 9,
+          fontSize: 6.5,
         },
         bodyStyles: {
           fontSize: 8,
@@ -764,7 +792,7 @@ async function getBangHighMixedSR(data) {
         head: [
           [
             {
-              content: "",
+              content: pending_assignments,
               styles: {
                 minCellHeight: 15,
               },
@@ -773,9 +801,18 @@ async function getBangHighMixedSR(data) {
           //--- --- ---//
         ],
       });
-      doc.text(250, 190, "Fecha de emisión: " + output);
+      doc.addImage(
+        getLogoBangueoloHighSchoolFemalesYKTBase64(),
+        "png",
+        141,
+        7,
+        17,
+        20
+      );
+     
+      doc.text(250, 200, "Fecha de emisión: " + output);
       doc.setLineWidth(1.5);
-      doc.line(150, 18, 150, 200);
+      doc.line(150, 32, 150, 178);
       /*  doc.addImage(
                       getLogoBangueoloHighSchoolFemalesYKTBase64(),
                       "png",
@@ -857,7 +894,7 @@ async function getBangHighMixedSR(data) {
       //mejanejet_commit
       /* COMENTARIOS DE MEJANEJET */
       doc.autoTable({
-        startY: 120,
+        startY: 90,
         tableWidth: 130,
         margin: {
           left: 160,
@@ -886,7 +923,7 @@ async function getBangHighMixedSR(data) {
             {
               content: mejanejet_commit,
               styles: {
-                halign: "right",
+                halign: "left",
                 valign: "middle",
                 fillColor: [230, 206, 255],
               },
@@ -1019,15 +1056,29 @@ async function getBangHighMixedSR(data) {
                      }); */
         }
       }
-      doc.setFont("VarelaRound-Regular");
+      doc.addImage(
+        getPortadaHighBangFem(),
+        "png",
+        12.5,
+        10,
+        123,
+        190
+      );
       doc.setFontSize(9);
       doc.setDrawColor(0, 0, 0);
+      doc.setLineWidth(0.3);
+      doc.line(163, 160, 206, 160);
+      doc.text(166, 163, "Firma del tutor de grupo");
+
+      doc.line(238, 160, 283, 160);
+      doc.text(242, 163, "Firma de  la Mejanejet");
+      doc.setFont("VarelaRound-Regular");
       doc.line(238, 185, 283, 185);
       doc.text(240, 189, " " + "Firma directora academica");
       //doc.text(30, 200, reverse("חתימת המחנכת"));
       //--- FIRMA TUTOR ---//
       doc.line(163, 185, 206, 185);
-      doc.text(165, 189, "Firma del Tutor de Grupo");
+      doc.text(165, 189, "Firma del Padre o Tutor");
       //doc.text(99, 200, reverse("חתימת ההורים"));
       doc.save(student_code + ".pdf");
       await timer(2000);

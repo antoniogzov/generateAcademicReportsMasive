@@ -1,6 +1,7 @@
 var global_a = 0;
 async function getSchoolReportCardSpanishSecondaryMalesLFT(imgLogo, data) {
   //--- --- ---//
+  console.log("hereeeeeeeeeeee");
   var a = global_a;
   //--- --- ---//
   console.log(data);

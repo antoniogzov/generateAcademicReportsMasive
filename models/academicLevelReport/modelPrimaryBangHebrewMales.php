@@ -56,6 +56,8 @@ class DataSchoolReportCardsHebrewMales extends Connection
         ON grape.id_final_grade = asscassglmp.id_final_grade AND percal.id_period_calendar = grape.id_period_calendar
         LEFT JOIN iteach_grades_quantitatives.extraordinary_exams AS extra ON extra.id_grade_period = grape.id_grade_period
         WHERE asscassglmp.id_assignment = assgn.id_assignment
+         AND assgn.print_school_report_card = 1
+         AND assgn.assignment_active = 1
          AND assgn.id_group = $id_group
         AND sbj.subject_type_id !=3
         AND insc.id_student = $id_student

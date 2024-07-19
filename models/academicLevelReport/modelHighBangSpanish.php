@@ -16,7 +16,11 @@ class DataSchoolReportCardsSpanish extends Connection
         sbj.id_subject,
         percal.no_period,
         sbj.name_subject AS name_subject_original,
-        sbj.name_subject,
+        CASE
+        WHEN groups.group_type_id = 1 THEN sbj.name_subject
+        WHEN groups.group_type_id = 2 THEN CONCAT('* ', sbj.name_subject)
+        END
+        AS 'name_subject',
         CASE
         WHEN ext_exam.`grade_extraordinary_examen` IS NULL THEN '-'
         ELSE ext_exam.`grade_extraordinary_examen`
@@ -52,7 +56,12 @@ class DataSchoolReportCardsSpanish extends Connection
         ON assgn.id_assignment = asscassglmp.id_assignment AND asscassglmp.id_student = $id_student AND asscassglmp.id_inscription = insc.id_inscription
         LEFT JOIN iteach_grades_quantitatives.grades_period AS grape
         ON grape.id_final_grade = asscassglmp.id_final_grade AND percal.id_period_calendar = grape.id_period_calendar
-        LEFT JOIN iteach_grades_quantitatives.extraordinary_exams AS ext_exam ON ext_exam.`id_grade_period` = grape.`id_grade_period`
+        LEFT JOIN iteach_grades_quantitatives.extraordinary_exams AS ext_exam ON ext_exam.id_extraordinary_exams = 
+                    (SELECT id_extraordinary_exams
+                        FROM  iteach_grades_quantitatives.extraordinary_exams AS exe
+                        WHERE exe.`id_grade_period` = grape.`id_grade_period`
+                        ORDER BY id_examen_types ASC LIMIT 1
+                        )
         WHERE assgn.id_group = insc.id_group
         AND assgn.print_school_report_card = 1
         AND insc.id_student = $id_student
@@ -61,7 +70,30 @@ class DataSchoolReportCardsSpanish extends Connection
         AND sbj.id_subject != 418
         AND (assgn.show_list_teacher = 0 OR assgn.show_list_teacher = percal.no_period)
         AND assgn.print_school_report_card != 0
+        AND assgn.assignment_active = 1
         ORDER BY sbj.name_subject
+        ";
+        $query = $this->conn->query($sql);
+
+
+        while ($row = $query->fetch(PDO::FETCH_OBJ)) {
+            $results[] = $row;
+        }
+        //while ($row2 = $query2->fetch(PDO::FETCH_OBJ)) {
+        //    $results[] = $row2;
+        //}
+
+        return $results;
+    }
+    public function getSpecialGroup($id_student)
+    {
+        $results = array();
+        $sql = "SELECT groups.group_code
+         FROM 
+         school_control_ykt.students AS stds
+        INNER JOIN school_control_ykt.inscriptions AS insc ON stds.id_student = insc.id_student
+        INNER JOIN school_control_ykt.groups AS groups ON groups.id_group = insc.id_group AND groups.group_type_id = 2
+        WHERE stds.id_student = $id_student
         ";
         $query = $this->conn->query($sql);
 
@@ -79,7 +111,7 @@ class DataSchoolReportCardsSpanish extends Connection
     public function getQualificationsCondByStudentPeriodSpan($id_group, $id_academic_area, $id_student, $id_period_calendar, $order_by_cond_span)
     {
         $results = array();
-        $sql = "SELECT  CASE 
+        $sql = "SELECT DISTINCT CASE 
         WHEN esou.evaluation_name = 'Asignación libre' THEN ep.manual_name
         ELSE esou.evaluation_name
         END AS evaluation_name,
@@ -97,8 +129,10 @@ class DataSchoolReportCardsSpanish extends Connection
         END
         AS 'eval_hebrew_name'
         FROM  school_control_ykt.students AS stud
-        INNER JOIN school_control_ykt.subjects AS sbj ON sbj.id_subject = 417
-        INNER JOIN school_control_ykt.assignments AS asg ON sbj.id_subject = asg.id_subject
+        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student = stud.id_student
+        INNER JOIN school_control_ykt.groups AS gps ON gps.id_group = insc.id_group AND gps.group_type_id = 1
+        INNER JOIN school_control_ykt.assignments AS asg ON gps.id_group = asg.id_group
+        INNER JOIN school_control_ykt.subjects AS sbj ON sbj.id_subject = asg.id_subject AND sbj.id_subject = 417
         INNER JOIN iteach_grades_quantitatives.evaluation_plan AS ep ON  ep.id_assignment = asg.id_assignment
         INNER JOIN iteach_grades_quantitatives.evaluation_source AS esou ON esou.id_evaluation_source = ep.id_evaluation_source 
         INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS fga ON  asg.id_assignment = fga.id_assignment AND fga.id_student = stud.id_student
@@ -109,7 +143,7 @@ class DataSchoolReportCardsSpanish extends Connection
         AND grape.id_period_calendar = $id_period_calendar
         AND stud.id_student = $id_student
         $order_by_cond_span ";
-        /* echo $sql; */
+        //echo $sql;
         $query = $this->conn->query($sql);
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
