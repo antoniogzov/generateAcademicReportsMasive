@@ -203,6 +203,7 @@ async function getBangHighMixedSR(data) {
             var period_qualif = "-";
           }
           data_school_assignments[assignments].unshift(period_qualif);
+
         }
         if (sum_promedio != 0 && valid_asg != 0) {
           prom_period = (sum_promedio / valid_asg).toFixed(1);
@@ -211,6 +212,7 @@ async function getBangHighMixedSR(data) {
           sum_promedio = 0;
         }
         data_school_averages_heb[0].unshift(prom_period);
+        
       }
       if (sum_promedio_final != 0 && valid_asg_final != 0) {
         final_prom = (
@@ -247,11 +249,12 @@ async function getBangHighMixedSR(data) {
         if (extr_qualif != "-") {
           calif_final = extr_qualif;
         }
-        data_school_assignments[assignments].unshift("-", "-", calif_final);
+        data_school_assignments[assignments].unshift("-", "-", ""+calif_final);
 
         if (calif_final != "-" && calif_final < 6 ) {
-          pending_assignments += name_subject + ", ";
+          pending_assignments += data_school_assignments[assignments][7] + ", ";
         }
+       
       }
       /////////////////////////////////////////////////////////////////////////
       /* CREAR ESTRUCTURA INICIAL ESPAÑOL (NOMBRES DE ASIGNATURAS Y PROFESORES) */
