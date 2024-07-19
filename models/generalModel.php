@@ -88,7 +88,7 @@ class generalModelReports extends Connection
             FROM school_control_ykt.students AS student
             INNER JOIN school_control_ykt.inscriptions AS inscription ON student.id_student = inscription.id_student
             WHERE inscription.id_group = '$group_id' AND student.status = '1'
-            ORDER BY student.lastname  ");
+            ORDER BY student.lastname");
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
             $results[] = $row;

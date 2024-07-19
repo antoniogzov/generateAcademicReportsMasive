@@ -251,7 +251,7 @@ async function getBangHighMixedSR(data) {
         }
         data_school_assignments[assignments].unshift("-", "-", ""+calif_final);
 
-        if (calif_final != "-" && calif_final < 6 ) {
+        if (calif_final != "-" && calif_final < 6 && calif_final > 0) {
           pending_assignments += data_school_assignments[assignments][7] + ", ";
         }
        
