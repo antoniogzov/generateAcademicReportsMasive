@@ -232,12 +232,6 @@ async function getBangHighMixedSR(data) {
         if (calif_p1 != "-") {
           valid_qualif++;
           calif_final = calif_final + parseFloat(calif_p1);
-          if (
-            calif_p1 < 6 ||
-            (calif_p1 < 6 && extr_qualif != "-" && extr_qualif < 6)
-          ) {
-            pending_assignments += name_subject + ", ";
-          }
         }
         if (calif_p2 != "-") {
           valid_qualif++;
@@ -254,6 +248,10 @@ async function getBangHighMixedSR(data) {
           calif_final = extr_qualif;
         }
         data_school_assignments[assignments].unshift("-", "-", calif_final);
+
+        if (calif_final != "-" && calif_final < 6 ) {
+          pending_assignments += name_subject + ", ";
+        }
       }
       /////////////////////////////////////////////////////////////////////////
       /* CREAR ESTRUCTURA INICIAL ESPAÑOL (NOMBRES DE ASIGNATURAS Y PROFESORES) */
