@@ -79,4 +79,46 @@ function getSectionsByCampus()
 
     echo json_encode($data);
 }
+function getPeriods()
+{
+    $queries = new Queries;
 
+    
+    $id_academic_area = $_POST['id_academic_area'];
+    $id_academic_level = $_POST['id_academic_level'];
+    $id_campus = $_POST['id_campus'];
+    $id_section = $_POST['id_section'];
+
+
+    $sqlGetPeriods = "SELECT percal.*
+    FROM school_control_ykt.level_combinations AS lvc 
+    INNER JOIN iteach_grades_quantitatives.period_calendar AS percal ON percal.id_level_combination = lvc.id_level_combination
+    WHERE 
+        lvc.id_academic_area = $id_academic_area
+        AND lvc.id_academic_level = $id_academic_level
+        AND lvc.id_campus = $id_campus
+        AND lvc.id_section = $id_section
+    ";
+
+    $getPeriods = $queries->getData($sqlGetPeriods);
+    //--- --- ---//
+    //$last_id = $getInfoRequest['last_id'];
+    if (!empty($getPeriods)) {
+
+        $data = array(
+            'response' => true,
+            'data' => $getPeriods
+        );
+        //--- --- ---//
+
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message' => 'No se encontraron campus'
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}

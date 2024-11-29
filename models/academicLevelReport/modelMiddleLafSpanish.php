@@ -50,7 +50,7 @@ class DataSchoolReportCardsSecondaryMales extends Connection
         $query = $this->conn->query("
             SELECT student.id_student, student.student_code, student.name, student.lastname, CONCAT(UPPER(student.lastname), ' ', UPPER(student.name)) AS student_name
             FROM school_control_ykt.students AS student
-            INNER JOIN school_control_ykt.inscriptions AS inscription ON student.id_student = inscription.id_student
+            INNER JOIN school_control_ykt.inscriptions_old AS inscription ON student.id_student = inscription.id_student
             WHERE inscription.id_group = '$group_id' AND student.status = 1 
             ORDER BY student.lastname
             ");
@@ -103,7 +103,7 @@ class DataSchoolReportCardsSecondaryMales extends Connection
         $query = $this->conn->query("
             SELECT ins.id_inscription, student.id_student, student.student_code
             FROM school_control_ykt.assignments AS assignment
-            INNER JOIN school_control_ykt.inscriptions AS ins ON assignment.id_group = ins.id_group
+            INNER JOIN school_control_ykt.inscriptions_old AS ins ON assignment.id_group = ins.id_group
             INNER JOIN school_control_ykt.students AS student ON ins.id_student = student.id_student
             WHERE assignment.id_assignment = '$id_assignment'
             LIMIT 1

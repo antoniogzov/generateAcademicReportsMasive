@@ -41,7 +41,7 @@ class DataSchoolReportCardsSpanish extends Connection
         CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher,
         sbj_tp.subject_type
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions AS insc
+        INNER JOIN school_control_ykt.inscriptions_old AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -91,7 +91,7 @@ class DataSchoolReportCardsSpanish extends Connection
         $sql = "SELECT groups.group_code
          FROM 
          school_control_ykt.students AS stds
-        INNER JOIN school_control_ykt.inscriptions AS insc ON stds.id_student = insc.id_student
+        INNER JOIN school_control_ykt.inscriptions_old AS insc ON stds.id_student = insc.id_student
         INNER JOIN school_control_ykt.groups AS groups ON groups.id_group = insc.id_group AND groups.group_type_id = 2
         WHERE stds.id_student = $id_student
         ";
@@ -129,7 +129,7 @@ class DataSchoolReportCardsSpanish extends Connection
         END
         AS 'eval_hebrew_name'
         FROM  school_control_ykt.students AS stud
-        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student = stud.id_student
+        INNER JOIN school_control_ykt.inscriptions_old AS insc ON insc.id_student = stud.id_student
         INNER JOIN school_control_ykt.groups AS gps ON gps.id_group = insc.id_group AND gps.group_type_id = 1
         INNER JOIN school_control_ykt.assignments AS asg ON gps.id_group = asg.id_group
         INNER JOIN school_control_ykt.subjects AS sbj ON sbj.id_subject = asg.id_subject AND sbj.id_subject = 417
@@ -165,7 +165,7 @@ class DataSchoolReportCardsSpanish extends Connection
         AS 'calificacion',  fga.id_final_grade, percal.no_period, manual_name
         FROM school_control_ykt.students AS stud
        INNER JOIN  school_control_ykt.assignments AS assgn 
-       INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student= stud.id_student
+       INNER JOIN school_control_ykt.inscriptions_old AS insc ON insc.id_student= stud.id_student
        INNER JOIN school_control_ykt.groups AS groups ON groups.id_group = insc.id_group AND groups.group_type_id = 2
         INNER JOIN iteach_grades_quantitatives.period_calendar AS percal
        INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS fga ON assgn.id_assignment = fga.id_assignment AND fga.id_student = stud.id_student

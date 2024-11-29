@@ -1,4 +1,5 @@
 async function getBangHighMixedSR(data) {
+  console.log('getBangHighMixed');
   for (let i_group = 0; i_group < data.groups_heb.length; i_group++) {
     var school_cycle = data.current_school_year;
     var group_name = data.groups_heb[i_group].group_code;
@@ -1081,6 +1082,7 @@ async function getBangHighMixedSR(data) {
       doc.line(163, 185, 206, 185);
       doc.text(165, 189, "Firma del Padre o Tutor");
       //doc.text(99, 200, reverse("חתימת ההורים"));
+      
       doc.save(student_code + ".pdf");
       await timer(2000);
     }

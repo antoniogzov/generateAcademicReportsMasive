@@ -4,6 +4,8 @@ $(document).ready(function () {
     const id_level_combination = $("#id_level_combination").val();
     const id_group = $(this).attr("data-id-group");
     const id_academic_area = $("#slct_academic_area").val();
+    const id_period = $("#slct_period").val();
+    const no_period = $("#slct_period").find("option:selected").text();
     console.log(id_level_combination);
     switch (id_level_combination) {
       case "4":
@@ -52,6 +54,8 @@ $(document).ready(function () {
             id_level_combination: id_level_combination,
             id_group: id_group,
             id_academic_area: id_academic_area,
+            id_period: id_period,
+            no_period: no_period,
             order_by_lang: "ORDER BY sbj.name_subject",
             order_by_gral: "ORDER BY sbj.name_subject",
             installment: 1,
@@ -63,7 +67,7 @@ $(document).ready(function () {
               var response_data = data;
               console.log(response_data);
               //--- --- ---//
-              getBangMalesHebPrimSR(response_data);
+              getBangMalesHebPrimSR(response_data, no_period);
               //--- --- ---//
             } else {
               //--- --- ---//

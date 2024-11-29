@@ -1,4 +1,4 @@
-async function getBangMalesHebPrimSR(data) {
+async function getBangMalesHebPrimSR(data, no_period) {
   for (let i_group = 0; i_group < data.groups_heb.length; i_group++) {
     console.log(data.groups_heb);
     for (
@@ -124,7 +124,7 @@ async function getBangMalesHebPrimSR(data) {
           name_subject,
           qualif_period_1,
           qualif_period_2,
-          qualif_period_3 ,
+          qualif_period_3,
           qualif_period_4,
           qualif_final,
         ];
@@ -146,7 +146,7 @@ async function getBangMalesHebPrimSR(data) {
         promedio_final = promedio_final + parseFloat(promedio_p2);
         num_valid_periods++;
       }
-     // promedio_p3 = 0
+      // promedio_p3 = 0
       if (promedio_p3 == 0) {
         promedio_p3 = "-";
       } else {
@@ -166,16 +166,62 @@ async function getBangMalesHebPrimSR(data) {
       } else {
         promedio_final = (promedio_final / num_valid_periods).toFixed(1);
       }
-      var averages = [
-        [
-          "PROMEDIO",
-          promedio_p1,
-          promedio_p2,
-          promedio_p3,
-          promedio_p4,
-          promedio_final,
-        ],
-      ];
+
+      switch (no_period) {
+        case "1":
+          var averages = [
+            [
+              "PROMEDIO",
+              promedio_p1,
+              "-",
+              "-",
+              "-",
+              promedio_final,
+            ],
+          ];
+          break;
+
+          case "2":
+          var averages = [
+            [
+              "PROMEDIO",
+              promedio_p1,
+              promedio_p2,
+              "-",
+              "-",
+              promedio_final,
+            ],
+          ];
+          break;
+          case "3":
+          var averages = [
+            [
+              "PROMEDIO",
+              promedio_p1,
+              promedio_p2,
+              promedio_p3,
+              "-",
+              promedio_final,
+            ],
+          ];
+          break;
+          case "4":
+          var averages = [
+            [
+              "PROMEDIO",
+              promedio_p1,
+              promedio_p2,
+              promedio_p3,
+              promedio_p4,
+              promedio_final,
+            ],
+          ];
+          break;
+
+        default:
+          break;
+      }
+
       console.log(data_school_report);
 
       var data_school_report_languages = [];
@@ -241,13 +287,15 @@ async function getBangMalesHebPrimSR(data) {
       for (
         let cond = 0;
         cond <
-        data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
-          .period_qualifications.length;
+        data.groups_heb[i_group].students[0][i_student].qualifications_cond[
+          no_period - 1
+        ].period_qualifications.length;
         cond++
       ) {
         if (
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
-            .period_qualifications[cond] != undefined
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[
+            no_period - 1
+          ].period_qualifications[cond] != undefined
         ) {
           var heb_name =
             data.groups_heb[i_group].students[0][i_student]
@@ -283,14 +331,16 @@ async function getBangMalesHebPrimSR(data) {
         qualif_period_4 = "-";
 
         var id_evaluation_source =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
-            .period_qualifications[cond].id_evaluation_source;
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[
+            no_period - 1
+          ].period_qualifications[cond].id_evaluation_source;
 
         for (
           let cond1 = 0;
           cond1 <
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
-            .period_qualifications.length;
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[
+            no_period - 1
+          ].period_qualifications.length;
           cond1++
         ) {
           if (
@@ -366,7 +416,7 @@ async function getBangMalesHebPrimSR(data) {
             var qualif_period_3 = "-";
           }
         }
-       // var qualif_period_3 = "-";
+        // var qualif_period_3 = "-";
 
         for (
           let cond4 = 0;
@@ -390,20 +440,17 @@ async function getBangMalesHebPrimSR(data) {
                   .qualifications_cond[3].period_qualifications[cond4]
                   .grade_evaluation_criteria_teacher;
             }
-            
           } else {
             var qualif_period_4 = "-";
           }
-
-          
         }
 
         var data_school_report_cond_arr = [
           name_subject,
           qualif_period_1,
-          qualif_period_2,
+          "-",
           qualif_period_3,
-          qualif_period_4
+          qualif_period_4,
         ];
         data_school_report_conductual.push(data_school_report_cond_arr);
       }

@@ -56,7 +56,7 @@ class DataSchoolReportCardsSpanish extends Connection
                         CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher,
                         sbj_tp.subject_type
                 FROM school_control_ykt.assignments AS assgn
-                    INNER JOIN school_control_ykt.inscriptions AS insc
+                    INNER JOIN school_control_ykt.inscriptions_old AS insc
                     INNER JOIN school_control_ykt.groups AS groups
                         ON groups.id_group = insc.id_group
                     INNER JOIN school_control_ykt.subjects AS sbj
@@ -94,7 +94,7 @@ class DataSchoolReportCardsSpanish extends Connection
                 FROM iteach_grades_qualitatives.learning_maps_log AS log_lmp 
                     INNER JOIN iteach_grades_qualitatives.questions_log_learning_maps AS log_questions 
                         ON log_lmp.id_historical_learning_maps = log_questions.id_historical_learning_maps
-                    INNER JOIN school_control_ykt.inscriptions AS insc 
+                    INNER JOIN school_control_ykt.inscriptions_old AS insc 
                         ON log_lmp.id_student = insc.id_student
                     LEFT JOIN iteach_grades_qualitatives.evaluation_bank AS bq 
                         ON log_questions.id_evaluation_bank = bq.id_evaluation_bank

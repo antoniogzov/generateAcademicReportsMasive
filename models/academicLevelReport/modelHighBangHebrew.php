@@ -40,7 +40,7 @@ class DataSchoolReportCardsHebrew extends Connection
         CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher,
         sbj_tp.subject_type
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions AS insc
+        INNER JOIN school_control_ykt.inscriptions_old AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -86,7 +86,7 @@ class DataSchoolReportCardsHebrew extends Connection
          percal.no_period
         FROM school_control_ykt.students AS stud
         INNER JOIN  school_control_ykt.assignments AS assgn 
-        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student= stud.id_student
+        INNER JOIN school_control_ykt.inscriptions_old AS insc ON insc.id_student= stud.id_student
         INNER JOIN school_control_ykt.groups AS groups ON groups.id_group = insc.id_group AND groups.group_type_id = 2
          INNER JOIN iteach_grades_quantitatives.period_calendar AS percal
         INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS fga ON assgn.id_assignment = fga.id_assignment AND fga.id_student = stud.id_student
@@ -122,7 +122,7 @@ class DataSchoolReportCardsHebrew extends Connection
         CONCAT(mejan.nombre_corto) AS mejanejet_name_teacher,
         sbj_tp.subject_type
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions AS insc
+        INNER JOIN school_control_ykt.inscriptions_old AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -191,7 +191,7 @@ class DataSchoolReportCardsHebrew extends Connection
         CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher,
         sbj_tp.subject_type
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions AS insc
+        INNER JOIN school_control_ykt.inscriptions_old AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -242,7 +242,7 @@ class DataSchoolReportCardsHebrew extends Connection
         END
         AS 'eval_hebrew_name'
         FROM  school_control_ykt.students AS stud
-        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student = stud.id_student
+        INNER JOIN school_control_ykt.inscriptions_old AS insc ON insc.id_student = stud.id_student
         INNER JOIN school_control_ykt.groups AS gps ON gps.id_group = insc.id_group AND gps.group_type_id = 1
         INNER JOIN school_control_ykt.assignments AS asg ON gps.id_group = asg.id_group
         INNER JOIN school_control_ykt.subjects AS sbj ON sbj.id_subject = asg.id_subject AND sbj.id_subject = 418
@@ -275,7 +275,7 @@ class DataSchoolReportCardsHebrew extends Connection
         //--- OBTENEMOS LA CALIFICACIÓN DE LOS EXAMENES EXTRAS ---//
         $query = $this->conn->query("SELECT assgn.id_assignment, sbj.name_subject, sbj.hebrew_name
             FROM school_control_ykt.assignments AS assgn
-            INNER JOIN school_control_ykt.inscriptions AS insc ON assgn.id_group = insc.id_group
+            INNER JOIN school_control_ykt.inscriptions_old AS insc ON assgn.id_group = insc.id_group
             INNER JOIN school_control_ykt.subjects AS sbj ON assgn.id_subject = sbj.id_subject
             WHERE insc.id_student = $id_student AND assgn.id_group = $id_group AND sbj.subject_type_id = 4 AND assgn.assignment_active = 1
             ");
@@ -291,7 +291,7 @@ class DataSchoolReportCardsHebrew extends Connection
                 ELSE evp.manual_name
                 END AS name_exam
                 FROM school_control_ykt.assignments AS assgn
-                INNER JOIN school_control_ykt.inscriptions AS insc ON assgn.id_group = insc.id_group
+                INNER JOIN school_control_ykt.inscriptions_old AS insc ON assgn.id_group = insc.id_group
                 INNER JOIN iteach_grades_quantitatives.evaluation_plan AS evp ON assgn.id_assignment = evp.id_assignment
                 INNER JOIN iteach_grades_quantitatives.evaluation_source AS evs ON evp.id_evaluation_source = evs.id_evaluation_source
                 INNER JOIN iteach_grades_quantitatives.grades_evaluation_criteria AS gec ON evp.id_evaluation_plan = gec.id_evaluation_plan

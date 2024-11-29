@@ -99,5 +99,21 @@ class academicLevelsView extends Connection
 
         return $results;
     }
+    public function getPeriodsByLevelCombination($id_level_combination)
+    {
+        $results = array();
+
+        $query = $this->conn->query("SELECT percal.*
+        FROM school_control_ykt.level_combinations AS lvc 
+        INNER JOIN iteach_grades_quantitatives.period_calendar AS percal ON percal.id_level_combination = lvc.id_level_combination
+        WHERE 
+        lvc.id_level_combination = '$id_level_combination'");
+
+        while ($row = $query->fetch(PDO::FETCH_OBJ)) {
+            $results[] = $row;
+        }
+
+        return $results;
+    }
     
 }

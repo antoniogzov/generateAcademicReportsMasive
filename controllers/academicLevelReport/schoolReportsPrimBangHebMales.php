@@ -17,6 +17,8 @@ function getBangMalesHebPrimSR()
     $id_level_combination_span = $_POST['id_level_combination'];
     $id_group = $_POST['id_group'];
     $id_academic_area = $_POST['id_academic_area'];
+    $id_period = $_POST['id_period'];
+    $no_period = $_POST['no_period'];
 
     $periods_heb = array();
     $array_groups_heb = array();
@@ -94,7 +96,7 @@ function getBangMalesHebPrimSR()
                 /* CALIFICACIONES GENERALES POR PERIODO */
                 /* CALIFICACIONES CONDUCTUAL POR PERIODO */
                 $order_by_cond_heb = '';
-                $array_conductual = $model_heb->getQualificationsCondByStudentPeriodPrimary($group_heb->id_group, $id_academic_area, $index->id_student, $p_h->id_period_calendar, $order_by_cond_heb);
+                $array_conductual = $model_heb->getQualificationsCondByStudentPeriodPrimary($group_heb->id_group, $id_academic_area, $index->id_student, $p_h->id_period_calendar, $order_by_cond_heb, $no_period);
 
                 $qualifications_cond_period = array(
                     'id_period_calendar' => $p_h->id_period_calendar,

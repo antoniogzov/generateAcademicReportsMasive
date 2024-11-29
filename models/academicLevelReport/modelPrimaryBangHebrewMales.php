@@ -170,7 +170,7 @@ class DataSchoolReportCardsHebrewMales extends Connection
         return $results;
     }
 
-    public function getQualificationsCondByStudentPeriodPrimary($id_group, $id_academic_area, $id_student, $id_period_calendar, $order_by_cond_heb)
+    public function getQualificationsCondByStudentPeriodPrimary($id_group, $id_academic_area, $id_student, $id_period_calendar, $order_by_cond_heb, $no_period)
     {
         $results = array();
         $sql = "SELECT  sbj.name_subject,

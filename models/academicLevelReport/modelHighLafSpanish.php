@@ -14,7 +14,7 @@ class DataSchoolReportCardsLafontine extends Connection
         $results = array();
 
         $query = $this->conn->query("SELECT groups.*
-        	FROM school_control_ykt.inscriptions AS insc
+        	FROM school_control_ykt.inscriptions_old AS insc
             INNER JOIN school_control_ykt.groups AS groups ON insc.id_group = groups.id_group
         	WHERE insc.id_student = '$id_student'  AND groups.group_type_id = 2");
 
@@ -32,7 +32,7 @@ class DataSchoolReportCardsLafontine extends Connection
 
         $query = $this->conn->query(" SELECT student.id_student, student.student_code, student.hebrew_name, CONCAT(student.lastname , ' ', student.name) AS student_name
             FROM school_control_ykt.students AS student
-            INNER JOIN school_control_ykt.inscriptions AS inscription ON student.id_student = inscription.id_student
+            INNER JOIN school_control_ykt.inscriptions_old AS inscription ON student.id_student = inscription.id_student
             WHERE inscription.id_group = '$group_id' AND student.status = '1'
             ORDER BY student.lastname LIMIT 1");
 
@@ -148,7 +148,7 @@ class DataSchoolReportCardsLafontine extends Connection
                         CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher,
                         sbj_tp.subject_type
                 FROM school_control_ykt.assignments AS assgn
-                    INNER JOIN school_control_ykt.inscriptions AS insc
+                    INNER JOIN school_control_ykt.inscriptions_old AS insc
                     INNER JOIN school_control_ykt.groups AS groups
                         ON groups.id_group = insc.id_group
                     INNER JOIN school_control_ykt.subjects AS sbj
@@ -227,7 +227,7 @@ class DataSchoolReportCardsLafontine extends Connection
         CONCAT(mejan.nombre_corto) AS mejanejet_name_teacher,
         sbj_tp.subject_type
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions AS insc
+        INNER JOIN school_control_ykt.inscriptions_old AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -297,7 +297,7 @@ class DataSchoolReportCardsLafontine extends Connection
         CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher,
         sbj_tp.subject_type
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions AS insc
+        INNER JOIN school_control_ykt.inscriptions_old AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -377,7 +377,7 @@ class DataSchoolReportCardsLafontine extends Connection
         CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher,
         sbj_tp.subject_type
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions AS insc
+        INNER JOIN school_control_ykt.inscriptions_old AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -416,7 +416,7 @@ class DataSchoolReportCardsLafontine extends Connection
         $results = array();
         $sql = "SELECT sbj.name_subject, gec.id_evaluation_plan, evs.evaluation_name, evs.hebrew_name, gec.grade_evaluation_criteria_teacher 
         FROM school_control_ykt.students AS stud
-        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student = stud.id_student
+        INNER JOIN school_control_ykt.inscriptions_old AS insc ON insc.id_student = stud.id_student
         INNER JOIN school_control_ykt.groups AS gps ON gps.id_group=insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj ON sbj.subject_type_id = 4
         INNER JOIN school_control_ykt.assignments AS asg ON gps.id_group = asg.id_group AND asg.id_subject = sbj.id_subject
@@ -445,7 +445,7 @@ class DataSchoolReportCardsLafontine extends Connection
         //--- OBTENEMOS LA CALIFICACIÓN DE LOS EXAMENES EXTRAS ---//
         $query = $this->conn->query("SELECT assgn.id_assignment, sbj.name_subject, sbj.hebrew_name
             FROM school_control_ykt.assignments AS assgn
-            INNER JOIN school_control_ykt.inscriptions AS insc ON assgn.id_group = insc.id_group
+            INNER JOIN school_control_ykt.inscriptions_old AS insc ON assgn.id_group = insc.id_group
             INNER JOIN school_control_ykt.subjects AS sbj ON assgn.id_subject = sbj.id_subject
             WHERE insc.id_student = $id_student AND assgn.id_group = $id_group AND sbj.subject_type_id = 4 AND assgn.assignment_active = 1
             ");
@@ -461,7 +461,7 @@ class DataSchoolReportCardsLafontine extends Connection
                 ELSE evp.manual_name
                 END AS name_exam
                 FROM school_control_ykt.assignments AS assgn
-                INNER JOIN school_control_ykt.inscriptions AS insc ON assgn.id_group = insc.id_group
+                INNER JOIN school_control_ykt.inscriptions_old AS insc ON assgn.id_group = insc.id_group
                 INNER JOIN iteach_grades_quantitatives.evaluation_plan AS evp ON assgn.id_assignment = evp.id_assignment
                 INNER JOIN iteach_grades_quantitatives.evaluation_source AS evs ON evp.id_evaluation_source = evs.id_evaluation_source
                 INNER JOIN iteach_grades_quantitatives.grades_evaluation_criteria AS gec ON evp.id_evaluation_plan = gec.id_evaluation_plan
@@ -510,7 +510,7 @@ class DataSchoolReportCardsLafontine extends Connection
         FROM school_control_ykt.groups AS groups
           INNER JOIN school_control_ykt.assignments AS assgn
           ON assgn.id_group = groups.id_group
-        INNER JOIN school_control_ykt.inscriptions AS insc
+        INNER JOIN school_control_ykt.inscriptions_old AS insc
         
         INNER JOIN school_control_ykt.subjects AS sbj
         ON assgn.id_subject = sbj.id_subject
@@ -579,7 +579,7 @@ class DataSchoolReportCardsLafontine extends Connection
         colb.nombre_hebreo AS hebrew_name_teacher,
         CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions AS insc
+        INNER JOIN school_control_ykt.inscriptions_old AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -670,7 +670,7 @@ class DataSchoolReportCardsLafontine extends Connection
         CONCAT(mejan.nombre_corto) AS mejanejet_name_teacher,
         sbj_tp.subject_type
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions AS insc
+        INNER JOIN school_control_ykt.inscriptions_old AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -725,7 +725,7 @@ class DataSchoolReportCardsLafontine extends Connection
         CONCAT(mejan.nombre_corto) AS mejanejet_name_teacher,
         sbj_tp.subject_type
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions AS insc
+        INNER JOIN school_control_ykt.inscriptions_old AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -793,7 +793,7 @@ class DataSchoolReportCardsLafontine extends Connection
         CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher,
         sbj_tp.subject_type
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions AS insc
+        INNER JOIN school_control_ykt.inscriptions_old AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -891,7 +891,7 @@ class DataSchoolReportCardsLafontine extends Connection
         FROM school_control_ykt.subjects AS sbj
         INNER JOIN school_control_ykt.students AS stud
         INNER JOIN school_control_ykt.assignments AS asg ON sbj.id_subject = asg.id_subject
-        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student = stud.id_student
+        INNER JOIN school_control_ykt.inscriptions_old AS insc ON insc.id_student = stud.id_student
         INNER JOIN iteach_grades_quantitatives.evaluation_plan AS ep ON  ep.id_assignment = asg.id_assignment
         INNER JOIN iteach_grades_quantitatives.evaluation_source AS esou ON esou.id_evaluation_source = ep.id_evaluation_source 
         LEFT JOIN iteach_grades_quantitatives.grades_evaluation_criteria AS gec ON ep.id_evaluation_plan = gec.id_evaluation_plan
@@ -966,7 +966,7 @@ class DataSchoolReportCardsLafontine extends Connection
         $query = $this->conn->query("
                     SELECT ins.id_inscription, student.id_student, student.student_code
                     FROM school_control_ykt.assignments AS assignment
-                    INNER JOIN school_control_ykt.inscriptions AS ins ON assignment.id_group = ins.id_group
+                    INNER JOIN school_control_ykt.inscriptions_old AS ins ON assignment.id_group = ins.id_group
                     INNER JOIN school_control_ykt.students AS student ON ins.id_student = student.id_student
                     WHERE assignment.id_assignment = '$id_assignment'
                     ");
@@ -1105,7 +1105,7 @@ class DataSchoolReportCardsLafontine extends Connection
         SELECT log_lmp.*, log_questions.*, bq.colorHTML AS bckg
         FROM iteach_grades_qualitatives.learning_maps_log AS log_lmp 
         INNER JOIN iteach_grades_qualitatives.questions_log_learning_maps AS log_questions ON log_lmp.id_historical_learning_maps = log_questions.id_historical_learning_maps
-        INNER JOIN school_control_ykt.inscriptions AS insc ON log_lmp.id_student = insc.id_student
+        INNER JOIN school_control_ykt.inscriptions_old AS insc ON log_lmp.id_student = insc.id_student
         LEFT JOIN iteach_grades_qualitatives.evaluation_bank AS bq ON log_questions.id_evaluation_bank = bq.id_evaluation_bank
         WHERE log_lmp.ascc_lm_assgn = $ascc_lm_assgn AND log_lmp.assc_mpa_id = $assc_mpa_id AND log_lmp.no_installment = $no_installment AND insc.id_group = $id_group
         ");
@@ -1124,7 +1124,7 @@ class DataSchoolReportCardsLafontine extends Connection
         $query = $this->conn->query("
         SELECT fnl_comm.id_comments, fnl_comm.id_student, fnl_comm.comments1, fnl_comm.comments2, fnl_comm.directors_comment
         FROM iteach_grades_qualitatives.final_comments AS fnl_comm
-        INNER JOIN school_control_ykt.inscriptions AS insc ON fnl_comm.id_student = insc.id_student
+        INNER JOIN school_control_ykt.inscriptions_old AS insc ON fnl_comm.id_student = insc.id_student
         INNER JOIN school_control_ykt.groups AS groups ON insc.id_group = groups.id_group
         WHERE fnl_comm.ascc_lm_assgn = '$ascc_lm_assgn' AND fnl_comm.no_installment = '$no_installment' AND groups.id_group = '$id_group' AND (fnl_comm.comments1 != '' OR fnl_comm.comments2 != '' OR fnl_comm.directors_comment != '');
         ");

@@ -85,9 +85,9 @@ class generalModelReports extends Connection
         $results = array();
 
         $query = $this->conn->query(" SELECT student.id_student, student.student_code, student.hebrew_name, CONCAT(student.lastname , ' ', student.name) AS student_name
-            FROM school_control_ykt.students AS student
+            FROM school_control_ykt.students_old AS student
             INNER JOIN school_control_ykt.inscriptions AS inscription ON student.id_student = inscription.id_student
-            WHERE inscription.id_group = '$group_id' AND student.status = '1'
+            WHERE inscription.id_group = '$group_id' 
             ORDER BY student.lastname");
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {

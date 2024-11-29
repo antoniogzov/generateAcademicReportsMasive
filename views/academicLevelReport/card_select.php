@@ -11,6 +11,7 @@
             $id_academic_level = $_GET['id_academic_level'];
             $id_campus = $_GET['id_campus'];
             $id_section = $_GET['id_section'];
+            $id_period = $_GET['id_period'];
 
             $getCampusByAcademicLevel = $academic_levels_view->getCampusByAcademicLevel($id_academic_level);
             $getSectionsByCampus = $academic_levels_view->getSectionsByCampus($id_campus, $id_academic_level);
@@ -20,11 +21,12 @@
                 $id_level_combination = $getLevelCombinations = $getLevelCombinations[0]->id_level_combination;
 
                 $getGroupsByLevelCombination = $academic_levels_view->getGroupsByLevelCombination($id_level_combination);
+                $getPeriodsByLevelCombination = $academic_levels_view->getPeriodsByLevelCombination($id_level_combination);
             }
         ?>
             <div class="row">
                 <!-- -->
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group">
                         <label class="form-control-label" for="slct_academic_area">* Elija un área académica</label>
                         <form>
@@ -42,7 +44,7 @@
                     </div>
                 </div>
                 <!-- -->
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group">
                         <label class="form-control-label" for="slct_academic_level">* Elija un nivel académico</label>
                         <form>
@@ -59,7 +61,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="form-group">
                         <label class="form-control-label" for="slct_campus">* Elija un campus</label>
                         <form>
@@ -87,6 +89,24 @@
                                         <option selected value="<?= $section->id_section; ?>"><?= mb_strtoupper($section->section); ?></option>
                                     <?php else : ?>
                                         <option value="<?= $section->id_section; ?>"><?= mb_strtoupper($section->section); ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="form-control-label" for="slct_period">* Elija un periodo</label>
+                        <form>
+                            <select class="form-control" name="slct_period" id="slct_period">
+                                <option selected value="" disabled>Elija una opción</option>
+                                <?php foreach ($getPeriodsByLevelCombination as $period) : ?>
+                                    <?php if ($period->id_period_calendar == $id_period) : ?>
+                                        <option selected value="<?= $period->id_period_calendar; ?>"><?= $period->no_period ?></option>
+                                    <?php else : ?>
+                                        <option value="<?= $period->id_period_calendar; ?>"><?= $period->no_period ?></option>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
@@ -140,6 +160,16 @@
                         <label class="form-control-label" for="slct_section">* Elija una sección</label>
                         <form>
                             <select class="form-control" name="slct_section" id="slct_section">
+                                <option selected value="" disabled>Elija una opción</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="form-control-label" for="slct_period">* Elija un periodo</label>
+                        <form>
+                            <select class="form-control" name="slct_period" id="slct_period">
                                 <option selected value="" disabled>Elija una opción</option>
                             </select>
                         </form>
