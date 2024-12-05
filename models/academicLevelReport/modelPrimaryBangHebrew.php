@@ -37,7 +37,7 @@ class DataSchoolReportCardsHebrew extends Connection
         colb.nombre_hebreo AS hebrew_name_teacher,
         CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions_old AS insc
+        INNER JOIN school_control_ykt.inscriptions AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -82,7 +82,7 @@ class DataSchoolReportCardsHebrew extends Connection
          AS 'calificacion',
          percal.no_period
          FROM school_control_ykt.students AS stud
-        INNER JOIN school_control_ykt.inscriptions_old AS insc ON insc.id_student= stud.id_student
+        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student= stud.id_student
         INNER JOIN school_control_ykt.groups AS groups ON groups.id_group = insc.id_group
         INNER JOIN  school_control_ykt.assignments AS assgn ON assgn.id_group = groups.id_group
         INNER JOIN school_control_ykt.subjects AS sbj ON assgn.id_subject = sbj.id_subject
@@ -120,7 +120,7 @@ class DataSchoolReportCardsHebrew extends Connection
          AS 'calificacion',
          percal.no_period
          FROM school_control_ykt.students AS stud
-        INNER JOIN school_control_ykt.inscriptions_old AS insc ON insc.id_student = stud.id_student
+        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student = stud.id_student
         INNER JOIN school_control_ykt.groups AS groups ON groups.id_group = insc.id_group
         INNER JOIN  school_control_ykt.assignments AS assgn ON assgn.id_group = groups.id_group
         INNER JOIN school_control_ykt.subjects AS sbj ON assgn.id_subject = sbj.id_subject
@@ -174,7 +174,7 @@ class DataSchoolReportCardsHebrew extends Connection
         CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher,
         sbj_tp.subject_type
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions_old AS insc
+        INNER JOIN school_control_ykt.inscriptions AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -194,7 +194,7 @@ class DataSchoolReportCardsHebrew extends Connection
         AND sbj.id_academic_area = $id_academic_area AND sbj.subject_type_id = '3' AND sbj.id_subject != 416
         $order_by
         ";
-
+//echo $sql;
         $query = $this->conn->query($sql);
 
         while ($row = $query->fetch(PDO::FETCH_OBJ)) {
@@ -229,7 +229,7 @@ class DataSchoolReportCardsHebrew extends Connection
         FROM school_control_ykt.assignments AS asg
         INNER JOIN school_control_ykt.groups AS gps ON gps.id_group = asg.id_group
         INNER JOIN school_control_ykt.subjects AS sbj ON sbj.id_subject = asg.id_subject
-        INNER JOIN school_control_ykt.inscriptions_old AS insc ON insc.id_group = gps.id_group
+        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_group = gps.id_group
         INNER JOIN school_control_ykt.students AS stud ON stud.id_student = insc.id_student
         INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS fga ON  asg.id_assignment = fga.id_assignment  AND fga.id_student = stud.id_student
         INNER JOIN iteach_grades_quantitatives.grades_period AS grape ON  grape.id_final_grade = fga.id_final_grade 
@@ -298,7 +298,7 @@ class DataSchoolReportCardsHebrew extends Connection
         CONCAT(mejan.nombre_corto) AS mejanejet_name_teacher,
         sbj_tp.subject_type
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions_old AS insc
+        INNER JOIN school_control_ykt.inscriptions AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj

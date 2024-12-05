@@ -166,13 +166,16 @@ async function getBangFemHebPrimSR(data) {
         const qualif_period_1 =
           data.groups_heb[i_group].students[0][i_student].qualifications_lang[0]
             .period_qualifications[lang].calificacion;
-        const qualif_period_2 =
+            const qualif_period_2 ="-";
+          const qualif_period_3 ="-";
+
+            /*const qualif_period_2 =
           data.groups_heb[i_group].students[0][i_student].qualifications_lang[1]
             .period_qualifications[lang].calificacion;
         const qualif_period_3 =
           data.groups_heb[i_group].students[0][i_student].qualifications_lang[2]
             .period_qualifications[lang].calificacion;
-        /*  const qualif_period_4 =
+         const qualif_period_4 =
           data.groups_heb[i_group].students[0][i_student].qualifications_lang[3]
             .period_qualifications[lang].calificacion; */
         var data_school_report_language_arr = [
@@ -216,24 +219,27 @@ async function getBangFemHebPrimSR(data) {
 
       anexa.push(["NABÍ", anexa_period]);
 
-      /* console.log(absences); */
+      
       var data_school_report_conductual = [];
       for (
         let cond = 0;
         cond <
-        data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
+        data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
           .period_qualifications.length;
         cond++
       ) {
         var comments =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
             .comments;
         var mejanejet_name_teacher =
-          data.groups_heb[i_group].students[0][i_student].qualifications_cond[2]
+          data.groups_heb[i_group].students[0][i_student].qualifications_cond[0]
             .mejanejet_name;
         if (comments.length == 0) {
           comments = "";
         }
+
+        console.log(comments);
+
         const name_subject =
           data.groups_heb[i_group].students[0][
             i_student
