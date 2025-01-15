@@ -23,9 +23,35 @@ class DataSchoolReportCardsSpanish extends Connection
         AS 'name_subject',
         CASE
         WHEN ext_exam.`grade_extraordinary_examen` IS NULL THEN '-'
-        ELSE ext_exam.`grade_extraordinary_examen`
+        ELSE grape.grade_period_calc
         END
         AS 'extraordinary',
+         CASE 
+        WHEN (SELECT ex_mod.grade_extraordinary_examen
+              FROM iteach_grades_quantitatives.extraordinary_exams AS ex_mod
+              WHERE ex_mod.`id_grade_period` = grape.`id_grade_period` 
+                AND ex_mod.grade_extraordinary_examen IS NOT NULL
+                AND ex_mod.id_examen_types = 2
+              LIMIT 1) IS NOT NULL THEN  (SELECT ex_mod.grade_extraordinary_examen
+              FROM iteach_grades_quantitatives.extraordinary_exams AS ex_mod
+              WHERE ex_mod.`id_grade_period` = grape.`id_grade_period` 
+                AND ex_mod.grade_extraordinary_examen IS NOT NULL
+                AND ex_mod.id_examen_types = 2 ORDER BY id_extraordinary_exams DESC LIMIT 1) 
+        ELSE '-'
+    END AS exam_modular,
+    CASE 
+        WHEN (SELECT ex_mod.grade_extraordinary_examen
+              FROM iteach_grades_quantitatives.extraordinary_exams AS ex_mod
+              WHERE ex_mod.`id_grade_period` = grape.`id_grade_period` 
+                AND ex_mod.grade_extraordinary_examen IS NOT NULL
+                AND ex_mod.id_examen_types = 1
+              LIMIT 1) IS NOT NULL THEN  (SELECT extra_exam_val.grade_extraordinary_examen
+              FROM iteach_grades_quantitatives.extraordinary_exams AS extra_exam_val
+              WHERE extra_exam_val.`id_grade_period` = grape.`id_grade_period` 
+                AND extra_exam_val.grade_extraordinary_examen IS NOT NULL
+                AND extra_exam_val.id_examen_types = 1  ORDER BY id_extraordinary_exams DESC LIMIT 1) 
+        ELSE '-'
+    END AS exam_type_extraordinary,
        CASE
         WHEN grape.grade_period IS NULL THEN '-'
         ELSE grape.grade_period
@@ -41,7 +67,7 @@ class DataSchoolReportCardsSpanish extends Connection
         CONCAT(colb.apellido_paterno_colaborador,' ',colb.nombres_colaborador) AS spanish_name_teacher,
         sbj_tp.subject_type
          FROM school_control_ykt.assignments AS assgn
-        INNER JOIN school_control_ykt.inscriptions_old AS insc
+        INNER JOIN school_control_ykt.inscriptions AS insc
         INNER JOIN school_control_ykt.groups AS groups
         ON groups.id_group = insc.id_group
         INNER JOIN school_control_ykt.subjects AS sbj
@@ -59,7 +85,7 @@ class DataSchoolReportCardsSpanish extends Connection
         LEFT JOIN iteach_grades_quantitatives.extraordinary_exams AS ext_exam ON ext_exam.id_extraordinary_exams = 
                     (SELECT id_extraordinary_exams
                         FROM  iteach_grades_quantitatives.extraordinary_exams AS exe
-                        WHERE exe.`id_grade_period` = grape.`id_grade_period`
+                        WHERE exe.`id_grade_period` = grape.`id_grade_period` AND exe.grade_extraordinary_examen IS NOT NULL
                         ORDER BY id_examen_types ASC LIMIT 1
                         )
         WHERE assgn.id_group = insc.id_group
@@ -71,6 +97,7 @@ class DataSchoolReportCardsSpanish extends Connection
         AND (assgn.show_list_teacher = 0 OR assgn.show_list_teacher = percal.no_period)
         AND assgn.print_school_report_card != 0
         AND assgn.assignment_active = 1
+        AND insc.active = 1
         ORDER BY sbj.name_subject
         ";
         $query = $this->conn->query($sql);
@@ -91,9 +118,9 @@ class DataSchoolReportCardsSpanish extends Connection
         $sql = "SELECT groups.group_code
          FROM 
          school_control_ykt.students AS stds
-        INNER JOIN school_control_ykt.inscriptions_old AS insc ON stds.id_student = insc.id_student
+        INNER JOIN school_control_ykt.inscriptions AS insc ON stds.id_student = insc.id_student
         INNER JOIN school_control_ykt.groups AS groups ON groups.id_group = insc.id_group AND groups.group_type_id = 2
-        WHERE stds.id_student = $id_student
+        WHERE stds.id_student = $id_student AND insc.active = 1
         ";
         $query = $this->conn->query($sql);
 
@@ -129,7 +156,7 @@ class DataSchoolReportCardsSpanish extends Connection
         END
         AS 'eval_hebrew_name'
         FROM  school_control_ykt.students AS stud
-        INNER JOIN school_control_ykt.inscriptions_old AS insc ON insc.id_student = stud.id_student
+        INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student = stud.id_student
         INNER JOIN school_control_ykt.groups AS gps ON gps.id_group = insc.id_group AND gps.group_type_id = 1
         INNER JOIN school_control_ykt.assignments AS asg ON gps.id_group = asg.id_group
         INNER JOIN school_control_ykt.subjects AS sbj ON sbj.id_subject = asg.id_subject AND sbj.id_subject = 417
@@ -165,7 +192,7 @@ class DataSchoolReportCardsSpanish extends Connection
         AS 'calificacion',  fga.id_final_grade, percal.no_period, manual_name
         FROM school_control_ykt.students AS stud
        INNER JOIN  school_control_ykt.assignments AS assgn 
-       INNER JOIN school_control_ykt.inscriptions_old AS insc ON insc.id_student= stud.id_student
+       INNER JOIN school_control_ykt.inscriptions AS insc ON insc.id_student= stud.id_student
        INNER JOIN school_control_ykt.groups AS groups ON groups.id_group = insc.id_group AND groups.group_type_id = 2
         INNER JOIN iteach_grades_quantitatives.period_calendar AS percal
        INNER JOIN iteach_grades_quantitatives.final_grades_assignment AS fga ON assgn.id_assignment = fga.id_assignment AND fga.id_student = stud.id_student

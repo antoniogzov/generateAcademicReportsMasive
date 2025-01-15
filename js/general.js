@@ -57,7 +57,8 @@ function fixLetter(str) {
 }
 
 function RQhighschoolLF(q) {
-  if (!isNaN(q)) {
+  console.log(q);
+  if (!isNaN(q) && q != null && q != undefined) {
     var q_arr = q.split(".");
     var q_int = parseInt(q_arr[0]);
     var q_dec = parseInt(q_arr[1]);
@@ -76,7 +77,7 @@ function RQhighschoolLF(q) {
     }
     return q_int;
   } else {
-    return q;
+    return "-";
   }
 }
 function ParseFloatCero(q) {

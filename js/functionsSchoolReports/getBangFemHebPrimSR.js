@@ -117,21 +117,24 @@ async function getBangFemHebPrimSR(data) {
       if (promedio_p1 == 0) {
         promedio_p1 = "-";
       } else {
-        promedio_p1 = (promedio_p1 / sbj_p1).toFixed(1);
+        promedio_p1 = (promedio_p1 / sbj_p1);
+        promedio_p1 = truncateToDecimal(promedio_p1, 1).toFixed(2);
         promedio_final = promedio_final + parseFloat(promedio_p1);
         num_valid_periods++;
       }
       if (promedio_p2 == 0) {
         promedio_p2 = "-";
       } else {
-        promedio_p2 = (promedio_p2 / sbj_p2).toFixed(1);
+        promedio_p2 = (promedio_p2 / sbj_p2).toFixed(2);
+        promedio_p2 = truncateToDecimal(promedio_p2, 1);
         promedio_final = promedio_final + parseFloat(promedio_p2);
         num_valid_periods++;
       }
       if (promedio_p3 == 0) {
         promedio_p3 = "-";
       } else {
-        promedio_p3 = (promedio_p3 / sbj_p3).toFixed(1);
+        promedio_p3 = (promedio_p3 / sbj_p3).toFixed(2);
+        promedio_p3 = truncateToDecimal(promedio_p3, 1);
         promedio_final = promedio_final + parseFloat(promedio_p3);
         num_valid_periods++;
       }
@@ -145,7 +148,8 @@ async function getBangFemHebPrimSR(data) {
       if (promedio_final == 0) {
         promedio_final = "-";
       } else {
-        promedio_final = (promedio_final / num_valid_periods).toFixed(1);
+        promedio_final = (promedio_final / num_valid_periods).toFixed(2);
+        promedio_final = truncateToDecimal(promedio_final, 1);
       }
       var averages = [
         ["PROMEDIO", promedio_p1, promedio_p2, promedio_p3, promedio_final],
@@ -925,6 +929,11 @@ async function getBangFemHebPrimSR(data) {
     }
   }
   //--- --- ---//
+}
+
+function truncateToDecimal(number, decimals) {
+  const factor = Math.pow(10, decimals);
+  return Math.floor(number * factor) / factor;
 }
 
 function getFont() {

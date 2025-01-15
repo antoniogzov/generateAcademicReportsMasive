@@ -33,7 +33,7 @@ async function getLFHighSpanSR(imgLogo, data) {
             var speciality = data.groups_span[i_group].students[0][ind_std].speciality[0].comment_group;
             console.log(array_all_periods_span_qualifications);
             ///-- nombre de materia y profesor -- ///
-            for (let assignment_period =2; assignment_period <= 2; assignment_period++) {
+            for (let assignment_period =0; assignment_period <= 0; assignment_period++) {
                 assignment = [];
                 for (let period_qualifs = 0; period_qualifs < array_all_periods_span_qualifications[assignment_period].spanish_period_qualifications.length; period_qualifs++) {
                     name_subject = array_all_periods_span_qualifications[assignment_period].spanish_period_qualifications[period_qualifs].name_subject;
@@ -57,7 +57,7 @@ async function getLFHighSpanSR(imgLogo, data) {
                 }
             }
             ///-- CALIFICACIONES -- ///
-            for (let assignment_period = 2; assignment_period <= 2; assignment_period++) {
+            for (let assignment_period = 0; assignment_period <= 0; assignment_period++) {
                 assignment = [];
                 for (let period_qualifs = 0; period_qualifs < array_all_periods_span_qualifications[assignment_period].spanish_period_qualifications.length; period_qualifs++) {
                     console.log(array_all_periods_span_qualifications[assignment_period].spanish_period_qualifications[period_qualifs].no_period);
@@ -193,7 +193,7 @@ async function getLFHighSpanSR(imgLogo, data) {
                             halign: "left"
                         },
                     }, {
-                        content: "Módulo: 3",
+                        content: "Módulo: 1",
                         styles: {
                             halign: "right"
                         },
@@ -251,7 +251,7 @@ async function getLFHighSpanSR(imgLogo, data) {
                     }, {
                         content: "Tipo de materia",
                     }, {
-                        content: "Calificación M3",
+                        content: "Calificación M1",
                     }, ],
                     //--- --- ---//
                 ],
@@ -328,8 +328,8 @@ async function getLFHighSpanSR(imgLogo, data) {
             doc.setLineWidth(0.5);
             doc.setDrawColor(0, 0, 0);
             doc.line(55, 220, 150, 220); // horizontal line
-            doc.text(76, 225, "LIC. IRENE ESSES MOCHON");
-            doc.text(79, 230, "DIRECTORA DE ESPAÑOL");
+            doc.text(76, 225, "JAJAM MORDEJAI BASSUL");
+            doc.text(66, 230, "DIRECTOR PREPARATORIA ESPAÑOL");
             doc.line(45, 245, 170, 245); // horizontal line
             doc.text(60, 250, "NOMBRE Y FIRMA DEL PADRE, MADRE O TUTOR");
             doc.autoTable({
